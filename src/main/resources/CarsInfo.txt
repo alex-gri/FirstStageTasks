@@ -1,0 +1,9 @@
+8888HH3/MERCEDES/S222/2017/DIESEL/18.5/100/5/70000/310/Пневмо/7g-tronic/true/4/2/10/A3/true/Blue Goose, Jack Daniels/true/Натуральная кожа/Bose 11.3
+0000OO3/BMW/755/2017/DIESEL/16.9/95/4/64300/323/Пневмо/7g-tronic/true/4/1/9/A3/false/Blue Goose, Jack Daniels/true/Искусственная кожа/Harman Kardon 5.1
+1111AA3/AUDI/A6 C8/2018/DIESEL/13.5/85/4/45000/285/Многорычажная, Sport/Вариатор/true/4/1/6/A3/true
+2274AE3/VOLVO/XC90/2012/DIESEL/12.3/80/5/30000/260/Многорычажная, Elegance/6g-tronic/true/2/1/9/A2/false
+4775AB3/VW/Phaeton/2006/DIESEL/20.0/80/5/20000/270/Многорычажная/6g-tronic/true/2/1/9/A1/false
+1876AA3/VW/Passat B7/2012/HYBRID/10.5/70/5/15000/240/Многорычажная/5 ст./true/2
+1877AA3/VW/Passat B7/2012/HYBRID/10.0/70/5/14000/220/Однорычажная, мягкая/5 ст./false/2
+1878AA3/VW/Passat B7/2012/HYBRID/10.2/70/5/13000/225/Однорычажная/5 ст./false/2
+1879AA3/VW/Passat B7/2012/HYBRID/11.5/70/5/12000/210/Однорычажная/4 ст. legacy/false/2
