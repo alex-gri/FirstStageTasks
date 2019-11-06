@@ -5,7 +5,7 @@ import collectionstasks.maintask.cars.enumfields.Manufacturer;
 
 import java.util.Objects;
 
-public class Car {
+abstract public class Car {
     private String id;
     private Manufacturer manufacturer;
     private String model;
