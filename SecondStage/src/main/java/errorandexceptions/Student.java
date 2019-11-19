@@ -6,9 +6,11 @@ public class Student {
     private String initial;
     private Map<Subject, List<Integer>> grades;
     private static Random random = new Random();
+
     public Student() {
         // Student's name is represented like initial (string of 3 uppercase characters)
         this.initial = getRandomInitial();
+        addRandomGradesToEachSubject();
     }
 
     // Generates decimal ASCII value, converts it to character 3 times and concatenates.
@@ -61,6 +63,8 @@ public class Student {
         List<Integer> randomGrades = new ArrayList<Integer>();
         for (Subject subject : Subject.values()) {
             int numberOfGrades = random.nextInt(8);
+            while(numberOfGrades == 0)
+                numberOfGrades = random.nextInt(8);
             for (int i = 0; i < numberOfGrades; i++) {
                 randomGrades.add(random.nextInt(11));
             }

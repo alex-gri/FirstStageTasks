@@ -15,7 +15,7 @@ public class Faculty {
     }
 
     public List<Group> initializeGroups(){
-        ArrayList<Group> groupsOfThisFaculty = new ArrayList<Group>();
+        ArrayList<Group> groupsOfThisFaculty = new ArrayList<>();
         int numberOfGroups = random.nextInt(8);
         while(numberOfGroups == 0)
             numberOfGroups = random.nextInt(8);

@@ -18,7 +18,7 @@ public class Group {
     }
 
     public List<Student> initializeStudents() {
-        ArrayList<Student> studentsOfThisGroup = new ArrayList<Student>();
+        ArrayList<Student> studentsOfThisGroup = new ArrayList<>();
         int numberOfStudents = random.nextInt(11);
         while(numberOfStudents == 0)
             numberOfStudents = random.nextInt(11);
@@ -29,7 +29,7 @@ public class Group {
     }
 
     public List<Subject> initializeSubjects(){
-        ArrayList<Subject> subjectsOfThisGroup = new ArrayList<Subject>();
+        ArrayList<Subject> subjectsOfThisGroup = new ArrayList<>();
         int numberOfSubjects = random.nextInt(5);
         while(numberOfSubjects == 0)
             numberOfSubjects = random.nextInt(5);
