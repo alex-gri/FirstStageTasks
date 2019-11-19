@@ -19,16 +19,18 @@ public class Group {
         this.faculty = faculty;
     }
 
-    public ArrayList<Student> initializeStudents() {
+    public List<Student> initializeStudents() {
         ArrayList<Student> studentsOfThisGroup = new ArrayList<Student>();
         int numberOfStudents = random.nextInt(11);
+        while(numberOfStudents == 0)
+            numberOfStudents = random.nextInt(11);
         for (int i = 0; i < numberOfStudents; i++) {
             studentsOfThisGroup.add(new Student());
         }
         return studentsOfThisGroup;
     }
 
-    public ArrayList<Subject> initializeSubjects(){
+    public List<Subject> initializeSubjects(){
         ArrayList<Subject> subjectsOfThisGroup = new ArrayList<Subject>();
         int numberOfSubjects = random.nextInt(5);
         while(numberOfSubjects == 0)
