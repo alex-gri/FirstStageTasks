@@ -27,7 +27,7 @@ public class Student {
     public void addGrades(Subject subject, List<Integer> grades) {
         for (Map.Entry<Subject, List<Integer>> pair : this.grades.entrySet()) {
             if (pair.getKey().equals(subject)) {
-                List<Integer> updatedGrades = new ArrayList<Integer>(pair.getValue());
+                List<Integer> updatedGrades = new ArrayList<>(pair.getValue());
                 updatedGrades.addAll(grades);
                 pair.setValue(updatedGrades);
             }
@@ -60,7 +60,7 @@ public class Student {
     }
 
     public void addRandomGradesToEachSubject() {
-        List<Integer> randomGrades = new ArrayList<Integer>();
+        List<Integer> randomGrades = new ArrayList<>();
         for (Subject subject : Subject.values()) {
             int numberOfGrades = random.nextInt(8);
             while(numberOfGrades == 0)
@@ -71,6 +71,24 @@ public class Student {
             addGrades(subject, randomGrades);
             randomGrades.clear();
         }
+    }
+
+    public String printGrades() {
+        StringBuilder bld = new StringBuilder();
+        for (Map.Entry<Subject, List<Integer>> pair : this.grades.entrySet()) {
+            bld.append(" | ").append(pair.getKey().name()).append(":");
+            Iterator<Integer> iterator=pair.getValue().iterator();
+            while(iterator.hasNext()){
+                bld.append("  ").append(iterator.next());
+            }
+        }
+        return bld.toString();
+    }
+
+    @Override
+    public String toString() {
+        return   "student initial='" + initial +
+                ", grades: " + printGrades();
     }
 }
 

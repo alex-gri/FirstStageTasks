@@ -2,6 +2,7 @@ package errorandexceptions;
 
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -32,5 +33,22 @@ public class University {
 
     public List<Faculty> getFaculties() {
         return faculties;
+    }
+
+    public String printFaculties(){
+        StringBuilder bld = new StringBuilder();
+        Iterator<Faculty> iterator=faculties.iterator();
+        while(iterator.hasNext()){
+            bld.append("\n").append(iterator.next().toString());
+        }
+        return bld.toString();
+
+    }
+
+    @Override
+    public String toString() {
+        return "University " +
+                "name='" + name +
+                printFaculties();
     }
 }

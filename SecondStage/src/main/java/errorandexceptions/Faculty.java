@@ -1,6 +1,7 @@
 package errorandexceptions;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -31,5 +32,21 @@ public class Faculty {
 
     public List<Group> getGroups() {
         return groups;
+    }
+
+    public String printGroups(){
+        StringBuilder bld = new StringBuilder();
+        Iterator<Group> iterator=groups.iterator();
+        while(iterator.hasNext()){
+            bld.append("\n").append(iterator.next().toString());
+        }
+        return bld.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty " +
+                "name='" + name +
+                printGroups();
     }
 }

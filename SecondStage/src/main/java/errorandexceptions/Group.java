@@ -1,9 +1,6 @@
 package errorandexceptions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Group {
     private int id;
@@ -69,5 +66,21 @@ public class Group {
         }else{
             return 0;
         }
+    }
+
+    public String printStudents(){
+        StringBuilder bld = new StringBuilder();
+        Iterator<Student> iterator=students.iterator();
+        while(iterator.hasNext()){
+            bld.append("\n").append(iterator.next().toString());
+        }
+        return bld.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "Group " +
+                "id=" + id +
+                printStudents();
     }
 }
