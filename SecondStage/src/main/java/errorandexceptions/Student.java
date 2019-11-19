@@ -66,5 +66,17 @@ public class Student {
             return 0;
         }
     }
+
+    public void addRandomGradesToEachSubject() {
+        List<Integer> randomGrades = new ArrayList<Integer>();
+        for (Subject subject : Subject.values()) {
+            int numberOfGrades = random.nextInt(8);
+            for (int i = 0; i < numberOfGrades; i++) {
+                randomGrades.add(random.nextInt(11));
+            }
+            addGrades(subject, randomGrades);
+            randomGrades.clear();
+        }
+    }
 }
 
