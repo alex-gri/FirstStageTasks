@@ -5,12 +5,10 @@ import java.util.*;
 public class Student {
     private String initial;
     private Map<Subject, List<Integer>> grades;
-    private Group group;
     private static Random random = new Random();
-    public Student(Group group) {
+    public Student() {
         // Student's name is represented like initial (string of 3 uppercase characters)
         this.initial = getRandomInitial();
-        this.group = group;
     }
 
     // Generates decimal ASCII value, converts it to character 3 times and concatenates.
@@ -22,10 +20,6 @@ public class Student {
 
     public Map<Subject, List<Integer>> getGrades() {
         return grades;
-    }
-
-    public Group getGroup() {
-        return group;
     }
 
     public void addGrades(Subject subject, List<Integer> grades) {

@@ -2,6 +2,7 @@ package errorandexceptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Group {
@@ -22,7 +23,7 @@ public class Group {
         ArrayList<Student> studentsOfThisGroup = new ArrayList<Student>();
         int numberOfStudents = random.nextInt(11);
         for (int i = 0; i < numberOfStudents; i++) {
-            studentsOfThisGroup.add(new Student(this));
+            studentsOfThisGroup.add(new Student());
         }
         return studentsOfThisGroup;
     }
@@ -53,4 +54,5 @@ public class Group {
     public Faculty getFaculty() {
         return faculty;
     }
+    
 }
