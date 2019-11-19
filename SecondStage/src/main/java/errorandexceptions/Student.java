@@ -3,13 +3,22 @@ package errorandexceptions;
 import java.util.*;
 
 public class Student {
-    private String name;
+    private String initial;
     private Map<Subject, List<Integer>> grades;
     private Group group;
 
-    public Student(String name, Group group) {
-        this.name = name;
+    public Student(Group group) {
+        // Student's name is represented like initial (string of 3 uppercase characters)
+        this.initial = getRandomInitial();
         this.group = group;
+    }
+
+    // Generates decimal ASCII value, converts it to character 3 times and concatenates.
+    private String getRandomInitial() {
+        Random random = new Random();
+        return "" + (char) (random.nextInt((90 - 65) + 1) + 65)
+                + (char) (random.nextInt((90 - 65) + 1) + 65)
+                + (char) (random.nextInt((90 - 65) + 1) + 65);
     }
 
     public Map<Subject, List<Integer>> getGrades() {
@@ -20,14 +29,6 @@ public class Student {
         return group;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setGrades(Map<Subject, List<Integer>> grades) {
-        this.grades = new HashMap<Subject, List<Integer>>(grades);
-    }
-
     public void addGrades(Subject subject, List<Integer> grades) {
         for (Map.Entry<Subject, List<Integer>> pair : this.grades.entrySet()) {
             if (pair.getKey().equals(subject)) {
@@ -36,6 +37,14 @@ public class Student {
                 pair.setValue(updatedGrades);
             }
         }
+    }
+
+    public String getInitial() {
+        return initial;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public double averageGradeOfAllSubjects() {
