@@ -9,14 +9,12 @@ public class Group {
     private int id;
     private List<Student> students;
     private List<Subject> subjects;
-    private Faculty faculty;
     private static Random random = new Random();
 
-    public Group(int id, Faculty faculty) {
+    public Group(int id) {
         this.id = id;
         this.students = initializeStudents();
         this.subjects = initializeSubjects();
-        this.faculty = faculty;
     }
 
     public List<Student> initializeStudents() {
@@ -51,10 +49,6 @@ public class Group {
 
     public List<Subject> getSubjects() {
         return subjects;
-    }
-
-    public Faculty getFaculty() {
-        return faculty;
     }
 
     public double getAverageGradeAtSubject(Subject subject){

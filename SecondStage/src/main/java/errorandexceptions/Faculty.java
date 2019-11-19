@@ -20,7 +20,7 @@ public class Faculty {
         while(numberOfGroups == 0)
             numberOfGroups = random.nextInt(8);
         for (int i = 0; i < numberOfGroups; i++) {
-            groupsOfThisFaculty.add(new Group(i+1,this));
+            groupsOfThisFaculty.add(new Group(i+1));
         }
         return groupsOfThisFaculty;
     }
