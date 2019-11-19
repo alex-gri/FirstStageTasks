@@ -63,5 +63,9 @@ public class Student {
         if (numberOfGradesOfAllSubjects != 0) {
             return (double) sumOfAllGradesOfAllSubjects / (double) numberOfGradesOfAllSubjects;
         }
+        else{
+            return 0;
+        }
     }
 }
+
