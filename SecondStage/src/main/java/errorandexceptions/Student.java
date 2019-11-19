@@ -42,10 +42,6 @@ public class Student {
         return initial;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
     public double averageGradeOfAllSubjects() {
         int sumOfAllGradesOfAllSubjects = 0;
         int numberOfGradesOfAllSubjects = 0;
