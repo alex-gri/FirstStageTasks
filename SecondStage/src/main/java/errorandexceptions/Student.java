@@ -6,7 +6,7 @@ public class Student {
     private String initial;
     private Map<Subject, List<Integer>> grades;
     private Group group;
-
+    private static Random random = new Random();
     public Student(Group group) {
         // Student's name is represented like initial (string of 3 uppercase characters)
         this.initial = getRandomInitial();
@@ -15,7 +15,6 @@ public class Student {
 
     // Generates decimal ASCII value, converts it to character 3 times and concatenates.
     private String getRandomInitial() {
-        Random random = new Random();
         return "" + (char) (random.nextInt((90 - 65) + 1) + 65)
                 + (char) (random.nextInt((90 - 65) + 1) + 65)
                 + (char) (random.nextInt((90 - 65) + 1) + 65);
