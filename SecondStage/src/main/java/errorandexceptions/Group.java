@@ -37,5 +37,20 @@ public class Group {
         }
         return subjectsOfThisGroup;
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
 }
