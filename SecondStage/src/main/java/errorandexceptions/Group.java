@@ -11,10 +11,10 @@ public class Group {
     private Faculty faculty;
     private static Random random = new Random();
 
-    public Group(int id, List<Subject> subjects, Faculty faculty) {
+    public Group(int id, Faculty faculty) {
         this.id = id;
         this.students = initializeStudents();
-        this.subjects = subjects;
+        this.subjects = initializeSubjects();
         this.faculty = faculty;
     }
 
@@ -27,4 +27,15 @@ public class Group {
         return studentsOfThisGroup;
     }
 
+    public ArrayList<Subject> initializeSubjects(){
+        ArrayList<Subject> subjectsOfThisGroup = new ArrayList<Subject>();
+        int numberOfSubjects = random.nextInt(5);
+        while(numberOfSubjects == 0)
+            numberOfSubjects = random.nextInt(5);
+        for (int i = 0; i < numberOfSubjects; i++) {
+            subjectsOfThisGroup.add(Subject.values()[i]);
+        }
+        return subjectsOfThisGroup;
+    }
+    
 }
