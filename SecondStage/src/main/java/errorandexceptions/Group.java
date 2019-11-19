@@ -54,5 +54,24 @@ public class Group {
     public Faculty getFaculty() {
         return faculty;
     }
-    
+
+    public double getAverageGradeAtSubject(Subject subject){
+        int sumOfGradesOfAllStudentsOfGroupAtSubject = 0;
+        int numberOfGradesOfAllStudentsOfGroupAtSubject = 0;
+        for (Student student: students) {
+            for (Map.Entry<Subject, List<Integer>> pair : student.getGrades().entrySet()) {
+                if (pair.getKey().equals(subject)) {
+                    while(pair.getValue().iterator().hasNext()) {
+                        sumOfGradesOfAllStudentsOfGroupAtSubject += pair.getValue().iterator().next();
+                        numberOfGradesOfAllStudentsOfGroupAtSubject++;
+                    }
+                }
+            }
+        }
+        if(numberOfGradesOfAllStudentsOfGroupAtSubject != 0){
+            return (double)sumOfGradesOfAllStudentsOfGroupAtSubject / (double)numberOfGradesOfAllStudentsOfGroupAtSubject;
+        }else{
+            return 0;
+        }
+    }
 }
