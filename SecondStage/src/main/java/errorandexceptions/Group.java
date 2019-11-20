@@ -1,6 +1,7 @@
 package errorandexceptions;
 
 import errorandexceptions.exceptions.GradeValueIsOutOfBoundsException;
+import errorandexceptions.exceptions.GroupHasNoStudentsException;
 import errorandexceptions.exceptions.StudentHasNoSubjectsException;
 
 import java.util.*;
@@ -14,22 +15,31 @@ public class Group {
     public Group(int id) {
         this.id = id;
         this.subjects = initializeSubjects();
-        this.students = initializeStudents();
+        try {
+            this.students = initializeStudents();
+        } catch (GroupHasNoStudentsException e) {
+            e.printStackTrace();
+            Map<Subject, List<Integer>> gradesDefault = new HashMap<>();
+            gradesDefault.put(subjects.get(0), new ArrayList<Integer>(Arrays.asList(1,2,3)));
+            this.students.add(new Student(gradesDefault));
+        }
 
     }
 
-    public List<Student> initializeStudents() {
+    public List<Student> initializeStudents() throws GroupHasNoStudentsException {
         List<Student> studentsOfThisGroup = new ArrayList<>();
         int numberOfStudents = random.nextInt(7);
-        while(numberOfStudents == 0)
-            numberOfStudents = random.nextInt(7);
-        for (int i = 0; i < numberOfStudents; i++) {
-            try {
-                studentsOfThisGroup.add(new Student(addRandomGradesToEachSubject()));
-            } catch (GradeValueIsOutOfBoundsException | StudentHasNoSubjectsException e) {
-                e.printStackTrace();
-                studentsOfThisGroup.clear();
-                studentsOfThisGroup = initializeStudents();
+        if(numberOfStudents == 0){
+            throw new GroupHasNoStudentsException("No students added to the group!");
+        }else{
+            for (int i = 0; i < numberOfStudents; i++) {
+                try {
+                    studentsOfThisGroup.add(new Student(addRandomGradesToEachSubject()));
+                } catch (GradeValueIsOutOfBoundsException | StudentHasNoSubjectsException e) {
+                    e.printStackTrace();
+                    studentsOfThisGroup.clear();
+                    studentsOfThisGroup = initializeStudents();
+                }
             }
         }
         return studentsOfThisGroup;
