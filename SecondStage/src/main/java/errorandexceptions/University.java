@@ -1,5 +1,7 @@
 package errorandexceptions;
 
+import errorandexceptions.exceptions.UniversityHasNoFacultiesException;
+
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,17 +15,26 @@ public class University {
 
     public University(String name) {
         this.name = name;
-        this.faculties = initializeFaculties();
+        try {
+            this.faculties = initializeFaculties();
+        } catch (UniversityHasNoFacultiesException e) {
+            e.printStackTrace();
+            Faculty facultyDefault = new Faculty("DEFAULT_FACULTY");
+            this.faculties.add(facultyDefault);
+        }
     }
 
-    public List<Faculty> initializeFaculties(){
+    public List<Faculty> initializeFaculties() throws UniversityHasNoFacultiesException {
         ArrayList<Faculty> facultiesOfThisUniversity = new ArrayList<>();
         int numberOfFaculties = random.nextInt(2);
-        while(numberOfFaculties == 0)
-            numberOfFaculties = random.nextInt(2);
-        for (int i = 0; i < numberOfFaculties; i++) {
-            facultiesOfThisUniversity.add(new Faculty(Month.of(i+1).name()));
+        if(numberOfFaculties == 0){
+            throw new UniversityHasNoFacultiesException("No faculties added to the university!");
+        }else{
+            for (int i = 0; i < numberOfFaculties; i++) {
+                facultiesOfThisUniversity.add(new Faculty(Month.of(i+1).name()));
+            }
         }
+
         return facultiesOfThisUniversity;
     }
 
