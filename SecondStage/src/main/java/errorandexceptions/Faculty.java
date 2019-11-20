@@ -1,5 +1,7 @@
 package errorandexceptions;
 
+import errorandexceptions.exceptions.FacultyHasNoGroupsException;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,16 +14,24 @@ public class Faculty {
 
     public Faculty(String name) {
         this.name = name;
-        this.groups = initializeGroups();
+        try {
+            this.groups = initializeGroups();
+        } catch (FacultyHasNoGroupsException e) {
+            e.printStackTrace();
+            Group groupDefault = new Group(1);
+            this.groups.add(groupDefault);
+        }
     }
 
-    public List<Group> initializeGroups(){
+    public List<Group> initializeGroups() throws FacultyHasNoGroupsException {
         ArrayList<Group> groupsOfThisFaculty = new ArrayList<>();
         int numberOfGroups = random.nextInt(5);
-        while(numberOfGroups == 0)
-            numberOfGroups = random.nextInt(5);
-        for (int i = 0; i < numberOfGroups; i++) {
-            groupsOfThisFaculty.add(new Group(i+1));
+        if(numberOfGroups == 0){
+            throw new FacultyHasNoGroupsException("No groups added to the faculty!");
+        }else{
+            for (int i = 0; i < numberOfGroups; i++) {
+                groupsOfThisFaculty.add(new Group(i+1));
+            }
         }
         return groupsOfThisFaculty;
     }
