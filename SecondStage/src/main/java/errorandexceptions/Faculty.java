@@ -17,9 +17,9 @@ public class Faculty {
 
     public List<Group> initializeGroups(){
         ArrayList<Group> groupsOfThisFaculty = new ArrayList<>();
-        int numberOfGroups = random.nextInt(8);
+        int numberOfGroups = random.nextInt(5);
         while(numberOfGroups == 0)
-            numberOfGroups = random.nextInt(8);
+            numberOfGroups = random.nextInt(5);
         for (int i = 0; i < numberOfGroups; i++) {
             groupsOfThisFaculty.add(new Group(i+1));
         }
@@ -38,7 +38,7 @@ public class Faculty {
         StringBuilder bld = new StringBuilder();
         Iterator<Group> iterator=groups.iterator();
         while(iterator.hasNext()){
-            bld.append("\n").append(iterator.next().toString());
+            bld.append("\n  ").append(iterator.next().toString());
         }
         return bld.toString();
     }
@@ -46,7 +46,7 @@ public class Faculty {
     @Override
     public String toString() {
         return "Faculty " +
-                "name='" + name +
+                "name=" + name +
                 printGroups();
     }
 }

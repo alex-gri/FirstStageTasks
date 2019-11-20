@@ -18,9 +18,9 @@ public class University {
 
     public List<Faculty> initializeFaculties(){
         ArrayList<Faculty> facultiesOfThisUniversity = new ArrayList<>();
-        int numberOfFaculties = random.nextInt(11);
+        int numberOfFaculties = random.nextInt(2);
         while(numberOfFaculties == 0)
-            numberOfFaculties = random.nextInt(12);
+            numberOfFaculties = random.nextInt(2);
         for (int i = 0; i < numberOfFaculties; i++) {
             facultiesOfThisUniversity.add(new Faculty(Month.of(i+1).name()));
         }
@@ -38,11 +38,18 @@ public class University {
     public String printFaculties(){
         StringBuilder bld = new StringBuilder();
         Iterator<Faculty> iterator=faculties.iterator();
+        int index = 1;
         while(iterator.hasNext()){
-            bld.append("\n").append(iterator.next().toString());
+            bld.append("\n").append(index).append(" - ").append(iterator.next().toString()).append(" ");
+            index++;
         }
         return bld.toString();
+    }
 
+    public void printFacultiesNames(){
+        for (int i = 0; i < faculties.size(); i++) {
+            System.out.println((i+1) + " - " + faculties.get(i).getName());
+        }
     }
 
     @Override
