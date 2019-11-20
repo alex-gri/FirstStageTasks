@@ -1,5 +1,8 @@
 package errorandexceptions;
 
+import errorandexceptions.exceptions.GradeValueIsOutOfBoundsException;
+import errorandexceptions.exceptions.StudentHasNoSubjectsException;
+
 import java.util.*;
 
 public class Group {
@@ -16,12 +19,18 @@ public class Group {
     }
 
     public List<Student> initializeStudents() {
-        ArrayList<Student> studentsOfThisGroup = new ArrayList<>();
+        List<Student> studentsOfThisGroup = new ArrayList<>();
         int numberOfStudents = random.nextInt(7);
         while(numberOfStudents == 0)
             numberOfStudents = random.nextInt(7);
         for (int i = 0; i < numberOfStudents; i++) {
-            studentsOfThisGroup.add(new Student(addRandomGradesToEachSubject()));
+            try {
+                studentsOfThisGroup.add(new Student(addRandomGradesToEachSubject()));
+            } catch (GradeValueIsOutOfBoundsException | StudentHasNoSubjectsException e) {
+                e.printStackTrace();
+                studentsOfThisGroup.clear();
+                studentsOfThisGroup = initializeStudents();
+            }
         }
         return studentsOfThisGroup;
     }
@@ -36,18 +45,26 @@ public class Group {
         }
         return subjectsOfThisGroup;
     }
-    public Map<Subject, List<Integer>> addRandomGradesToEachSubject() {
+    public Map<Subject, List<Integer>> addRandomGradesToEachSubject() throws GradeValueIsOutOfBoundsException,
+                                                                            StudentHasNoSubjectsException {
         Map<Subject, List<Integer>> randomGrades = new EnumMap<>(Subject.class);
         List<Integer> randomGradesValues = new ArrayList<>();
         for (Subject subject : subjects) {
             randomGradesValues.clear();
             int numberOfGrades = random.nextInt(4);
-            while(numberOfGrades == 0)
-                numberOfGrades = random.nextInt(4);
-            for (int i = 0; i < numberOfGrades; i++) {
-                randomGradesValues.add(random.nextInt(10)+1);
-            }
-            randomGrades.put(subject, randomGradesValues);
+                if(numberOfGrades == 0){
+                    throw new StudentHasNoSubjectsException("No subjects added to student's grades!");
+                }else{
+                    for (int i = 0; i < numberOfGrades; i++) {
+                        int randomGrade = random.nextInt(10)+1;
+                        if(randomGrade <= 10 && randomGrade >= 1)
+                            randomGradesValues.add(randomGrade);
+                        else{
+                            throw new GradeValueIsOutOfBoundsException("Grade is not in [1:10] range!");
+                        }
+                    }
+                    randomGrades.put(subject, randomGradesValues);
+                }
         }
         return randomGrades;
     }
