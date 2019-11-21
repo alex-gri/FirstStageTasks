@@ -27,15 +27,16 @@ public class University {
     public List<Faculty> initializeFaculties() throws UniversityHasNoFacultiesException {
         ArrayList<Faculty> facultiesOfThisUniversity = new ArrayList<>();
         int numberOfFaculties = random.nextInt(2);
+        while(numberOfFaculties==0)
+            numberOfFaculties = random.nextInt(2);
         if(numberOfFaculties == 0){
             throw new UniversityHasNoFacultiesException("No faculties added to the university!");
         }else{
             for (int i = 0; i < numberOfFaculties; i++) {
                 facultiesOfThisUniversity.add(new Faculty(Month.of(i+1).name()));
             }
+            return facultiesOfThisUniversity;
         }
-
-        return facultiesOfThisUniversity;
     }
 
     public String getName() {
@@ -66,7 +67,7 @@ public class University {
     @Override
     public String toString() {
         return "University " +
-                "name='" + name +
+                "name=" + name +
                 printFaculties();
     }
 }

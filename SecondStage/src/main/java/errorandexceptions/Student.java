@@ -40,13 +40,7 @@ public class Student {
             }
             numberOfGradesOfAllSubjects += gradesOfOneSubject.size();
         }
-
-        if (numberOfGradesOfAllSubjects != 0) {
-            return (double) sumOfAllGradesOfAllSubjects / (double) numberOfGradesOfAllSubjects;
-        }
-        else{
-            return 0;
-        }
+        return numberOfGradesOfAllSubjects != 0 ? sumOfAllGradesOfAllSubjects / (double) numberOfGradesOfAllSubjects: 0;
     }
 
     public String printGrades() {
@@ -54,10 +48,8 @@ public class Student {
         for (Map.Entry<Subject, List<Integer>> pair : this.grades.entrySet()) {
             bld.append(" | ").append(pair.getKey().name()).append(":");
             Iterator<Integer> iterator=pair.getValue().iterator();
-            int index = 1;
             while(iterator.hasNext()){
                 bld.append("  ").append(iterator.next());
-                index++;
             }
         }
         return bld.toString();

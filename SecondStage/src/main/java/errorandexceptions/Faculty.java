@@ -26,14 +26,16 @@ public class Faculty {
     public List<Group> initializeGroups() throws FacultyHasNoGroupsException {
         ArrayList<Group> groupsOfThisFaculty = new ArrayList<>();
         int numberOfGroups = random.nextInt(5);
+        while(numberOfGroups==0)
+            numberOfGroups = random.nextInt(5);
         if(numberOfGroups == 0){
             throw new FacultyHasNoGroupsException("No groups added to the faculty!");
         }else{
             for (int i = 0; i < numberOfGroups; i++) {
                 groupsOfThisFaculty.add(new Group(i+1));
             }
+            return groupsOfThisFaculty;
         }
-        return groupsOfThisFaculty;
     }
 
     public String getName() {
