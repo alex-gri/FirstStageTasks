@@ -1,5 +1,6 @@
 package errorandexceptions;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Runner {
@@ -8,7 +9,8 @@ public class Runner {
     static Random random = new Random();
     static int exitCounter = 0;
     static University university = new University("Polessky State University");
-    static String yourChoice = "Ваш выбор: ";
+    static String yourChoiceMessage = "Ваш выбор: ";
+    static String inputErrorMessage = "Ошибка выбора! Попробуйте снова!";
 
     public static void main(String[] args) {
         while (true) {
@@ -37,11 +39,11 @@ public class Runner {
                         System.exit(0);
                         break;
                     default:
-                        System.out.println("Ошибка выбора! Попробуйте снова!");
+                        System.out.println(inputErrorMessage);
                         break;
                 }
             } else {
-                System.out.println("Ошибка выбора! Попробуйте снова!");
+                System.out.println(inputErrorMessage);
                 consoleInput = new Scanner(System.in);
             }
         }
@@ -62,22 +64,73 @@ public class Runner {
         for (int i = 0; i < chosenGroup.getSubjects().size(); i++) {
             System.out.println((i + 1) + " " + chosenGroup.getSubjects().get(i).toString());
         }
-        System.out.print(yourChoice);
-        return chosenGroup.getSubjects().get(consoleInput.nextInt() - 1);
+        int indexOfSubject = 0;
+
+        // Input value validation.
+        while(true){
+            try{
+                System.out.print(yourChoiceMessage);
+                indexOfSubject = consoleInput.nextInt();
+                if(indexOfSubject > 0 && indexOfSubject <= chosenGroup.getSubjects().size())
+                    break;
+                else{
+                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                }
+            }catch(InputMismatchException | IndexOutOfBoundsException e){
+                e.printStackTrace();
+                System.out.println(inputErrorMessage);
+                consoleInput = new Scanner(System.in);
+            }
+        }
+        return chosenGroup.getSubjects().get(indexOfSubject - 1);
     }
 
     private static Group chooseGroup(Faculty chosenFaculty) {
         System.out.print("Выберите группу: ");
         System.out.println(chosenFaculty.printGroups());
-        System.out.print(yourChoice);
-        return chosenFaculty.getGroups().get(consoleInput.nextInt() - 1);
+        int indexOfGroup = 0;
+
+        // Input value validation.
+        while(true){
+            try{
+                System.out.print(yourChoiceMessage);
+                indexOfGroup = consoleInput.nextInt();
+                if(indexOfGroup > 0 && indexOfGroup <= chosenFaculty.getGroups().size())
+                    break;
+                else{
+                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                }
+            }catch(InputMismatchException | IndexOutOfBoundsException e){
+                e.printStackTrace();
+                System.out.println(inputErrorMessage);
+                consoleInput = new Scanner(System.in);
+            }
+        }
+        return chosenFaculty.getGroups().get(indexOfGroup - 1);
     }
 
     private static Faculty chooseFaculty() {
         System.out.println("Выберите факультет: ");
         university.printFacultiesNames();
-        System.out.print(yourChoice);
-        return university.getFaculties().get(consoleInput.nextInt() - 1);
+        int indexOfFaculty = 0;
+
+        // Валидация вводимого значения.
+        while(true){
+            try{
+                System.out.print(yourChoiceMessage);
+                indexOfFaculty = consoleInput.nextInt();
+                if(indexOfFaculty > 0 && indexOfFaculty <= university.getFaculties().size())
+                    break;
+                else{
+                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                }
+            }catch(InputMismatchException | IndexOutOfBoundsException e){
+                e.printStackTrace();
+                System.out.println(inputErrorMessage);
+                consoleInput = new Scanner(System.in);
+            }
+        }
+        return university.getFaculties().get(indexOfFaculty - 1);
     }
 
     private static boolean shouldBreak() {
@@ -119,8 +172,25 @@ public class Runner {
         for (int i = 0; i < Subject.values().length; i++) {
             System.out.println((i + 1) + " - " + Subject.values()[i].toString());
         }
-        System.out.print(yourChoice);
-        return Subject.values()[consoleInput.nextInt() - 1];
+        int indexOfSubject = 0;
+
+        // Input value validation.
+        while (true) {
+            try {
+                System.out.print(yourChoiceMessage);
+                indexOfSubject = consoleInput.nextInt();
+                if(indexOfSubject > 0 && indexOfSubject <= Subject.values().length)
+                    break;
+                else{
+                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                }
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                e.printStackTrace();
+                System.out.println(inputErrorMessage);
+                consoleInput = new Scanner(System.in);
+            }
+        }
+        return Subject.values()[indexOfSubject - 1];
     }
 
     private static void printRandomStudentAverageGrade(University university) {
@@ -143,6 +213,6 @@ public class Runner {
         System.out.println("3 - Посчитать средний балл по предмету для всего университета");
         System.out.println("4 - Вывести всю информацию об университете и студентах");
         System.out.println("5 - Выход");
-        System.out.print(yourChoice);
+        System.out.print(yourChoiceMessage);
     }
 }
