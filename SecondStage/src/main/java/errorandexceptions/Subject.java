@@ -1,3 +1,3 @@
 package errorandexceptions;
 
-public enum Subject { MATH, ENGLISH, PROGRAMMING, STATISTICS}
+public enum Subject {MATH, ENGLISH, PROGRAMMING, STATISTICS}

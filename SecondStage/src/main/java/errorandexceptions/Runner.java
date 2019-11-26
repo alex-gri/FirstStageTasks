@@ -1,16 +1,19 @@
 package errorandexceptions;
 
-import java.sql.SQLOutput;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Runner {
 
+    public static final String INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE = "Ошибка! Выберите один из предложенных вариантов!";
+    public static final String YOUR_CHOICE_MESSAGE = "Ваш выбор: ";
+    public static final String INPUT_ERROR_MESSAGE = "Ошибка выбора! Попробуйте снова!";
+    static Logger logger = Logger.getLogger(Runner.class.getName());
     static Scanner consoleInput = new Scanner(System.in);
     static Random random = new Random();
     static int exitCounter = 0;
     static University university = new University("Polessky State University");
-    static String yourChoiceMessage = "Ваш выбор: ";
-    static String inputErrorMessage = "Ошибка выбора! Попробуйте снова!";
 
     public static void main(String[] args) {
         while (true) {
@@ -23,62 +26,66 @@ public class Runner {
                         exitCounter++;
                         break;
                     case 2:
-                        getAverageGradeOfUniversityWithParameters();
+                        printAverageGradeOfUniversityWithParameters();
                         exitCounter++;
                         break;
                     case 3:
-                        System.out.println("Средняя оценка по всему университету = " +
+                        logger.log(Level.SEVERE, "Средняя оценка по всему университету = {0}",
                                 getAverageGradeOfUniversityAtSubject());
                         exitCounter++;
                         break;
                     case 4:
-                        System.out.println(university.toString());
+                        String infoOfUniversity = university.toString();
+                        logger.log(Level.SEVERE, infoOfUniversity);
                         exitCounter++;
                         break;
                     case 5:
                         System.exit(0);
                         break;
                     default:
-                        System.out.println(inputErrorMessage);
+                        logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                         break;
                 }
             } else {
-                System.out.println(inputErrorMessage);
+                logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                 consoleInput = new Scanner(System.in);
             }
         }
     }
 
-    private static void getAverageGradeOfUniversityWithParameters() {
+    private static void printAverageGradeOfUniversityWithParameters() {
         Faculty chosenFaculty = chooseFaculty();
         Group chosenGroup = chooseGroup(chosenFaculty);
         Subject chosenSubject = chooseSubject(chosenGroup);
-        System.out.println("На факультете " + chosenFaculty.getName() + " в группе " + chosenGroup.getId()
-                + " по предмету " + chosenSubject.toString() + " средний балл равен = " +
+        String averageGradeOfUniversityWithParametersFormatted = ("На факультете " +
+                chosenFaculty.getName() + " в группе " + chosenGroup.getId() +
+                " по предмету " + chosenSubject.toString() + " средний балл равен = " +
                 chosenGroup.getAverageGradeAtSubject(chosenSubject));
+        logger.log(Level.SEVERE, averageGradeOfUniversityWithParametersFormatted);
     }
 
     private static Subject chooseSubject(Group chosenGroup) {
         consoleInput = new Scanner(System.in);
-        System.out.println("Выберите предмет: ");
+        logger.log(Level.SEVERE, "Выберите предмет: ");
         for (int i = 0; i < chosenGroup.getSubjects().size(); i++) {
-            System.out.println((i + 1) + " " + chosenGroup.getSubjects().get(i).toString());
+            String chooseLine = (i + 1) + " " + chosenGroup.getSubjects().get(i).toString();
+            logger.log(Level.SEVERE, chooseLine);
         }
         int indexOfSubject = 0;
 
         // Input value validation.
-        while(true){
-            try{
-                System.out.print(yourChoiceMessage);
+        while (true) {
+            try {
+                logger.log(Level.SEVERE, YOUR_CHOICE_MESSAGE);
                 indexOfSubject = consoleInput.nextInt();
-                if(indexOfSubject > 0 && indexOfSubject <= chosenGroup.getSubjects().size())
+                if (indexOfSubject > 0 && indexOfSubject <= chosenGroup.getSubjects().size())
                     break;
-                else{
-                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                else {
+                    throw new IndexOutOfBoundsException(INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE);
                 }
-            }catch(InputMismatchException | IndexOutOfBoundsException e){
-                e.printStackTrace();
-                System.out.println(inputErrorMessage);
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                logger.log(Level.WARNING, e.getMessage());
+                logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                 consoleInput = new Scanner(System.in);
             }
         }
@@ -86,23 +93,24 @@ public class Runner {
     }
 
     private static Group chooseGroup(Faculty chosenFaculty) {
-        System.out.print("Выберите группу: ");
-        System.out.println(chosenFaculty.printGroups());
+        logger.log(Level.SEVERE, "Выберите группу: ");
+        String groupsLines = chosenFaculty.printGroups();
+        logger.log(Level.SEVERE, groupsLines);
         int indexOfGroup = 0;
 
         // Input value validation.
-        while(true){
-            try{
-                System.out.print(yourChoiceMessage);
+        while (true) {
+            try {
+                logger.log(Level.SEVERE, YOUR_CHOICE_MESSAGE);
                 indexOfGroup = consoleInput.nextInt();
-                if(indexOfGroup > 0 && indexOfGroup <= chosenFaculty.getGroups().size())
+                if (indexOfGroup > 0 && indexOfGroup <= chosenFaculty.getGroups().size())
                     break;
-                else{
-                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                else {
+                    throw new IndexOutOfBoundsException(INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE);
                 }
-            }catch(InputMismatchException | IndexOutOfBoundsException e){
-                e.printStackTrace();
-                System.out.println(inputErrorMessage);
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                logger.log(Level.WARNING, e.getMessage());
+                logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                 consoleInput = new Scanner(System.in);
             }
         }
@@ -110,23 +118,23 @@ public class Runner {
     }
 
     private static Faculty chooseFaculty() {
-        System.out.println("Выберите факультет: ");
+        logger.log(Level.SEVERE, "Выберите факультет: ");
         university.printFacultiesNames();
         int indexOfFaculty = 0;
 
         // Валидация вводимого значения.
-        while(true){
-            try{
-                System.out.print(yourChoiceMessage);
+        while (true) {
+            try {
+                logger.log(Level.SEVERE, YOUR_CHOICE_MESSAGE);
                 indexOfFaculty = consoleInput.nextInt();
-                if(indexOfFaculty > 0 && indexOfFaculty <= university.getFaculties().size())
+                if (indexOfFaculty > 0 && indexOfFaculty <= university.getFaculties().size())
                     break;
-                else{
-                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                else {
+                    throw new IndexOutOfBoundsException(INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE);
                 }
-            }catch(InputMismatchException | IndexOutOfBoundsException e){
-                e.printStackTrace();
-                System.out.println(inputErrorMessage);
+            } catch (InputMismatchException | IndexOutOfBoundsException e) {
+                logger.log(Level.WARNING, e.getMessage());
+                logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                 consoleInput = new Scanner(System.in);
             }
         }
@@ -135,10 +143,10 @@ public class Runner {
 
     private static boolean shouldBreak() {
         if (exitCounter == 4) {
-            System.out.println("Программа закрыта автоматически (4 итерации).");
+            logger.log(Level.SEVERE, "Программа закрыта автоматически (4 итерации).");
             return true;
         } else {
-            System.out.println("Программа будет автоматически закрыта через " + (4 - exitCounter) + " итерации");
+            logger.log(Level.SEVERE, "Программа будет автоматически закрыта через {0} итерации", (4 - exitCounter));
             return false;
         }
     }
@@ -150,17 +158,8 @@ public class Runner {
         for (Faculty faculty : university.getFaculties()) {
             for (Group group : faculty.getGroups()) {
                 if (group.getSubjects().contains(chosenSubject)) {
-                    for (Student student : group.getStudents()) {
-                        for (Map.Entry<Subject, List<Integer>> pair : student.getGrades().entrySet()) {
-                            if (pair.getKey().equals(chosenSubject)) {
-                                Iterator<Integer> iterator = pair.getValue().iterator();
-                                while (iterator.hasNext()) {
-                                    sumOfUniversityGradesAtSubject += iterator.next();
-                                    numberOfGroupsThatHasSubject++;
-                                }
-                            }
-                        }
-                    }
+                    sumOfUniversityGradesAtSubject += group.getAverageGradeAtSubject(chosenSubject);
+                    numberOfGroupsThatHasSubject++;
                 }
             }
         }
@@ -168,25 +167,26 @@ public class Runner {
     }
 
     private static Subject chooseSubject() {
-        System.out.println("Выберите предмет: ");
+        logger.log(Level.SEVERE, "Выберите предмет: ");
         for (int i = 0; i < Subject.values().length; i++) {
-            System.out.println((i + 1) + " - " + Subject.values()[i].toString());
+            String subjectLine = (i + 1) + " - " + Subject.values()[i].toString();
+            logger.log(Level.SEVERE, subjectLine);
         }
         int indexOfSubject = 0;
 
         // Input value validation.
         while (true) {
             try {
-                System.out.print(yourChoiceMessage);
+                logger.log(Level.SEVERE, YOUR_CHOICE_MESSAGE);
                 indexOfSubject = consoleInput.nextInt();
-                if(indexOfSubject > 0 && indexOfSubject <= Subject.values().length)
+                if (indexOfSubject > 0 && indexOfSubject <= Subject.values().length)
                     break;
-                else{
-                    throw new IndexOutOfBoundsException("Ошибка! Выберите один из предложенных вариантов!");
+                else {
+                    throw new IndexOutOfBoundsException(INDEX_OUT_OF_BOUNDS_EXCEPTION_MESSAGE);
                 }
             } catch (InputMismatchException | IndexOutOfBoundsException e) {
-                e.printStackTrace();
-                System.out.println(inputErrorMessage);
+                logger.log(Level.WARNING, e.getMessage());
+                logger.log(Level.INFO, INPUT_ERROR_MESSAGE);
                 consoleInput = new Scanner(System.in);
             }
         }
@@ -195,8 +195,9 @@ public class Runner {
 
     private static void printRandomStudentAverageGrade(University university) {
         Student randomStudent = getRandomStudent(university);
-        System.out.print("Студент " + randomStudent.getInitial() + " имеет средний балл = ");
-        System.out.println(randomStudent.averageGradeOfAllSubjects());
+        String randomStudentAverageGradeLine = "Студент " + randomStudent.getInitial() + " имеет средний балл = " +
+                randomStudent.getAverageGradeOfAllSubjects();
+        logger.log(Level.SEVERE, randomStudentAverageGradeLine);
     }
 
     private static Student getRandomStudent(University university) {
@@ -206,13 +207,14 @@ public class Runner {
     }
 
     public static void popMenu() {
-        System.out.println("Выберите:");
-        System.out.println("1 - Посчитать средний балл по всем предметам случайного студента");
-        System.out.println("2 - Посчитать средний балл по конкретному предмету в конкретной группе " +
-                "и на конкретном факультете");
-        System.out.println("3 - Посчитать средний балл по предмету для всего университета");
-        System.out.println("4 - Вывести всю информацию об университете и студентах");
-        System.out.println("5 - Выход");
-        System.out.print(yourChoiceMessage);
+        String menuLine = "Выберите: \n" +
+                "1 - Посчитать средний балл по всем предметам случайного студента\n" +
+                "2 - Посчитать средний балл по конкретному предмету в конкретной группе " +
+                "и на конкретном факультете\n" +
+                "3 - Посчитать средний балл по предмету для всего университета\n" +
+                "4 - Вывести всю информацию об университете и студентах\n" +
+                "5 - Выход";
+        logger.log(Level.SEVERE, menuLine);
+        logger.log(Level.INFO, YOUR_CHOICE_MESSAGE);
     }
 }

@@ -3,21 +3,14 @@ package errorandexceptions;
 import java.util.*;
 
 public class Student {
+    private static Random random = new Random();
     private String initial;
     private Map<Subject, List<Integer>> grades;
-    private static Random random = new Random();
 
     public Student(Map<Subject, List<Integer>> grades) {
         // Student's name is represented like initial (string of 3 uppercase characters)
         this.initial = getRandomInitial();
         this.grades = grades;
-    }
-
-    // Generates decimal ASCII value, converts it to character 3 times and concatenates.
-    private String getRandomInitial() {
-        return "" + (char) (random.nextInt((90 - 65) + 1) + 65)
-                + (char) (random.nextInt((90 - 65) + 1) + 65)
-                + (char) (random.nextInt((90 - 65) + 1) + 65);
     }
 
     public Map<Subject, List<Integer>> getGrades() {
@@ -28,7 +21,19 @@ public class Student {
         return initial;
     }
 
-    public double averageGradeOfAllSubjects() {
+    @Override
+    public String toString() {
+        return "student initial = " + initial + ", grades: " + printGrades();
+    }
+
+    // Generates decimal ASCII value, converts it to character 3 times and concatenates.
+    private String getRandomInitial() {
+        return "" + (char) (random.nextInt((90 - 65) + 1) + 65)
+                + (char) (random.nextInt((90 - 65) + 1) + 65)
+                + (char) (random.nextInt((90 - 65) + 1) + 65);
+    }
+
+    public double getAverageGradeOfAllSubjects() {
         int sumOfAllGradesOfAllSubjects = 0;
         int numberOfGradesOfAllSubjects = 0;
         Iterator iterator = grades.values().iterator();
@@ -40,25 +45,19 @@ public class Student {
             }
             numberOfGradesOfAllSubjects += gradesOfOneSubject.size();
         }
-        return numberOfGradesOfAllSubjects != 0 ? sumOfAllGradesOfAllSubjects / (double) numberOfGradesOfAllSubjects: 0;
+        return numberOfGradesOfAllSubjects != 0 ? sumOfAllGradesOfAllSubjects / (double) numberOfGradesOfAllSubjects : 0;
     }
 
     public String printGrades() {
-        StringBuilder bld = new StringBuilder();
+        StringBuilder stringBuilder = new StringBuilder();
         for (Map.Entry<Subject, List<Integer>> pair : this.grades.entrySet()) {
-            bld.append(" | ").append(pair.getKey().name()).append(":");
-            Iterator<Integer> iterator=pair.getValue().iterator();
-            while(iterator.hasNext()){
-                bld.append("  ").append(iterator.next());
+            stringBuilder.append(" | ").append(pair.getKey().name()).append(":");
+            Iterator<Integer> iterator = pair.getValue().iterator();
+            while (iterator.hasNext()) {
+                stringBuilder.append("  ").append(iterator.next());
             }
         }
-        return bld.toString();
-    }
-
-    @Override
-    public String toString() {
-        return   "student initial=" + initial +
-                ", grades: " + printGrades();
+        return stringBuilder.toString();
     }
 }
 
