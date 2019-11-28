@@ -1,11 +1,15 @@
 package optionaltasks;
 
-import org.omg.CORBA.Environment;
-
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+/**
+ * Задание. Выполнить указанные действия по чтению информации из файла, ее обработке и записи в файл.
+ * При разработке для вывода результатов создавать новую директорию и файл средствами класса File.
+ * 1. Создать и заполнить файл случайными целыми числами. Отсортировать содержимое файла по возрастанию.
+ */
 
 public class FirstTask {
     static Random random = new Random();
@@ -19,7 +23,6 @@ public class FirstTask {
     }
 
     public static void main(String[] args) {
-
         List<Integer> randomNumbers = getRandomNumbers();
         writeNumbersToFile(randomNumbers);
         TreeSet<Integer> sortedNumbers = getSortedNumbersFromFile();
