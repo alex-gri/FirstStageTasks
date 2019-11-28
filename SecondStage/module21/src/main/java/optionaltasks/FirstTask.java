@@ -1,9 +1,8 @@
 package optionaltasks;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import org.omg.CORBA.Environment;
+
+import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,10 +10,20 @@ import java.util.logging.Logger;
 public class FirstTask {
     static Random random = new Random();
     static Logger logger = Logger.getLogger(FirstTask.class.getName());
+    static File folder = new File("Output");
+    static String pathToFile = null;
+
+    static {
+        folder.mkdir();
+        pathToFile = folder.getPath() + File.separator + "OptionalTask1.txt";
+    }
 
     public static void main(String[] args) {
-        List<Integer> numbers = getRandomNumbers();
-        writeRandomNumbersToFile(numbers);
+
+        List<Integer> randomNumbers = getRandomNumbers();
+        writeNumbersToFile(randomNumbers);
+        TreeSet<Integer> sortedNumbers = getSortedNumbersFromFile();
+        writeNumbersToFile(sortedNumbers);
     }
 
     private static ArrayList<Integer> getRandomNumbers() {
@@ -26,14 +35,27 @@ public class FirstTask {
         return numbers;
     }
 
-    private static void writeRandomNumbersToFile(Collection numbers) {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("OptionalTask1.txt")))) {
+    private static void writeNumbersToFile(Collection numbers) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(pathToFile)))) {
             Iterator iterator = numbers.iterator();
             while (iterator.hasNext()) {
                 writer.println(iterator.next());
             }
         } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
+            logger.log(Level.WARNING, e.getMessage());
         }
+    }
+
+    private static TreeSet<Integer> getSortedNumbersFromFile() {
+        TreeSet<Integer> numbers = new TreeSet<>();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathToFile))) {
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                numbers.add(Integer.valueOf(line));
+            }
+        } catch (IOException e) {
+            logger.log(Level.WARNING, e.getMessage());
+        }
+        return numbers;
     }
 }
