@@ -8,36 +8,52 @@ import java.util.logging.Logger;
 
 public class Runner {
     static Logger logger = Logger.getLogger(Runner.class.getName());
+    static File folder = new File(String.format("%s\\module21\\src\\main\\resources\\Output",
+                         System.getProperty("user.dir")));
+    static String pathToFile = null;
+
+    static {
+        folder.mkdir();
+        pathToFile = folder.getPath() + File.separator + "MainTask.txt";
+    }
 
     public static void main(String[] args) {
-        File file = new File(args[0]);
-        if (!file.exists()) {
-            logger.log(Level.SEVERE, "Invalid path");
-        } else {
-            if (file.isDirectory()) {
-                logger.log(Level.SEVERE, args[0]);
-                writeTreeToFile(args[0]);
+        try {
+            File file = new File(args[0]);
+            if (!file.exists()) {
+                logger.log(Level.SEVERE, "Invalid path");
             } else {
-                printFileInfo(args[0]);
+                if (file.isDirectory()) {
+                    logger.log(Level.SEVERE, args[0]);
+                    writeTreeToFile(args[0]);
+                } else {
+                    printFileInfo(args[0]);
+                }
             }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            logger.log(Level.WARNING, "Provide path as an argument!");
         }
     }
 
     public static void writeTreeToFile(String pathToDir) {
         File dir = new File(pathToDir);
-        File[] dirContent = dir.listFiles();
-        for (int i = 0; i < dirContent.length; i++) {
-            if (dirContent[i].isFile()) {
-                writeLineToFile(" |  " + dirContent[i].getName());
-            } else {
-                writeLineToFile(" |-----" + dirContent[i].getName());
-                writeTreeToFile(dirContent[i].getAbsolutePath());
+        try {
+            File[] dirContent = dir.listFiles();
+            for (int i = 0; i < dirContent.length; i++) {
+                if (dirContent[i].isFile()) {
+                    writeLineToFile(" |  " + dirContent[i].getName());
+                } else {
+                    writeLineToFile(" |-----" + dirContent[i].getName());
+                    writeTreeToFile(dirContent[i].getAbsolutePath());
+                }
             }
+        } catch (NullPointerException e) {
+            logger.log(Level.WARNING, "Path should include at least one directory, not just local drive!");
         }
     }
 
     private static void writeLineToFile(String name) {
-        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("Tree.txt", true)))) {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter(pathToFile, true)))) {
             writer.printf("%s%n", name);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Can not write the line!");
