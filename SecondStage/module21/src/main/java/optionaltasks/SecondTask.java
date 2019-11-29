@@ -1,9 +1,7 @@
 package optionaltasks;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,9 +14,10 @@ import java.util.logging.Logger;
 
 public class SecondTask {
     static Logger logger = Logger.getLogger(SecondTask.class.getName());
-    static String pathToSource = System.getProperty("user.dir") + "\\module21\\src\\main\\" +
-                                 "java\\optionaltasks\\SecondTask.java";
-    static File folder = new File("Output");
+    static String pathToSource = String.format("%s\\module21\\src\\main\\" +
+                                 "java\\optionaltasks\\SecondTask.java", System.getProperty("user.dir"));
+    static File folder = new File(String.format("%s\\module21\\src\\main\\resources\\Output",
+                         System.getProperty("user.dir")));
     static String pathToNewFile = null;
 
     static {
@@ -28,9 +27,6 @@ public class SecondTask {
 
     public static void main(String[] args) {
         List<String> sourceLines = readFileToList(pathToSource);
-        for (String line: sourceLines) {
-            System.out.println(line);
-        }
         sourceLines = reflectSourceLines(sourceLines);
         writeListToFile(sourceLines);
     }

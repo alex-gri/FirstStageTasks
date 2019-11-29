@@ -14,7 +14,8 @@ import java.util.logging.Logger;
 public class FirstTask {
     static Random random = new Random();
     static Logger logger = Logger.getLogger(FirstTask.class.getName());
-    static File folder = new File("Output");
+    static File folder = new File(String.format("%s\\module21\\src\\main\\resources\\Output",
+                         System.getProperty("user.dir")));
     static String pathToFile = null;
 
     static {
