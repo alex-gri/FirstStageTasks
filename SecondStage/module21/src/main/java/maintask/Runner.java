@@ -85,11 +85,7 @@ public class Runner {
     }
 
     private static int getAverage(int divisor, int dividend) {
-        if (divisor != 0) {
-            return dividend / divisor;
-        } else {
-         return 0;
-        }
+        return divisor != 0 ? dividend / divisor : 0;
     }
 
     private static void readFileToList(String pathToFile, List<String> linesOfFile) {
