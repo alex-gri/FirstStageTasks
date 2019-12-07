@@ -18,7 +18,8 @@ public class LeavingTask implements Runnable {
 
     public void leaveParkingPlace() {
         try {
-            parkedCars.take().leaveParkingPlace();
+            Thread.sleep(100);
+            parkedCars.take().getEngagedParkingPlace().take().leaveParkingPlace();
         } catch (InterruptedException e) {
             logger.warning(e.getMessage());
             Thread.currentThread().interrupt();
