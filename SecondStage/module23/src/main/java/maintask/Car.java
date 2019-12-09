@@ -1,57 +1,48 @@
 package maintask;
 
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class Car implements Runnable {
     static Logger logger = Logger.getLogger(Car.class.getName());
+    static Random random = new Random();
 
-    private final BlockingQueue<Car> parkedCars;
-    private final BlockingQueue<ParkingPlace> engagedParkingPlace;
+    private BlockingQueue<Integer> parkingPlaces;
     private int id;
 
-    public BlockingQueue<ParkingPlace> getEngagedParkingPlace() {
-        return engagedParkingPlace;
-    }
+    // Number of place where car is parked.
+    private int parkingPlaceTaken;
 
-    public Car(int id, BlockingQueue<Car> parkedCars) {
-        this.parkedCars = parkedCars;
+    public Car(int id, BlockingQueue<Integer> parkingPlaces) {
         this.id = id;
-        this.engagedParkingPlace = new ArrayBlockingQueue<>(10);
+        this.parkingPlaces = parkingPlaces;
     }
 
     @Override
     public void run() {
         try {
-            Thread.sleep(75);
             park();
+            TimeUnit.SECONDS.sleep(random.nextInt(3));
+            if (parkingPlaceTaken != 0) {
+                unpark();
+            }
         } catch (InterruptedException e) {
-            logger.warning(e.getMessage());
-            Thread.currentThread().interrupt();
+            e.printStackTrace();
         }
     }
 
     public void park() throws InterruptedException {
-        Parking parkedAt = getAvailableParking();
-        ParkingPlace parkingPlace = parkedAt.getAvailableParkingPlace();
-        parkingPlace.setEngaged(true);
-        parkingPlace.setEngagedBy(this);
-        parkedCars.put(this);
-        engagedParkingPlace.put(parkingPlace);
-        System.out.println(toString() + " parked at " + parkedAt.getId() + " parking at " + parkingPlace.getId() + " place");
+        parkingPlaceTaken = parkingPlaces.take();
+        System.out.println(toString() + " parked at " + parkingPlaceTaken);
     }
 
-    public Parking getAvailableParking() {
-        Parking availableParking = new Parking();
-        for (Parking parking : Runner.parkings) {
-            if (parking.hasParkingPlaceAvailable()) {
-                availableParking = parking;
-                break;
-            }
-        }
-        return availableParking;
+    public void unpark() throws InterruptedException {
+        parkingPlaces.put(parkingPlaceTaken);
+        System.out.println(toString() + " just leaved the parking place " + parkingPlaceTaken);
+        parkingPlaceTaken = 0;
     }
 
     @Override

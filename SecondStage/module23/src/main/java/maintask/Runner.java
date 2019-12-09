@@ -14,33 +14,34 @@ import java.util.concurrent.*;
 
 public class Runner {
 
-    // 3 parkings always created with 3 parking places at each.
-    static List<Parking> parkings = new ArrayList<>();
-
     public static void main(String[] args) {
-        initializeParkings();
 
-        // Blocking parked car in queue so each car can't park twice.
-        BlockingQueue<Car> parkedCars = new LinkedBlockingQueue<>(10);
+        // Parking itself (1 parking place).
+        BlockingQueue<Integer> parkingPlaces = initializeParkingPlaces();
 
-        // Thread that creates car and parks it.
+        // 15 cars (implements Runnable).
+        List<Car> cars = initializeCars(parkingPlaces);
+
         new Thread(() -> {
-            for (int i = 0; i < 9; i++) {
-                new Thread(new Car(i + 1, parkedCars)).start();
-            }
-        }).start();
-
-        // Thread that make car leave a parking.
-        new Thread(() -> {
-            for (int i = 0; i < 9; i++) {
-                new Thread(new LeavingTask(parkedCars)).start();
+            for (int i = 0; i < cars.size(); i++) {
+                new Thread(cars.get(i)).start();
             }
         }).start();
     }
 
-    public static void initializeParkings() {
-        for (int i = 0; i < 3; i++) {
-            parkings.add(new Parking(i + 1));
+    public static ArrayList<Car> initializeCars(BlockingQueue<Integer> parkingPlaces) {
+        ArrayList<Car> cars = new ArrayList<>();
+        for (int i = 1; i < 16; i++) {
+            cars.add(new Car(i, parkingPlaces));
         }
+        return cars;
+    }
+
+    public static ArrayBlockingQueue<Integer> initializeParkingPlaces() {
+        ArrayBlockingQueue<Integer> parkingPlaces = new ArrayBlockingQueue<>(7);
+        for (int i = 1; i < 8; i++) {
+            parkingPlaces.add(i);
+        }
+        return parkingPlaces;
     }
 }
