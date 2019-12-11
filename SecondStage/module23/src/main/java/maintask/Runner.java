@@ -2,7 +2,8 @@ package maintask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Разработать консольное многопоточное приложение.
@@ -16,20 +17,18 @@ public class Runner {
 
     public static void main(String[] args) {
 
-        // Parking itself (1 parking place).
+        // Parking itself (7 parking place).
         BlockingQueue<Integer> parkingPlaces = initializeParkingPlaces();
 
         // 15 cars (implements Runnable).
         List<Car> cars = initializeCars(parkingPlaces);
 
-        new Thread(() -> {
-            for (int i = 0; i < cars.size(); i++) {
-                new Thread(cars.get(i)).start();
-            }
-        }).start();
+        for (int i = 0; i < cars.size(); i++) {
+            new Thread(cars.get(i)).start();
+        }
     }
 
-    public static ArrayList<Car> initializeCars(BlockingQueue<Integer> parkingPlaces) {
+    public static List<Car> initializeCars(BlockingQueue<Integer> parkingPlaces) {
         ArrayList<Car> cars = new ArrayList<>();
         for (int i = 1; i < 16; i++) {
             cars.add(new Car(i, parkingPlaces));

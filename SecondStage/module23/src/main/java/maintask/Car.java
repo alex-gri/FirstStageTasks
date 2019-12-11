@@ -8,9 +8,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class Car implements Runnable {
-    static Logger logger = LogManager.getLogger();
-    static Random random = new Random();
 
+    // log4j logger which configured using log4j2.xml from resources.
+    static Logger logger = LogManager.getLogger();
+
+    static Random random = new Random();
     private BlockingQueue<Integer> parkingPlaces;
     private int id;
 
@@ -26,27 +28,39 @@ public class Car implements Runnable {
     public void run() {
         try {
             park();
-            TimeUnit.SECONDS.sleep(random.nextInt(3));
             if (parkingPlaceTaken != 0) {
                 unpark();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.warn(e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
 
     public void park() throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder();
-        parkingPlaceTaken = parkingPlaces.take();
-        logger.info(stringBuilder.append(toString()).append(" parked at ").
-                    append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString());
+        try {
+
+            // Car waits 2 seconds for available parking place or leaves forever.
+            parkingPlaceTaken = parkingPlaces.poll(2, TimeUnit.SECONDS);
+            int uniqueSleepTime = random.nextInt(2000);
+            Thread.sleep(uniqueSleepTime);
+            String logLine = stringBuilder.append(toString()).append(" parked at ").
+                           append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString();
+            logger.info(logLine);
+        } catch (NullPointerException e) {
+            logger.warn(stringBuilder.append(toString()).append(" is leaving to another place"));
+        }
     }
 
     public void unpark() throws InterruptedException {
         StringBuilder stringBuilder = new StringBuilder();
+        int uniqueSleepTime = random.nextInt(2000);
+        Thread.sleep(uniqueSleepTime);
         parkingPlaces.put(parkingPlaceTaken);
-        logger.info(stringBuilder.append(toString()).append(" just leaved the parking place ").
-                    append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString());
+        String logLine = stringBuilder.append(toString()).append(" just leaved the parking place ").
+                       append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString();
+        logger.info(logLine);
         parkingPlaceTaken = 0;
     }
 
