@@ -1,13 +1,14 @@
 package maintask;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class Car implements Runnable {
-    static Logger logger = Logger.getLogger(Car.class.getName());
+    static Logger logger = LogManager.getLogger();
     static Random random = new Random();
 
     private BlockingQueue<Integer> parkingPlaces;
@@ -35,13 +36,17 @@ public class Car implements Runnable {
     }
 
     public void park() throws InterruptedException {
+        StringBuilder stringBuilder = new StringBuilder();
         parkingPlaceTaken = parkingPlaces.take();
-        System.out.println(toString() + " parked at " + parkingPlaceTaken);
+        logger.info(stringBuilder.append(toString()).append(" parked at ").
+                    append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString());
     }
 
     public void unpark() throws InterruptedException {
+        StringBuilder stringBuilder = new StringBuilder();
         parkingPlaces.put(parkingPlaceTaken);
-        System.out.println(toString() + " just leaved the parking place " + parkingPlaceTaken);
+        logger.info(stringBuilder.append(toString()).append(" just leaved the parking place ").
+                    append(parkingPlaceTaken).append(" at ").append(System.currentTimeMillis()).toString());
         parkingPlaceTaken = 0;
     }
 
