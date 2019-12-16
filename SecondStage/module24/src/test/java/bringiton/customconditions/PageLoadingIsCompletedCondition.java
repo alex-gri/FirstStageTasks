@@ -1,4 +1,4 @@
-package icanwin.customconditions;
+package bringiton.customconditions;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
