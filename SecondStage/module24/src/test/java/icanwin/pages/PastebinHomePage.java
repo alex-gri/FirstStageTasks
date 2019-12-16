@@ -58,6 +58,6 @@ public class PastebinHomePage {
 
     public boolean createPaste() {
         createNewPastePseudoButton.submit();
-        return successNote.getText().contains("Your guest paste has been posted") ? true : false;
+        return successNote.getText().contains("Your guest paste has been posted");
     }
 }
