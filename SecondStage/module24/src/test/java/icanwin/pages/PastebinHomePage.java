@@ -1,6 +1,6 @@
 package icanwin.pages;
 
-import icanwin.CustomConditions.PageLoadingIsCompletedCondition;
+import icanwin.customconditions.PageLoadingIsCompletedCondition;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,19 +13,19 @@ public class PastebinHomePage {
     private static final String HOMEPAGE_URL = "https://pastebin.com";
     private WebDriver driver;
 
-    @FindBy(id = "paste_code")
+    @FindBy (id = "paste_code")
     private WebElement pasteCodeTextBox;
 
-    @FindBy(name = "paste_expire_date")
+    @FindBy (name = "paste_expire_date")
     private WebElement pasteExpirationSelectBox;
 
-    @FindBy(name = "paste_name")
+    @FindBy (name = "paste_name")
     private WebElement pasteNameTextBox;
 
-    @FindBy(id = "submit")
+    @FindBy (id = "submit")
     private WebElement createNewPastePseudoButton; // Pseudo - because it's actually of input type.
 
-    @FindBy(id = "success")
+    @FindBy (id = "success")
     private WebElement successNote;
 
     public PastebinHomePage(WebDriver driver) {

@@ -1,4 +1,4 @@
-package icanwin.CustomConditions;
+package icanwin.customconditions;
 
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
