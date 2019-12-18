@@ -42,7 +42,9 @@ public class PastebinPastePage extends AbstractPage {
         FileInputStream fileInputStream;
         Properties property = new Properties();
         StringBuilder propertyFilePathBuilder = new StringBuilder();
-        propertyFilePathBuilder.append("resources").append(File.separator).append("BringItOn_Code.properties");
+        propertyFilePathBuilder.append("src").append(File.separator)
+                               .append("test").append(File.separator)
+                               .append("resources").append(File.separator).append("BringItOn_Code.properties");
 
         try {
             fileInputStream = new FileInputStream(propertyFilePathBuilder.toString());
