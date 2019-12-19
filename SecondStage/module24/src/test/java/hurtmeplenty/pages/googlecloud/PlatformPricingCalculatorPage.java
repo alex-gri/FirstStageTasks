@@ -1,5 +1,6 @@
-package hurtmeplenty.pages;
+package hurtmeplenty.pages.googlecloud;
 
+import hurtmeplenty.datakeepers.InputKeeperOfCalculator;
 import icanwin.customconditions.PageLoadingIsCompletedCondition;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,12 +8,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class GoogleCloudPlatformPricingCalculatorPage {
+public class PlatformPricingCalculatorPage {
 
     private WebDriver driver;
+
+    // Storage for input values so they can be compared to output ones;
+    private InputKeeperOfCalculator inputDataSetter;
 
     @FindBy(id = "myFrame")
     private WebElement calculatorFrame;
@@ -20,7 +23,7 @@ public class GoogleCloudPlatformPricingCalculatorPage {
     @FindBy(xpath = "//md-tab-item/div[@title='Compute Engine']")
     private WebElement computeEngineTab;
 
-    @FindBy(xpath = "//*[@id='input_54']")
+    @FindBy(xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
     private WebElement numberOfInstancesTextBox;
 
     @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']")
@@ -53,84 +56,92 @@ public class GoogleCloudPlatformPricingCalculatorPage {
     @FindBy(xpath = "//button[@aria-label='Add to Estimate' and @ng-disabled='ComputeEngineForm.$invalid || !listingCtrl.isGceAvailable']")
     private WebElement addToEstimateButton;
 
-    public GoogleCloudPlatformPricingCalculatorPage(WebDriver driver) {
+    public PlatformPricingCalculatorPage(WebDriver driver) {
         this.driver = driver;
+        inputDataSetter = new InputKeeperOfCalculator();
         PageFactory.initElements(driver, this);
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage openPage() {
+    // Made this to skip part with searching of calculator (which works properly).
+    public PlatformPricingCalculatorPage openPage() {
         driver.get("https://cloud.google.com/products/calculator/");
         new WebDriverWait(driver, 20)
                 .until(PageLoadingIsCompletedCondition.jQueryAJAXsCompleted());
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage setNumberOfInstance(String numberOfInstances) {
+    public PlatformPricingCalculatorPage setNumberOfInstance(String numberOfInstances) {
         driver.switchTo().frame(calculatorFrame);
         numberOfInstancesTextBox.sendKeys(numberOfInstances);
         driver.switchTo().defaultContent();
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectOperatingSystemSoftware(String operatingSystemSoftware) {
+    public PlatformPricingCalculatorPage selectOperatingSystemSoftware(String operatingSystemSoftware) {
         selectDropdownOption(operatingSystemSoftware, operatingSystemSoftwareDropdown);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectMachineClass(String machineClass) {
+    public PlatformPricingCalculatorPage selectMachineClass(String machineClass) {
         selectDropdownOption(machineClass, machineClassDropdown);
+        inputDataSetter.setMachineClassExpected(machineClass);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectMachineType(String machineType) {
+    public PlatformPricingCalculatorPage selectMachineType(String machineType) {
         selectDropdownOption(machineType, machineTypeDropdown);
+        inputDataSetter.setMachineTypeExpected(machineType);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage checkAddGPUsCheckBox() {
+    public PlatformPricingCalculatorPage checkAddGPUsCheckBox() {
         driver.switchTo().frame(calculatorFrame);
         addGPUsCheckBox.click();
         driver.switchTo().defaultContent();
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectNumberOfGPUs(String numberOfGPUs) {
+    public PlatformPricingCalculatorPage selectNumberOfGPUs(String numberOfGPUs) {
         selectDropdownOption(numberOfGPUs, numberOfGPUsDropdown);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectTypeOfGPU(String typeOfGPU) {
+    public PlatformPricingCalculatorPage selectTypeOfGPU(String typeOfGPU) {
         selectDropdownOption(typeOfGPU, typeOfGPUDropdown);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectLocalSSD(String localSSD) {
+    public PlatformPricingCalculatorPage selectLocalSSD(String localSSD) {
         selectDropdownOption(localSSD, localSSDDropdown);
+        inputDataSetter.setLocalSSDExpected(localSSD);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectDatacenterLocation(String datacenterLocation) {
+    public PlatformPricingCalculatorPage selectDatacenterLocation(String datacenterLocation) {
         selectDropdownOption(datacenterLocation, datacenterLocationDropdown);
+        inputDataSetter.setDatacenterLocationExpected(datacenterLocation);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage selectCommittedUsage(String committedUsage) {
+    public PlatformPricingCalculatorPage selectCommittedUsage(String committedUsage) {
         selectDropdownOption(committedUsage, committedUsageDropdown);
+        inputDataSetter.setCommittedUsageExpected(committedUsage);
         return this;
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage addToEstimateButtonClick() {
+    public ResultBlockPage addToEstimateButtonClick() {
         driver.switchTo().frame(calculatorFrame);
         addToEstimateButton.click();
         driver.switchTo().defaultContent();
-        return this;
+        return new ResultBlockPage(driver, inputDataSetter);
     }
 
-    private GoogleCloudPlatformPricingCalculatorPage selectDropdownOption(String wantedValue, WebElement control) {
+    // Builds locator to element and sets wanted option in it.
+    private PlatformPricingCalculatorPage selectDropdownOption(String wantedOption, WebElement control) {
         driver.switchTo().frame(calculatorFrame);
         control.click();
         String xpathLocator = String.format("//div[@class='md-select-menu-container md-active md-clickable']" +
-                                            "//md-option[contains(.,'%s')]", wantedValue);
+                                            "//md-option[contains(.,'%s')]", wantedOption);
         new WebDriverWait(driver,20)
                 .until(ExpectedConditions.visibilityOfElementLocated((By.xpath(xpathLocator))));
         driver.findElement(By.xpath(xpathLocator)).click();

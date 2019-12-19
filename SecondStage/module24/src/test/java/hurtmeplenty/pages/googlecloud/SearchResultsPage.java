@@ -1,4 +1,4 @@
-package hurtmeplenty.pages;
+package hurtmeplenty.pages.googlecloud;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,20 +7,20 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class GoogleCloudSearchResultsPage {
+public class SearchResultsPage {
 
     private WebDriver driver;
 
     @FindBy(xpath = "//a[@class='gs-title' and contains(.,'Google Cloud Platform Pricing Calculator')]")
     private List<WebElement> requestedResult;
 
-    public GoogleCloudSearchResultsPage(WebDriver driver) {
+    public SearchResultsPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public GoogleCloudPlatformPricingCalculatorPage clickOnRequestedResult() {
+    public PlatformPricingCalculatorPage clickOnRequestedResult() {
         requestedResult.get(0).click();
-        return new GoogleCloudPlatformPricingCalculatorPage(driver);
+        return new PlatformPricingCalculatorPage(driver);
     }
 }

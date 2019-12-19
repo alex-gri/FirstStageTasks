@@ -1,24 +1,13 @@
-package hurtmeplenty.pages;
+package hurtmeplenty.pages.googlecloud;
 
-import bringiton.pages.AbstractPage;
-import bringiton.pages.PastebinHomePage;
-import bringiton.pages.PastebinPastePage;
 import icanwin.customconditions.PageLoadingIsCompletedCondition;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.log4testng.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Properties;
-
-public class GoogleCloudHomePage {
+public class HomePage {
 
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
     private WebDriver driver;
@@ -26,25 +15,25 @@ public class GoogleCloudHomePage {
     @FindBy (xpath = "//input[@class='devsite-search-field devsite-search-query']")
     private WebElement searchField;
 
-    public GoogleCloudHomePage(WebDriver driver) {
+    public HomePage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
-    public GoogleCloudHomePage openPage() {
+    public HomePage openPage() {
         driver.get(HOMEPAGE_URL);
         new WebDriverWait(driver, 20)
                 .until(PageLoadingIsCompletedCondition.jQueryAJAXsCompleted());
         return this;
     }
 
-    public GoogleCloudHomePage writeSearchTerm(String searchTerm) {
+    public HomePage writeSearchTerm(String searchTerm) {
         searchField.sendKeys(searchTerm);
         return this;
     }
 
-    public GoogleCloudSearchResultsPage search() {
+    public SearchResultsPage search() {
         searchField.submit();
-        return new GoogleCloudSearchResultsPage(driver);
+        return new SearchResultsPage(driver);
     }
 }
