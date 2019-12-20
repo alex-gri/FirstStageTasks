@@ -18,7 +18,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isMachineClassValueEqualToExpected() {
+    public void testIsMachineClassValueEqualToExpected() {
         boolean isMachineClassValueEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -42,7 +42,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isMachineTypeValueEqualToExpected() {
+    public void testIsMachineTypeValueEqualToExpected() {
         boolean isMachineTypeValueEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -61,7 +61,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isRegionValueEqualToExpected() {
+    public void testIsRegionValueEqualToExpected() {
         boolean isRegionValueEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -80,7 +80,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isLocalSSDValueEqualToExpected() {
+    public void testIsLocalSSDValueEqualToExpected() {
         boolean isLocalSSDValueEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -99,7 +99,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isCommittedUsageEqualToExpected() {
+    public void testIsCommittedUsageEqualToExpected() {
         boolean isCommittedUsageEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -118,7 +118,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isTotalCostEqualToExpected() {
+    public void testIsTotalCostEqualToExpected() {
         boolean isTotalCostEqualToExpected = new PlatformPricingCalculatorPage(driver)
                 .openPage()
                 .setNumberOfInstance("4")
@@ -139,6 +139,5 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     @AfterMethod
     public void browserClose() {
         driver.quit();
-        driver = null;
     }
 }

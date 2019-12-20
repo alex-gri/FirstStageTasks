@@ -1,6 +1,8 @@
 package hurtmeplenty.pages.googlecloud;
 
 import hurtmeplenty.datakeepers.InputKeeperOfCalculator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +12,7 @@ public class ResultBlockPage {
 
     private WebDriver driver;
     private InputKeeperOfCalculator inputDataGetter;
+    private Logger logger = LogManager.getLogger();
 
     @FindBy(id = "myFrame")
     private WebElement calculatorFrame;
@@ -40,16 +43,19 @@ public class ResultBlockPage {
 
     public boolean isMachineClassValueEqualToExpected() {
         String machineClassGiven = inputDataGetter.getMachineClassExpected().toLowerCase();
+        logger.info("In - " + machineClassGiven);
         return isEstimatedValueEqualToGivenValue(machineClassGiven, machineClassEstimated);
     }
 
     public boolean isMachineTypeValueEqualToExpected() {
         String machineTypeGiven = inputDataGetter.getMachineTypeExpected().split(" ")[0].toLowerCase();
+        logger.info("In - " + machineTypeGiven);
         return isEstimatedValueEqualToGivenValue(machineTypeGiven, machineTypeEstimated);
     }
 
     public boolean isRegionValueEqualToExpected() {
         String regionGiven = inputDataGetter.getDatacenterLocationExpected().toLowerCase();
+        logger.info("In - " + regionGiven);
         return isEstimatedValueEqualToGivenValue(regionGiven, regionEstimated);
     }
 
@@ -58,11 +64,14 @@ public class ResultBlockPage {
         String localSSDGiven = inputDataGetter.getLocalSSDExpected().toLowerCase();
         String localSSDEstimatedValue = localSSDEstimated.getText().split(" ")[5].trim();
         driver.switchTo().defaultContent();
+        logger.info("In - " + localSSDGiven);
+        logger.info("Out - " + localSSDEstimatedValue);
         return localSSDGiven.equals(localSSDEstimatedValue);
     }
 
     public boolean isCommittedUsageEqualToExpected() {
         String committedUsageGiven = inputDataGetter.getCommittedUsageExpected().toLowerCase();
+        logger.info("In - " + committedUsageGiven);
         return isEstimatedValueEqualToGivenValue(committedUsageGiven, committedUsageEstimated);
     }
 
@@ -71,6 +80,8 @@ public class ResultBlockPage {
         String estimatedCostExpected = "1,082.77";
         String totalEstimatedCostValue = totalEstimatedCost.getText().split(" ")[4];
         driver.switchTo().defaultContent();
+        logger.info("InExpected - " + estimatedCostExpected);
+        logger.info("Out - " + totalEstimatedCostValue);
         return estimatedCostExpected.equals(totalEstimatedCostValue);
     }
 
@@ -78,6 +89,7 @@ public class ResultBlockPage {
         driver.switchTo().frame(calculatorFrame);
         String valueEstimated = parsePureValue(estimatedValueField.getText());
         driver.switchTo().defaultContent();
+        logger.info("Out - " + valueEstimated);
         return valueGiven.equals(valueEstimated);
     }
 
