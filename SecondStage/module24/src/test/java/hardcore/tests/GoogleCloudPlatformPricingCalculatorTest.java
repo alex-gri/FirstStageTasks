@@ -18,7 +18,7 @@ public class GoogleCloudPlatformPricingCalculatorTest {
     }
 
     @Test
-    public void isCalculatedCostEqualToEmailed() {
+    public void isCalculatedCostEqualToEmailedTest() {
         boolean isCalculatedCostEqualToEmailed = new GoogleCloudHomePage(driver)
                 .openPage()
                 .writeSearchTerm("Google Cloud Platform Pricing Calculator")
@@ -50,6 +50,6 @@ public class GoogleCloudPlatformPricingCalculatorTest {
 
     @AfterMethod
     public void browserClose() {
-        //driver.quit();
+        driver.quit();
     }
 }
