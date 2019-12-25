@@ -5,6 +5,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.yandexdisk.menuitempages.YandexDiskFilesPage;
 
 public class PassportYandexAuthorizationPage {
 
@@ -13,7 +14,7 @@ public class PassportYandexAuthorizationPage {
     private By loginTextBox = new By.ById("passp-field-login");
     private By passwordTextBox = new By.ById("passp-field-passwd");
     private By logInButton = new By.ByXPath("//button[contains(.,'Войти')]");
-    private By successMessage = new By.ByXPath("//h1[contains(.,'Файлы')]");
+    private By successMessage = new By.ByXPath("//span[@title='Загрузить файлы']");
     private By failureMessage = new By.ByXPath("//div[@class='passp-form-field__error']");
 
     public PassportYandexAuthorizationPage(WebDriver driver) {
@@ -38,12 +39,15 @@ public class PassportYandexAuthorizationPage {
         return this;
     }
 
+    public YandexDiskFilesPage openYandexDiskFilesPage() {
+        return new YandexDiskFilesPage(driver);
+    }
+
     public boolean isLogInSuccessful() {
         try {
-            new WebDriverWait(driver, 10)
+            return new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.presenceOfElementLocated(successMessage))
                     .isDisplayed();
-            return true;
         } catch (TimeoutException e) {
             return false;
         }
@@ -51,10 +55,9 @@ public class PassportYandexAuthorizationPage {
 
     public boolean isLogInFailed() {
         try {
-            new WebDriverWait(driver, 10)
+            return new WebDriverWait(driver, 10)
                     .until(ExpectedConditions.presenceOfElementLocated(failureMessage))
                     .isDisplayed();
-            return true;
         } catch (TimeoutException e) {
             return false;
         }

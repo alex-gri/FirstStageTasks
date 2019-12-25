@@ -17,7 +17,7 @@ public class YandexDiskHomePage {
         this.driver = driver;
     }
 
-    public YandexDiskHomePage openPage() {
+    public YandexDiskHomePage openYndexDiskHomePage() {
         driver.get(URL);
         new WebDriverWait(driver, 30).until(PageLoadingIsCompletedCondition.jQueryAJAXsCompleted());
         return this;
