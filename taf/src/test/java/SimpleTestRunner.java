@@ -22,7 +22,7 @@ public class SimpleTestRunner {
     @Test
     public void validCredentialsLogInShouldSucceedTest() {
         boolean isLogInSuccessful = new YandexDiskHomePage(driver)
-                .openPage()
+                .openYndexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -35,7 +35,7 @@ public class SimpleTestRunner {
     @Test
     public void invalidLoginLogInShouldFailTest() {
         boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openPage()
+                .openYndexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(INVALID_LOGIN)
                 .logInButtonClick()
@@ -46,7 +46,7 @@ public class SimpleTestRunner {
     @Test
     public void invalidPasswordLogInShouldFailTest() {
         boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openPage()
+                .openYndexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -54,6 +54,118 @@ public class SimpleTestRunner {
                 .logInButtonClick()
                 .isLogInFailed();
         Assert.assertTrue(isLogInFailed);
+    }
+
+    @Test
+    public void archiveMenuItemLeadsToValidPageTest() {
+        boolean isItArchivePage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .archiveMenuItemClick()
+                .isItArchivePage();
+
+        Assert.assertTrue(isItArchivePage);
+    }
+
+    @Test
+    public void filesMenuItemLeadsToValidPageTest() {
+        boolean isItFilesPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .filesMenuItemClickAfterClickOnAnotherItem()
+                .isItFilesPage();
+
+        Assert.assertTrue(isItFilesPage);
+    }
+
+    @Test
+    public void historyMenuItemLeadsToValidPageTest() {
+        boolean isItHistoryPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .historyMenuItemClick()
+                .isItHistoryPage();
+
+        Assert.assertTrue(isItHistoryPage);
+    }
+
+    @Test
+    public void photoMenuItemLeadsToValidPageTest() {
+        boolean isItPhotoPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .photoMenuItemClick()
+                .isItPhotoPage();
+
+        Assert.assertTrue(isItPhotoPage);
+    }
+
+    @Test
+    public void recentMenuItemLeadsToValidPageTest() {
+        boolean isItRecentPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .recentMenuItemClickAfterClickOnAnotherItem()
+                .isItRecentPage();
+
+        Assert.assertTrue(isItRecentPage);
+    }
+
+    @Test
+    public void sharedMenuItemLeadsToValidPageTest() {
+        boolean isItSharedPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .sharedMenuItemClick()
+                .isItSharedPage();
+
+        Assert.assertTrue(isItSharedPage);
+    }
+
+    @Test
+    public void trashMenuItemLeadsToValidPageTest() {
+        boolean isItTrashPage = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .trashMenuItemClick()
+                .isItTrashPage();
+
+        Assert.assertTrue(isItTrashPage);
     }
 
     @AfterMethod
