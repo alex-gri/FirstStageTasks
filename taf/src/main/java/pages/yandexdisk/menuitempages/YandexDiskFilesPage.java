@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.yandexdisk.YandexDiskCreatePage;
 
 public class YandexDiskFilesPage {
 
@@ -17,6 +18,8 @@ public class YandexDiskFilesPage {
     private By historyMenuItem = new By.ByXPath("//a[@title='История']");
     private By archiveMenuItem = new By.ByXPath("//a[@title='Архив']");
     private By trashMenuItem = new By.ByXPath("//a[@title='Корзина']");
+
+    private By createButton = new By.ByXPath("//button[contains(.,'Создать')]");
 
     public YandexDiskFilesPage(WebDriver driver) {
         this.driver = driver;
@@ -78,8 +81,14 @@ public class YandexDiskFilesPage {
                 .isDisplayed();
     }
 
+    public YandexDiskCreatePage createButtonClick() {
+        waitForElementAndClick(createButton);
+        return new YandexDiskCreatePage(driver);
+    }
+
     private void waitForElementAndClick(By elementXpath) {
-        new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(elementXpath))
+        new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.presenceOfElementLocated(elementXpath))
                 .click();
     }
 }

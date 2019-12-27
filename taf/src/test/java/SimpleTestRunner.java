@@ -168,8 +168,29 @@ public class SimpleTestRunner {
         Assert.assertTrue(isItTrashPage);
     }
 
+    @Test
+    public void createFolderAndVisitItTest() {
+        boolean isFolderCreatedAndVisited = new YandexDiskHomePage(driver)
+                .openYndexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .filesMenuItemClick()
+                .createButtonClick()
+                .createFolderOptionClick()
+                .setFolderName()
+                .saveButtonClick()
+                .openCreatedFolder()
+                .isFolderVisited();
+
+        Assert.assertTrue(isFolderCreatedAndVisited);
+    }
+
     @AfterMethod
     public void browserClose() {
-        //driver.quit();
+        driver.quit();
     }
 }
