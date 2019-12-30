@@ -1,5 +1,6 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,10 +19,10 @@ public class SimpleTestRunner {
         driver = new ChromeDriver();
     }
 
-/*    @Test
+    @Test
     public void validCredentialsLogInShouldSucceedTest() {
         boolean isLogInSuccessful = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -34,7 +35,7 @@ public class SimpleTestRunner {
     @Test
     public void invalidLoginLogInShouldFailTest() {
         boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(INVALID_LOGIN)
                 .logInButtonClick()
@@ -45,7 +46,7 @@ public class SimpleTestRunner {
     @Test
     public void invalidPasswordLogInShouldFailTest() {
         boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -58,7 +59,7 @@ public class SimpleTestRunner {
     @Test
     public void archiveMenuItemLeadsToValidPageTest() {
         boolean isItArchivePage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -74,7 +75,7 @@ public class SimpleTestRunner {
     @Test
     public void filesMenuItemLeadsToValidPageTest() {
         boolean isItFilesPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -90,7 +91,7 @@ public class SimpleTestRunner {
     @Test
     public void historyMenuItemLeadsToValidPageTest() {
         boolean isItHistoryPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -106,7 +107,7 @@ public class SimpleTestRunner {
     @Test
     public void photoMenuItemLeadsToValidPageTest() {
         boolean isItPhotoPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -122,7 +123,7 @@ public class SimpleTestRunner {
     @Test
     public void recentMenuItemLeadsToValidPageTest() {
         boolean isItRecentPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -138,7 +139,7 @@ public class SimpleTestRunner {
     @Test
     public void sharedMenuItemLeadsToValidPageTest() {
         boolean isItSharedPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -154,7 +155,7 @@ public class SimpleTestRunner {
     @Test
     public void trashMenuItemLeadsToValidPageTest() {
         boolean isItTrashPage = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -170,7 +171,7 @@ public class SimpleTestRunner {
     @Test
     public void createFolderAndVisitItTest() {
         boolean isFolderCreatedAndVisited = new YandexDiskHomePage(driver)
-                .openYndexDiskHomePage()
+                .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
                 .logInButtonClick()
@@ -186,10 +187,10 @@ public class SimpleTestRunner {
                 .isFolderVisited();
 
         Assert.assertTrue(isFolderCreatedAndVisited);
-    }*/
+    }
 
     @Test
-    public void createFolderAndVisitItTest() {
+    public void createTextDocumentAndVisitItTest() {
         new YandexDiskHomePage(driver)
                 .openYandexDiskHomePage()
                 .logInButtonClick()
@@ -200,8 +201,17 @@ public class SimpleTestRunner {
                 .openYandexDiskFilesPage()
                 .filesMenuItemClick()
                 .createButtonClick()
+                .createFolderOptionClick()
+                .setFolderName()
+                .saveButtonClick()
+                .openCreatedFolder()
+                .createButtonClick()
                 .createTextDocumentOptionClick()
-                .typeHelloWorld();
+                .writeToDocument("Hello World!")
+                .fileMenuButtonClick()
+                .renameMenuOptionClick()
+                .setDocumentName()
+                .okButtonClick();
 
         //Assert.assertTrue(isFolderCreatedAndVisited);
     }

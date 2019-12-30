@@ -4,14 +4,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.yandexdisk.AbstractMenuPage;
 
-public class YandexDiskFolderPage {
+public class YandexDiskFolderPage extends AbstractMenuPage {
 
-    private WebDriver driver;
     private String createdFolderName;
 
     public YandexDiskFolderPage(WebDriver driver, String createdFolderName) {
-        this.driver = driver;
+        super(driver);
         this.createdFolderName = createdFolderName;
     }
 

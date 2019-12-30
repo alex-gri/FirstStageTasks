@@ -9,6 +9,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.yandexdisk.createdelements.YandexDiskFolderPage;
 import pages.yandexdisk.createdelements.YandexDiskTextDocumentPage;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class YandexDiskCreatePage {
 
     private WebDriver driver;
@@ -39,7 +43,7 @@ public class YandexDiskCreatePage {
         folderName = String.valueOf(System.currentTimeMillis());
 
         // Is default folder name "Новая папка" selected check.
-        new WebDriverWait(driver, 10).until(TextSelectedCondition.isDefaultFolderNameSelected());
+        new WebDriverWait(driver, 10).until(TextSelectedCondition.isDefaultNameSelected("Новая папка"));
         driver.findElement(folderNameField).sendKeys(folderName);
         return this;
     }
@@ -62,7 +66,24 @@ public class YandexDiskCreatePage {
 
     private void waitForElementAndClick(By elementXpath) {
         new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(elementXpath))
+                .until(ExpectedConditions.elementToBeClickable(elementXpath))
                 .click();
+    }
+
+    private void writeProperty(String key, String value) {
+        FileInputStream fileInputStream;
+        Properties property = new Properties();
+
+        try {
+            fileInputStream = new FileInputStream("src/main/resources/config.properties");
+            property.load(fileInputStream);
+            property.setProperty(key, value);
+
+            String host = property.getProperty("db.host");
+            String login = property.getProperty("db.login");
+            String password = property.getProperty("db.password");
+        } catch (IOException e) {
+            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+        }
     }
 }
