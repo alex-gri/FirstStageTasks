@@ -10,6 +10,7 @@ import pages.yandexdisk.createdelements.YandexDiskFolderPage;
 import pages.yandexdisk.createdelements.YandexDiskTextDocumentPage;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -54,6 +55,7 @@ public class YandexDiskCreatePage {
         new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.attributeToBe(folderNameField, "value", folderName));
         waitForElementAndClick(saveButton);
+        writeProperty("folder.name", folderName);
         return this;
     }
 
@@ -72,18 +74,21 @@ public class YandexDiskCreatePage {
 
     private void writeProperty(String key, String value) {
         FileInputStream fileInputStream;
-        Properties property = new Properties();
-
+        FileOutputStream fileOutputStream;
+        String propertyFilePath = "src/main/resources/config.properties";
+        Properties properties = new Properties();
         try {
-            fileInputStream = new FileInputStream("src/main/resources/config.properties");
-            property.load(fileInputStream);
-            property.setProperty(key, value);
+            fileInputStream = new FileInputStream(propertyFilePath);
+            properties.load(fileInputStream);
+            fileInputStream.close();
 
-            String host = property.getProperty("db.host");
-            String login = property.getProperty("db.login");
-            String password = property.getProperty("db.password");
+            properties.setProperty(key, value);
+
+            fileOutputStream = new FileOutputStream(propertyFilePath);
+            properties.store(fileOutputStream, null);
+            fileOutputStream.close();
         } catch (IOException e) {
-            System.err.println("ОШИБКА: Файл свойств отсуствует!");
+            System.err.println("Error: Property file is not found!");
         }
     }
 }

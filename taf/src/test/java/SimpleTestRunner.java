@@ -208,10 +208,8 @@ public class SimpleTestRunner {
                 .createButtonClick()
                 .createTextDocumentOptionClick()
                 .writeToDocument("Hello World!")
-                .fileMenuButtonClick()
-                .renameMenuOptionClick()
-                .setDocumentName()
-                .okButtonClick();
+                .renameDocumentFieldClick()
+                .setDocumentName();
 
         //Assert.assertTrue(isFolderCreatedAndVisited);
     }
