@@ -9,7 +9,7 @@ public class YandexDiskHistoryPage {
 
     private WebDriver driver;
 
-    private By historyContentTitle = new By.ByXPath("//h1[text()='История']");
+    private By historyContentTitle = By.xpath("//h1[text()='История']");
 
     public YandexDiskHistoryPage(WebDriver driver) {
         this.driver = driver;

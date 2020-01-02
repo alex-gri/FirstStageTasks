@@ -9,7 +9,7 @@ public class YandexDiskSharedPage {
 
     private WebDriver driver;
 
-    private By sharedContentTitle = new By.ByXPath("//h1[text()='Публичные ссылки']");
+    private By sharedContentTitle = By.xpath("//h1[text()='Публичные ссылки']");
 
     public YandexDiskSharedPage(WebDriver driver) {
         this.driver = driver;

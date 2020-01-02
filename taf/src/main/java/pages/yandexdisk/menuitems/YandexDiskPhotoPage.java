@@ -9,7 +9,7 @@ public class YandexDiskPhotoPage {
 
     private WebDriver driver;
 
-    private By photoContentTitle = new By.ByXPath("//h1[text()='Все фотографии']");
+    private By photoContentTitle = By.xpath("//h1[text()='Все фотографии']");
 
     public YandexDiskPhotoPage(WebDriver driver) {
         this.driver = driver;

@@ -9,7 +9,7 @@ import pages.yandexdisk.YandexDiskCreatePage;
 
 public class YandexDiskFilesPage extends AbstractMenuPage {
 
-    private By filesContentTitle = new By.ByXPath("//h1[text()='Файлы']");
+    private By filesContentTitle = By.xpath("//h1[text()='Файлы']");
 
     public YandexDiskFilesPage(WebDriver driver) {
         super(driver);

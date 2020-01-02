@@ -9,7 +9,7 @@ public class YandexDiskRecentPage {
 
     private WebDriver driver;
 
-    private By recentContentTitle = new By.ByXPath("//h1[text()='Последние файлы']");
+    private By recentContentTitle = By.xpath("//h1[text()='Последние файлы']");
 
     public YandexDiskRecentPage(WebDriver driver) {
         this.driver = driver;

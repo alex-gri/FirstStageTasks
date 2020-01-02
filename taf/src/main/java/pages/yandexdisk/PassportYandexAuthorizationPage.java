@@ -11,11 +11,11 @@ public class PassportYandexAuthorizationPage {
 
     private WebDriver driver;
 
-    private By loginTextBox = new By.ById("passp-field-login");
-    private By passwordTextBox = new By.ById("passp-field-passwd");
-    private By logInButton = new By.ByXPath("//button[contains(.,'Войти')]");
-    private By successMessage = new By.ByXPath("//span[@title='Загрузить файлы']");
-    private By failureMessage = new By.ByXPath("//div[@class='passp-form-field__error']");
+    private By loginTextBox = By.id("passp-field-login");
+    private By passwordTextBox = By.id("passp-field-passwd");
+    private By logInButton = By.xpath("//button[contains(.,'Войти')]");
+    private By successMessage = By.xpath("//span[@title='Загрузить файлы']");
+    private By failureMessage = By.xpath("//div[@class='passp-form-field__error']");
 
     public PassportYandexAuthorizationPage(WebDriver driver) {
         this.driver = driver;

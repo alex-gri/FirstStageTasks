@@ -1,6 +1,7 @@
 package pages.yandexdisk;
 
 import customconditions.TextSelectedCondition;
+import iohelper.PropertyManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -9,20 +10,15 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.yandexdisk.createdelements.YandexDiskFolderPage;
 import pages.yandexdisk.createdelements.YandexDiskTextDocumentPage;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Properties;
-
 public class YandexDiskCreatePage {
 
     private WebDriver driver;
 
-    private By createFolderOption = new By.ByXPath("//button[contains(.,'Папку')]");
-    private By createTextDocumentOption = new By.ByXPath("//button[contains(.,'Текстовый документ')]");
-    private By folderNameField = new By.ByXPath("//form[@class='rename-dialog__rename-form']//input");
-    private By saveButton = new By.ByXPath("//button[contains(.,'Сохранить')]");
-    private By createdFolder = new By.ByXPath("//div[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_dir listing-item_selected js-prevent-deselect']");
+    private By createFolderOption = By.xpath("//button[contains(.,'Папку')]");
+    private By createTextDocumentOption = By.xpath("//button[contains(.,'Текстовый документ')]");
+    private By folderNameField = By.xpath("//form[@class='rename-dialog__rename-form']//input");
+    private By saveButton = By.xpath("//button[contains(.,'Сохранить')]");
+    private By createdFolder = By.xpath("//div[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_dir listing-item_selected js-prevent-deselect']");
 
     private String folderName;
 
@@ -55,7 +51,7 @@ public class YandexDiskCreatePage {
         new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.attributeToBe(folderNameField, "value", folderName));
         waitForElementAndClick(saveButton);
-        writeProperty("folder.name", folderName);
+        PropertyManager.writeProperty("folder.name", folderName);
         return this;
     }
 
@@ -70,25 +66,5 @@ public class YandexDiskCreatePage {
         new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.elementToBeClickable(elementXpath))
                 .click();
-    }
-
-    private void writeProperty(String key, String value) {
-        FileInputStream fileInputStream;
-        FileOutputStream fileOutputStream;
-        String propertyFilePath = "src/main/resources/config.properties";
-        Properties properties = new Properties();
-        try {
-            fileInputStream = new FileInputStream(propertyFilePath);
-            properties.load(fileInputStream);
-            fileInputStream.close();
-
-            properties.setProperty(key, value);
-
-            fileOutputStream = new FileOutputStream(propertyFilePath);
-            properties.store(fileOutputStream, null);
-            fileOutputStream.close();
-        } catch (IOException e) {
-            System.err.println("Error: Property file is not found!");
-        }
     }
 }

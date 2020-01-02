@@ -1,5 +1,6 @@
 package pages.yandexdisk.createdelements;
 
+import iohelper.PropertyManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -8,30 +9,27 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
+import java.util.List;
 
 public class YandexDiskTextDocumentPage {
 
     private WebDriver driver;
-    private String documentName;
 
-    By iframeXpath = new By.ByXPath("//iframe");
-    By saveStatusId = new By.ById("BreadcrumbSaveStatus");
-    By easyRenameFieldId = new By.ById("BreadcrumbTitle");
+    By iframeXpath = By.xpath("//iframe");
+    By saveStatusId = By.id("BreadcrumbSaveStatus");
+    By topRenameFieldId = By.id("BreadcrumbTitle");
+    By outlineContent = By.xpath("//span[@title='%s.docx']");
 
     public YandexDiskTextDocumentPage(WebDriver driver) {
         this.driver = driver;
     }
 
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
-        switchDriverToDocumentTab();
+        switchDriverToTab(1);
 
         // Switching driver to header's frame so we can wait page to load properly.
-        waitAndSwitchToFrameByXpath(iframeXpath);
+        waitAndSwitchToFrame(iframeXpath);
 
         // Waiting for document's save status to load before write any text.
         new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(saveStatusId));
@@ -41,22 +39,24 @@ public class YandexDiskTextDocumentPage {
         Actions actionsBuilder = new Actions(driver);
         actionsBuilder.sendKeys(textToWrite).perform();
 
-        writeProperty("document.text", textToWrite);
+        // Saving text to property-file to compare it later.
+        PropertyManager.writeProperty("document.text", textToWrite);
         return this;
     }
 
     public YandexDiskTextDocumentPage renameDocumentFieldClick() {
-        waitAndSwitchToFrameByXpath(iframeXpath);
+        waitAndSwitchToFrame(iframeXpath);
+        waitForSavedStatus();
         new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.textToBe(saveStatusId, "Сохранено в Yandex"));
-        waitForElementAndClick(easyRenameFieldId);
+                .until(ExpectedConditions.presenceOfElementLocated(topRenameFieldId))
+                .click();
         driver.switchTo().defaultContent();
         return this;
     }
 
     public YandexDiskTextDocumentPage setDocumentName() {
-        waitAndSwitchToFrameByXpath(iframeXpath);
-        documentName = String.valueOf(System.currentTimeMillis());
+        waitAndSwitchToFrame(iframeXpath);
+        String documentName = String.valueOf(System.currentTimeMillis());
 
         Actions actionsBuilder = new Actions(driver);
         actionsBuilder
@@ -64,45 +64,43 @@ public class YandexDiskTextDocumentPage {
                 .sendKeys(documentName)
                 .sendKeys(Keys.ENTER).build().perform();
 
-        writeProperty("document.name", documentName);
+        waitForSavedStatus();
+
+        PropertyManager.writeProperty("document.name", documentName);
 
         driver.switchTo().defaultContent();
         return this;
     }
 
-    private void waitAndSwitchToFrameByXpath(By frameXpath) {
+    public YandexDiskFolderPage closeDocumentTab() {
+        driver.switchTo().window(driver.getWindowHandle()).close();
+        switchDriverToTab(0);
+        return new YandexDiskFolderPage(driver);
+    }
+
+    public boolean isTextCorrect() {
+        switchDriverToTab(1);
+        List<WebElement> documentContent = new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent));
+        StringBuilder stringBuilder = new StringBuilder();
+        documentContent.forEach(webElement -> stringBuilder.append(webElement.getText()));
+        System.out.println(PropertyManager.readProperty("document.text"));
+        System.out.println(stringBuilder.toString());
+        return PropertyManager.readProperty("document.text").equals(stringBuilder.toString());
+    }
+
+    private void waitForSavedStatus() {
+        new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.textToBe(saveStatusId, "Сохранено в Yandex"));
+    }
+
+    private void waitAndSwitchToFrame(By frameXpath) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameXpath));
     }
 
-    private void writeProperty(String key, String value) {
-        FileInputStream fileInputStream;
-        FileOutputStream fileOutputStream;
-        String propertyFilePath = "src/main/resources/config.properties";
-        Properties properties = new Properties();
-        try {
-            fileInputStream = new FileInputStream(propertyFilePath);
-            properties.load(fileInputStream);
-            fileInputStream.close();
-
-            properties.setProperty(key, value);
-
-            fileOutputStream = new FileOutputStream(propertyFilePath);
-            properties.store(fileOutputStream, null);
-            fileOutputStream.close();
-        } catch (IOException e) {
-            System.err.println("Error: Property file is not found!");
-        }
-    }
-
-    private void switchDriverToDocumentTab() {
+    private void switchDriverToTab(int tabIndex) {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(1));
-    }
-
-    private void waitForElementAndClick(By elementXpath) {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(elementXpath))
-                .click();
+        driver.switchTo().window(tabs.get(tabIndex));
     }
 }

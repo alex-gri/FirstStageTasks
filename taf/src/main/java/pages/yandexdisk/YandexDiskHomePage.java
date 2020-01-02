@@ -10,7 +10,7 @@ public class YandexDiskHomePage {
     private static final String URL = "https://disk.yandex.by/";
     private WebDriver driver;
 
-    private By logInButtonXpath = new By.ByXPath("//a[@class='button button_login header__login-link']");
+    private By logInButtonXpath = By.xpath("//a[@class='button button_login header__login-link']");
 
     public YandexDiskHomePage(WebDriver driver) {
         this.driver = driver;

@@ -9,7 +9,7 @@ public class YandexDiskArchivePage {
 
     private WebDriver driver;
 
-    private By archiveContentTitle = new By.ByXPath("//h1[text()='Архив']");
+    private By archiveContentTitle = By.xpath("//h1[text()='Архив']");
 
     public YandexDiskArchivePage(WebDriver driver) {
         this.driver = driver;

@@ -6,19 +6,21 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.yandexdisk.menuitems.*;
 
+import java.util.ArrayList;
+
 public abstract class AbstractMenuPage {
 
     protected WebDriver driver;
 
-    protected By recentMenuItem = new By.ByXPath("//a[@title='Последние']");
-    protected By filesMenuItem = new By.ByXPath("//a[@title='Файлы']");
-    protected By photoMenuItem = new By.ByXPath("//a[@title='Фото']");
-    protected By sharedMenuItem = new By.ByXPath("//a[@title='Общий доступ']");
-    protected By historyMenuItem = new By.ByXPath("//a[@title='История']");
-    protected By archiveMenuItem = new By.ByXPath("//a[@title='Архив']");
-    protected By trashMenuItem = new By.ByXPath("//a[@title='Корзина']");
+    protected By recentMenuItem = By.xpath("//a[@title='Последние']");
+    protected By filesMenuItem = By.xpath("//a[@title='Файлы']");
+    protected By photoMenuItem = By.xpath("//a[@title='Фото']");
+    protected By sharedMenuItem = By.xpath("//a[@title='Общий доступ']");
+    protected By historyMenuItem = By.xpath("//a[@title='История']");
+    protected By archiveMenuItem = By.xpath("//a[@title='Архив']");
+    protected By trashMenuItem = By.xpath("//a[@title='Корзина']");
 
-    protected By createButton = new By.ByXPath("//button[contains(.,'Создать')]");
+    protected By createButton = By.xpath("//button[contains(.,'Создать')]");
 
     public AbstractMenuPage(WebDriver driver) {
         this.driver = driver;

@@ -190,8 +190,8 @@ public class SimpleTestRunner {
     }
 
     @Test
-    public void createTextDocumentAndVisitItTest() {
-        new YandexDiskHomePage(driver)
+    public void isDocumentInAppropriateFolderTest() {
+        boolean isDocumentInAppropriateFolder = new YandexDiskHomePage(driver)
                 .openYandexDiskHomePage()
                 .logInButtonClick()
                 .setLogin(LOGIN)
@@ -209,9 +209,11 @@ public class SimpleTestRunner {
                 .createTextDocumentOptionClick()
                 .writeToDocument("Hello World!")
                 .renameDocumentFieldClick()
-                .setDocumentName();
+                .setDocumentName()
+                .closeDocumentTab()
+                .isDocumentInAppropriateFolder();
 
-        //Assert.assertTrue(isFolderCreatedAndVisited);
+        Assert.assertTrue(isDocumentInAppropriateFolder);
     }
 
     @AfterMethod

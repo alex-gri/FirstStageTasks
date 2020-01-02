@@ -9,7 +9,7 @@ public class YandexDiskTrashPage {
 
     private WebDriver driver;
 
-    private By trashContentTitle = new By.ByXPath("//h1[text()='Корзина']");
+    private By trashContentTitle = By.xpath("//h1[text()='Корзина']");
 
     public YandexDiskTrashPage(WebDriver driver) {
         this.driver = driver;
