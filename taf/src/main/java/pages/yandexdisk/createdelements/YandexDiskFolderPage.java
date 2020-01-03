@@ -9,11 +9,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.yandexdisk.AbstractMenuPage;
 
+
 public class YandexDiskFolderPage extends AbstractMenuPage {
 
     private String createdFolderName;
     private String partialFolderNameXpath = "//h1[text()='%s']";
-    private String listingItemXpath = "//span[@class='clamped-text' and contains(.,'%s')]//ancestor::div[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
+    private String listingItemXpath = "//span[@title='%s.docx']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
 
     public YandexDiskFolderPage(WebDriver driver, String createdFolderName) {
         super(driver);
@@ -35,8 +36,8 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
         By documentXpath = By.xpath(String.format(listingItemXpath, PropertyManager.readProperty("document.name")));
         WebElement document = new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.presenceOfElementLocated(documentXpath));
-        Actions actionsBuilder = new Actions(driver);
-        actionsBuilder.doubleClick(document);
+        new Actions(driver).doubleClick(document).perform();
+        switchDriverToTab(1);
         return new YandexDiskTextDocumentPage(driver);
     }
 
