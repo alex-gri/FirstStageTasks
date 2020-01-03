@@ -23,7 +23,7 @@ public class PropertyManager {
             properties.load(fileInputStream);
             fileInputStream.close();
 
-            properties.setProperty(key, value + ".docx");
+            properties.setProperty(key, value);
 
             fileOutputStream = new FileOutputStream(propertyFilePath);
             properties.store(fileOutputStream, null);

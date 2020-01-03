@@ -17,9 +17,9 @@ public class YandexDiskTextDocumentPage {
     private WebDriver driver;
 
     By iframeXpath = By.xpath("//iframe");
-    By saveStatusId = By.id("BreadcrumbSaveStatus");
+    By saveStatusId = By.xpath("//form[@id='form1']//div[@id='AppHeaderPanel']//span[@id='BreadcrumbSaveStatus']");
     By topRenameFieldId = By.id("BreadcrumbTitle");
-    By outlineContent = By.xpath("//span[@title='%s.docx']");
+    By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
     public YandexDiskTextDocumentPage(WebDriver driver) {
         this.driver = driver;
@@ -28,11 +28,12 @@ public class YandexDiskTextDocumentPage {
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
         switchDriverToTab(1);
 
-        // Switching driver to header's frame so we can wait page to load properly.
+        /*
+         * Switching driver to header's frame so we can wait page to load properly.
+         * Waiting for document's save status to load before write any text.
+         */
         waitAndSwitchToFrame(iframeXpath);
-
-        // Waiting for document's save status to load before write any text.
-        new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfElementLocated(saveStatusId));
+        waitForSavedStatus();
         driver.switchTo().defaultContent();
 
         // Writing text to the document.
@@ -79,14 +80,13 @@ public class YandexDiskTextDocumentPage {
     }
 
     public boolean isTextCorrect() {
-        switchDriverToTab(1);
-        List<WebElement> documentContent = new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent));
+        waitAndSwitchToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
+        List <WebElement> documentContent = new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent));
         documentContent.forEach(webElement -> stringBuilder.append(webElement.getText()));
-        System.out.println(PropertyManager.readProperty("document.text"));
-        System.out.println(stringBuilder.toString());
-        return PropertyManager.readProperty("document.text").equals(stringBuilder.toString());
+        driver.switchTo().defaultContent();
+        return PropertyManager.readProperty("document.text").trim().equals(stringBuilder.toString().trim());
     }
 
     private void waitForSavedStatus() {
@@ -99,6 +99,7 @@ public class YandexDiskTextDocumentPage {
                 .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameXpath));
     }
 
+    // Not using inheritance since it's logically different page from AbstractMenuPage.
     private void switchDriverToTab(int tabIndex) {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(tabIndex));

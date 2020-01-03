@@ -216,8 +216,36 @@ public class SimpleTestRunner {
         Assert.assertTrue(isDocumentInAppropriateFolder);
     }
 
+    @Test
+    public void isDocumentSavedAndOpenedCorrectlyTest() {
+        boolean isDocumentSavedAndOpenedCorrectly = new YandexDiskHomePage(driver)
+                .openYandexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .filesMenuItemClick()
+                .createButtonClick()
+                .createFolderOptionClick()
+                .setFolderName()
+                .saveButtonClick()
+                .openCreatedFolder()
+                .createButtonClick()
+                .createTextDocumentOptionClick()
+                .writeToDocument("Hello World!")
+                .renameDocumentFieldClick()
+                .setDocumentName()
+                .closeDocumentTab()
+                .openDocument()
+                .isTextCorrect();
+
+        Assert.assertTrue(isDocumentSavedAndOpenedCorrectly);
+    }
+
     @AfterMethod
     public void browserClose() {
-        //driver.quit();
+        driver.quit();
     }
 }
