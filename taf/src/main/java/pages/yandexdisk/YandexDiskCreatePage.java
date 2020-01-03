@@ -10,9 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.yandexdisk.createdelements.YandexDiskFolderPage;
 import pages.yandexdisk.createdelements.YandexDiskTextDocumentPage;
 
-public class YandexDiskCreatePage {
-
-    private WebDriver driver;
+public class YandexDiskCreatePage extends AbstractMenuPage {
 
     private By createFolderOption = By.xpath("//button[contains(.,'Папку')]");
     private By createTextDocumentOption = By.xpath("//button[contains(.,'Текстовый документ')]");
@@ -23,7 +21,7 @@ public class YandexDiskCreatePage {
     private String folderName;
 
     public YandexDiskCreatePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public YandexDiskCreatePage createFolderOptionClick() {
@@ -33,15 +31,19 @@ public class YandexDiskCreatePage {
 
     public YandexDiskTextDocumentPage createTextDocumentOptionClick() {
         waitForElementAndClick(createTextDocumentOption);
+        switchDriverToTab(1);
         return new YandexDiskTextDocumentPage(driver);
     }
 
     public YandexDiskCreatePage setFolderName() {
-        folderName = String.valueOf(System.currentTimeMillis());
 
         // Is default folder name "Новая папка" selected check.
         new WebDriverWait(driver, 10).until(TextSelectedCondition.isDefaultNameSelected("Новая папка"));
-        driver.findElement(folderNameField).sendKeys(folderName);
+
+        folderName = String.valueOf(System.currentTimeMillis());
+        new WebDriverWait(driver, 10)
+                .until(ExpectedConditions.presenceOfElementLocated(folderNameField))
+                .sendKeys(folderName);
         return this;
     }
 
@@ -60,11 +62,5 @@ public class YandexDiskCreatePage {
         action.doubleClick(new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.presenceOfElementLocated(createdFolder))).build().perform();
         return new YandexDiskFolderPage(driver, folderName);
-    }
-
-    private void waitForElementAndClick(By elementXpath) {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.elementToBeClickable(elementXpath))
-                .click();
     }
 }
