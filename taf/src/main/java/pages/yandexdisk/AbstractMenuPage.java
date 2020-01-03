@@ -82,6 +82,11 @@ public abstract class AbstractMenuPage {
         return new YandexDiskTrashPage(driver);
     }
 
+    public void switchDriverToTab(int tabIndex) {
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        new WebDriverWait(driver, 20).until(WebDriver::switchTo).window(tabs.get(1));
+    }
+
     public void waitForElementAndClick(By elementXpath) {
         new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.presenceOfElementLocated(elementXpath))
