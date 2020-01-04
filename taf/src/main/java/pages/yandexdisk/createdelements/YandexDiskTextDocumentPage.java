@@ -90,8 +90,8 @@ public class YandexDiskTextDocumentPage {
     }
 
     private void waitForSavedStatus() {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.textToBe(saveStatusId, "Сохранено в Yandex"));
+        new WebDriverWait(driver, 50)
+                .until(ExpectedConditions.textToBePresentInElementLocated(saveStatusId, "Сохранено в Yandex"));
     }
 
     private void waitAndSwitchToFrame(By frameXpath) {

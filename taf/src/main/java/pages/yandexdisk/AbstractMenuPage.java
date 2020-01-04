@@ -89,7 +89,7 @@ public abstract class AbstractMenuPage {
 
     public void waitForElementAndClick(By elementXpath) {
         new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(elementXpath))
+                .until(ExpectedConditions.elementToBeClickable(elementXpath))
                 .click();
     }
 }

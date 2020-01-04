@@ -244,8 +244,37 @@ public class SimpleTestRunner {
         Assert.assertTrue(isDocumentSavedAndOpenedCorrectly);
     }
 
+    @Test
+    public void isDocumentInSourceFolderAndInTrashTest() {
+        boolean isDocumentInSourceFolderAndInTrash = new YandexDiskHomePage(driver)
+                .openYandexDiskHomePage()
+                .logInButtonClick()
+                .setLogin(LOGIN)
+                .logInButtonClick()
+                .setPassword(PASSWORD)
+                .logInButtonClick()
+                .openYandexDiskFilesPage()
+                .filesMenuItemClick()
+                .createButtonClick()
+                .createFolderOptionClick()
+                .setFolderName()
+                .saveButtonClick()
+                .openCreatedFolder()
+                .createButtonClick()
+                .createTextDocumentOptionClick()
+                .writeToDocument("Hello World!")
+                .renameDocumentFieldClick()
+                .setDocumentName()
+                .closeDocumentTab()
+                .selectDocument()
+                .deleteButtonClick()
+                .isDocumentInSourceFolderAndInTrash();
+
+        Assert.assertFalse(isDocumentInSourceFolderAndInTrash);
+    }
+
     @AfterMethod
     public void browserClose() {
-        driver.quit();
+        //driver.quit();
     }
 }
