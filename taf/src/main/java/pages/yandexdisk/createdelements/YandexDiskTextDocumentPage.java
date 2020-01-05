@@ -11,10 +11,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class YandexDiskTextDocumentPage {
 
     private WebDriver driver;
+    private Random random = new Random();
 
     By iframeXpath = By.xpath("//iframe");
     By saveStatusId = By.xpath("//form[@id='form1']//div[@id='AppHeaderPanel']//span[@id='BreadcrumbSaveStatus']");
@@ -57,7 +59,7 @@ public class YandexDiskTextDocumentPage {
 
     public YandexDiskTextDocumentPage setDocumentName() {
         waitAndSwitchToFrame(iframeXpath);
-        String documentName = String.valueOf(System.currentTimeMillis());
+        String documentName = String.valueOf(Math.abs(random.nextInt()));
 
         Actions actionsBuilder = new Actions(driver);
         actionsBuilder
