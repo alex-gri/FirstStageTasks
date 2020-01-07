@@ -1,10 +1,11 @@
-package pages.yandexdisk;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.yandexdisk.menuitems.*;
+import pages.createdelements.YandexDiskFolderPage;
+import pages.menuitems.*;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public abstract class AbstractMenuPage {
     protected By trashMenuItem = By.xpath("//a[@title='Корзина']");
 
     protected By createButton = By.xpath("//button[contains(.,'Создать')]");
+    protected By deleteButton = By.xpath("//span[text()='Удалить']//ancestor::button");
 
     public AbstractMenuPage(WebDriver driver) {
         this.driver = driver;
@@ -29,6 +31,11 @@ public abstract class AbstractMenuPage {
     public YandexDiskCreatePage createButtonClick() {
         waitForElementAndClick(createButton);
         return new YandexDiskCreatePage(driver);
+    }
+
+    public YandexDiskFolderPage deleteButtonClick() {
+        waitForElementAndClick(deleteButton);
+        return new YandexDiskFolderPage(driver);
     }
 
     public YandexDiskArchivePage archiveMenuItemClick() {
@@ -63,11 +70,6 @@ public abstract class AbstractMenuPage {
 
         // Changing current directory to trash first, because current could be Recent already.
         waitForElementAndClick(trashMenuItem);
-        waitForElementAndClick(recentMenuItem);
-        return new YandexDiskRecentPage(driver);
-    }
-
-    public YandexDiskRecentPage recentMenuItemClick() {
         waitForElementAndClick(recentMenuItem);
         return new YandexDiskRecentPage(driver);
     }
