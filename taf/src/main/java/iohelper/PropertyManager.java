@@ -11,7 +11,7 @@ import java.util.Properties;
 public class PropertyManager {
 
     private static Logger logger = LogManager.getLogger();
-    private static String propertyFilePath = "src/main/resources/config.properties";
+    private static String propertyFilePath = "src/main/resources/input.properties";
     private static String errorMessage = "Error: Property file is not found!";
 
     public static void writeProperty(String key, String value) {

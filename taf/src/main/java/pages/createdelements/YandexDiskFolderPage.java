@@ -72,11 +72,6 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
     }
 
     public YandexDiskFolderPage deleteButtonClick() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         waitForElementAndClick(deleteButton);
         return this;
     }
