@@ -1,4 +1,4 @@
-package pages.yandexdisk.createdelements;
+package pages.createdelements;
 
 import iohelper.PropertyManager;
 import org.openqa.selenium.By;
@@ -84,7 +84,7 @@ public class YandexDiskTextDocumentPage {
     public boolean isTextCorrect() {
         waitAndSwitchToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
-        List <WebElement> documentContent = new WebDriverWait(driver, 20)
+        List<WebElement> documentContent = new WebDriverWait(driver, 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent));
         documentContent.forEach(webElement -> stringBuilder.append(webElement.getText()));
         driver.switchTo().defaultContent();

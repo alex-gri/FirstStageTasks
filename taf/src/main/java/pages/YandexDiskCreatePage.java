@@ -1,4 +1,4 @@
-package pages.yandexdisk;
+package pages;
 
 import customconditions.TextSelectedCondition;
 import iohelper.PropertyManager;
@@ -7,8 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.yandexdisk.createdelements.YandexDiskFolderPage;
-import pages.yandexdisk.createdelements.YandexDiskTextDocumentPage;
+import pages.createdelements.YandexDiskTextDocumentPage;
+import pages.createdelements.YandexDiskFolderPage;
 
 import java.util.Random;
 

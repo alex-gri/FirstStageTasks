@@ -1,4 +1,4 @@
-package pages.yandexdisk.menuitems;
+package pages.menuitems;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

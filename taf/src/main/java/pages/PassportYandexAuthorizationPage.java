@@ -1,11 +1,11 @@
-package pages.yandexdisk;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.yandexdisk.menuitems.YandexDiskFilesPage;
+import pages.menuitems.YandexDiskFilesPage;
 
 public class PassportYandexAuthorizationPage {
 

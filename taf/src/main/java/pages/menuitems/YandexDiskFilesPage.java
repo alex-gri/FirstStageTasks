@@ -1,11 +1,10 @@
-package pages.yandexdisk.menuitems;
+package pages.menuitems;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.yandexdisk.AbstractMenuPage;
-import pages.yandexdisk.YandexDiskCreatePage;
+import pages.AbstractMenuPage;
 
 public class YandexDiskFilesPage extends AbstractMenuPage {
 
