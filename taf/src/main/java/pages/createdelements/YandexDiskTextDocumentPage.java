@@ -84,9 +84,9 @@ public class YandexDiskTextDocumentPage {
     public boolean isTextCorrect() {
         waitAndSwitchToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
-        List<WebElement> documentContent = new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent));
-        documentContent.forEach(webElement -> stringBuilder.append(webElement.getText()));
+        new WebDriverWait(driver, 20)
+                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
+                .forEach(webElement -> stringBuilder.append(webElement.getText()));
         driver.switchTo().defaultContent();
         return PropertyManager.readProperty("document.text").trim().equals(stringBuilder.toString().trim());
     }
