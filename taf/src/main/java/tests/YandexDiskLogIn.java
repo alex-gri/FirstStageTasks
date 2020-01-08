@@ -63,7 +63,7 @@ public class YandexDiskLogIn {
     }
 
     @AfterMethod
-    public void browserClose() {
+    public void tearDownBrowser() {
         driver.quit();
     }
 }

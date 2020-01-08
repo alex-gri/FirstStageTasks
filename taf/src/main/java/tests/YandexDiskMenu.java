@@ -1,38 +1,18 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.YandexDiskHomePage;
+import pages.menuitems.YandexDiskFilesPage;
 
 /**
  * Check that all main menu items works correctly and lead to correct page.
  */
 
-public class YandexDiskMenu {
-
-    private final String LOGIN = "taf.alexander.gritsok";
-    private final String PASSWORD = "WebDriverGo";
-    private WebDriver driver;
-
-    @BeforeMethod
-    public void browserSetup() {
-        driver = new ChromeDriver();
-    }
+public class YandexDiskMenu extends TestBase {
 
     @Test
     public void archiveMenuItemLeadsToValidPageTest() {
-        boolean isItArchivePage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItArchivePage = new YandexDiskFilesPage(driver)
                 .archiveMenuItemClick()
                 .isItArchivePage();
 
@@ -41,14 +21,7 @@ public class YandexDiskMenu {
 
     @Test
     public void filesMenuItemLeadsToValidPageTest() {
-        boolean isItFilesPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItFilesPage = new YandexDiskFilesPage(driver)
                 .filesMenuItemClickAfterClickOnAnotherItem()
                 .isItFilesPage();
 
@@ -57,14 +30,7 @@ public class YandexDiskMenu {
 
     @Test
     public void historyMenuItemLeadsToValidPageTest() {
-        boolean isItHistoryPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItHistoryPage = new YandexDiskFilesPage(driver)
                 .historyMenuItemClick()
                 .isItHistoryPage();
 
@@ -73,14 +39,7 @@ public class YandexDiskMenu {
 
     @Test
     public void photoMenuItemLeadsToValidPageTest() {
-        boolean isItPhotoPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItPhotoPage = new YandexDiskFilesPage(driver)
                 .photoMenuItemClick()
                 .isItPhotoPage();
 
@@ -89,14 +48,7 @@ public class YandexDiskMenu {
 
     @Test
     public void recentMenuItemLeadsToValidPageTest() {
-        boolean isItRecentPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItRecentPage = new YandexDiskFilesPage(driver)
                 .recentMenuItemClickAfterClickOnAnotherItem()
                 .isItRecentPage();
 
@@ -105,14 +57,7 @@ public class YandexDiskMenu {
 
     @Test
     public void sharedMenuItemLeadsToValidPageTest() {
-        boolean isItSharedPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItSharedPage = new YandexDiskFilesPage(driver)
                 .sharedMenuItemClick()
                 .isItSharedPage();
 
@@ -121,23 +66,10 @@ public class YandexDiskMenu {
 
     @Test
     public void trashMenuItemLeadsToValidPageTest() {
-        boolean isItTrashPage = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .openYandexDiskFilesPage()
+        boolean isItTrashPage = new YandexDiskFilesPage(driver)
                 .trashMenuItemClick()
                 .isItTrashPage();
 
         Assert.assertTrue(isItTrashPage);
-    }
-
-
-    @AfterMethod
-    public void browserClose() {
-        driver.quit();
     }
 }
