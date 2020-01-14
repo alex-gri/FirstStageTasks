@@ -20,8 +20,8 @@ public class MinuteInboxHomePage extends CommonAbstractPage {
     @FindBy(id = "email")
     private WebElement emailAddressField;
 
-    private By wantedMessage = By.xpath("//td[@class='from' and contains(.,'Sales')]");
-
+    private By wantedMessage = By.xpath("//span[contains(.,'Google Cloud Sales')]");
+    
     public MinuteInboxHomePage(WebDriver driver, GoogleCloudEmailYourEstimatePage previousTabPage) {
         super(driver);
         this.previousTabPage = previousTabPage;
