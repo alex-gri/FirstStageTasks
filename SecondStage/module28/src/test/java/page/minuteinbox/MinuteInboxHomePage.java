@@ -20,6 +20,8 @@ public class MinuteInboxHomePage extends CommonAbstractPage {
     @FindBy(id = "email")
     private WebElement emailAddressField;
 
+    private By wantedMessage = By.xpath("//td[@class='from' and contains(.,'Sales')]");
+
     public MinuteInboxHomePage(WebDriver driver, GoogleCloudEmailYourEstimatePage previousTabPage) {
         super(driver);
         this.previousTabPage = previousTabPage;
@@ -37,9 +39,9 @@ public class MinuteInboxHomePage extends CommonAbstractPage {
     }
 
     public MinuteInboxEmailPage openEmail() {
-        new WebDriverWait(driver, 60).until(ExpectedConditions.presenceOfElementLocated(By.xpath(
-                          "//td[@class='from' and contains(.,'Sales')]")));
-        driver.findElement(By.xpath("//td[@class='from' and contains(.,'Sales')]")).click();
+        new WebDriverWait(driver, 60)
+                .until(ExpectedConditions.presenceOfElementLocated(wantedMessage))
+                .click();
         return new MinuteInboxEmailPage(driver);
     }
 }
