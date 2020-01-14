@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Cost equality" verbose="1" >
+    <test name="Cost equality test"   >
+        <classes>
+            <class name="test.GoogleCloudPlatformPricingCalculatorTest" />
+        </classes>
+    </test>
+</suite>
