@@ -17,13 +17,13 @@ public class GoogleCloudEmailYourEstimatePage extends CommonAbstractPage {
     // Using this field we can return back to mail tab to wait an email.
     private MinuteInboxHomePage minuteInboxHomePage;
 
-    @FindBy(id = "myFrame")
+    @FindBy (id = "myFrame")
     private WebElement calculatorFrame;
 
-    @FindBy(xpath = "//input[@type='email']")
+    @FindBy (xpath = "//input[@type='email']")
     private WebElement emailField;
 
-    @FindBy(xpath = "//button[@aria-label='Send Email']")
+    @FindBy (xpath = "//button[@aria-label='Send Email']")
     private WebElement sendEmailButton;
 
     public GoogleCloudEmailYourEstimatePage(WebDriver driver) {

@@ -11,7 +11,7 @@ import page.CommonAbstractPage;
 
 public class GoogleCloudResultBlockPage extends CommonAbstractPage {
 
-    @FindBy(id = "myFrame")
+    @FindBy (id = "myFrame")
     private WebElement calculatorFrame;
 
     private By emailEstimateButton = By.xpath("//button[@ng-click='cloudCartCtrl.showEmailForm();']");

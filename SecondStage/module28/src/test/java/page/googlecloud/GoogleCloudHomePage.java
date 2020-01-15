@@ -19,7 +19,7 @@ public class GoogleCloudHomePage extends CommonAbstractPage {
 
     public GoogleCloudHomePage openPage() {
         driver.get(HOMEPAGE_URL);
-        new WebDriverWait(driver, 20)
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(jQueryAJAXsCompleted());
         return this;
     }

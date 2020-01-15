@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GoogleCloudSearchResultsPage extends CommonAbstractPage {
 
-    @FindBy(xpath = "//a[@class='gs-title' and contains(.,'Google Cloud Platform Pricing Calculator')]")
+    @FindBy (xpath = "//a[@class='gs-title' and contains(.,'Google Cloud Platform Pricing Calculator')]")
     private List<WebElement> requestedResult;
 
     public GoogleCloudSearchResultsPage(WebDriver driver) {

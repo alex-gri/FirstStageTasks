@@ -11,43 +11,43 @@ import page.CommonAbstractPage;
 
 public class GoogleCloudPlatformPricingCalculatorPage extends CommonAbstractPage {
 
-    @FindBy(id = "myFrame")
+    @FindBy (id = "myFrame")
     private WebElement calculatorFrame;
 
-    @FindBy(xpath = "//md-tab-item/div[@title='Compute Engine']")
+    @FindBy (xpath = "//md-tab-item/div[@title='Compute Engine']")
     private WebElement computeEngineTab;
 
-    @FindBy(xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
+    @FindBy (xpath = "//input[@ng-model='listingCtrl.computeServer.quantity']")
     private WebElement numberOfInstancesTextBox;
 
-    @FindBy(xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']")
+    @FindBy (xpath = "//md-select[@ng-model='listingCtrl.computeServer.os']")
     private WebElement operatingSystemSoftwareDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='VM Class']")
+    @FindBy (xpath = "//md-select[@placeholder='VM Class']")
     private WebElement machineClassDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='Instance type']")
+    @FindBy (xpath = "//md-select[@placeholder='Instance type']")
     private WebElement machineTypeDropdown;
 
-    @FindBy(xpath = "//md-checkbox[@ng-model='listingCtrl.computeServer.addGPUs']")
+    @FindBy (xpath = "//md-checkbox[@ng-model='listingCtrl.computeServer.addGPUs']")
     private WebElement addGPUsCheckBox;
 
-    @FindBy(xpath = "//md-select[@placeholder='Number of GPUs']")
+    @FindBy (xpath = "//md-select[@placeholder='Number of GPUs']")
     private WebElement numberOfGPUsDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='GPU type']")
+    @FindBy (xpath = "//md-select[@placeholder='GPU type']")
     private WebElement typeOfGPUDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='Local SSD']")
+    @FindBy (xpath = "//md-select[@placeholder='Local SSD']")
     private WebElement localSSDDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='Datacenter location']")
+    @FindBy (xpath = "//md-select[@placeholder='Datacenter location']")
     private WebElement datacenterLocationDropdown;
 
-    @FindBy(xpath = "//md-select[@placeholder='Committed usage']")
+    @FindBy (xpath = "//md-select[@placeholder='Committed usage']")
     private WebElement committedUsageDropdown;
 
-    @FindBy(xpath = "//button[@aria-label='Add to Estimate' and @ng-disabled='ComputeEngineForm.$invalid || !listingCtrl.isGceAvailable']")
+    @FindBy (xpath = "//button[@aria-label='Add to Estimate' and @ng-disabled='ComputeEngineForm.$invalid || !listingCtrl.isGceAvailable']")
     private WebElement addToEstimateButton;
 
     public GoogleCloudPlatformPricingCalculatorPage(WebDriver driver) {
@@ -140,7 +140,7 @@ public class GoogleCloudPlatformPricingCalculatorPage extends CommonAbstractPage
         control.click();
         String xpathLocator = String.format("//div[@class='md-select-menu-container md-active md-clickable']" +
                 "//md-option[contains(.,'%s')]", wantedOption);
-        new WebDriverWait(driver, 20)
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathLocator)))
                 .click();
         driver.switchTo().defaultContent();

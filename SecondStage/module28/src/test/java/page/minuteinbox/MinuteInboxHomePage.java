@@ -17,11 +17,11 @@ public class MinuteInboxHomePage extends CommonAbstractPage {
      */
     private GoogleCloudEmailYourEstimatePage previousTabPage;
 
-    @FindBy(id = "email")
+    @FindBy (id = "email")
     private WebElement emailAddressField;
 
     private By wantedMessage = By.xpath("//span[contains(.,'Google Cloud Sales')]");
-    
+
     public MinuteInboxHomePage(WebDriver driver, GoogleCloudEmailYourEstimatePage previousTabPage) {
         super(driver);
         this.previousTabPage = previousTabPage;
@@ -39,7 +39,7 @@ public class MinuteInboxHomePage extends CommonAbstractPage {
     }
 
     public MinuteInboxEmailPage openEmail() {
-        new WebDriverWait(driver, 60)
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfElementLocated(wantedMessage))
                 .click();
         return new MinuteInboxEmailPage(driver);
