@@ -17,21 +17,21 @@ public class YandexDiskLogIn extends LoginTestBase {
     @Test
     public void validCredentialsLogInTest() {
         Account testAccount = new AccountBuilder().login(LOGIN).password(PASSWORD).build();
-        new AccountService().logIn(testAccount);
+        AccountService.logIn(testAccount);
         Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInSuccessful());
     }
 
     @Test
     public void invalidLoginLogInTest() {
         Account testAccount = new AccountBuilder().login(INCORRECT_VALUE).build();
-        new AccountService().logInUsingOnlyLogin(testAccount);
+        AccountService.logInUsingOnlyLogin(testAccount);
         Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInFailed());
     }
 
     @Test
     public void invalidPasswordLogInTest() {
         Account testAccount = new AccountBuilder().login(LOGIN).password(INCORRECT_VALUE).build();
-        new AccountService().logIn(testAccount);
+        AccountService.logIn(testAccount);
         Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInFailed());
     }
 }

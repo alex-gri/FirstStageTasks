@@ -7,7 +7,7 @@ import com.epam.tat.yandex.disk.page.home.YandexDiskHomePage;
 
 public class AccountService {
 
-    public PassportYandexAuthorizationPage logIn(Account account) {
+    public static PassportYandexAuthorizationPage logIn(Account account) {
         return new YandexDiskHomePage(DriverSingleton.getDriver())
                 .openYandexDiskHomePage()
                 .logInButtonClick()
@@ -17,7 +17,7 @@ public class AccountService {
                 .logInButtonClick();
     }
 
-    public PassportYandexAuthorizationPage logInUsingOnlyLogin(Account account) {
+    public static PassportYandexAuthorizationPage logInUsingOnlyLogin(Account account) {
         return new YandexDiskHomePage(DriverSingleton.getDriver())
                 .openYandexDiskHomePage()
                 .logInButtonClick()
