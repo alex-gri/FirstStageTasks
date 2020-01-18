@@ -1,9 +1,14 @@
 package com.epam.tat.yandex;
 
 import com.epam.tat.testbase.TestBase;
+import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
+import com.epam.tat.yandex.disk.page.service.DocumentService;
+import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
+
+import java.sql.Driver;
 
 /**
  * Create new Word document inside that new folder, give it name,
@@ -16,17 +21,14 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentInAppropriateFolderTest() {
-        boolean isDocumentInAppropriateFolder = new YandexDiskFilesPage(driver)
-                .createButtonClick()
-                .createFolderOptionClick()
-                .setFolderName()
-                .saveButtonClick()
-                .openCreatedFolder()
-                .createButtonClick()
-                .createTextDocumentOptionClick()
-                .writeToDocument("Hello World!")
-                .renameDocumentFieldClick()
-                .setDocumentName()
+        FolderService
+                .createFolder()
+                .openCreatedFolder();
+        DocumentService
+                .createDocument()
+                .writeToDocument("Hello World!");
+        boolean isDocumentInAppropriateFolder = DocumentService
+                .renameDocument()
                 .closeDocumentTab()
                 .isDocumentInAppropriateFolder();
 
@@ -35,17 +37,14 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentSavedAndOpenedCorrectlyTest() {
-        boolean isDocumentSavedAndOpenedCorrectly = new YandexDiskFilesPage(driver)
-                .createButtonClick()
-                .createFolderOptionClick()
-                .setFolderName()
-                .saveButtonClick()
-                .openCreatedFolder()
-                .createButtonClick()
-                .createTextDocumentOptionClick()
-                .writeToDocument("Hello World!")
-                .renameDocumentFieldClick()
-                .setDocumentName()
+        FolderService
+                .createFolder()
+                .openCreatedFolder();
+        DocumentService
+                .createDocument()
+                .writeToDocument("Hello World!");
+        boolean isDocumentSavedAndOpenedCorrectly = DocumentService
+                .renameDocument()
                 .closeDocumentTab()
                 .openDocument()
                 .isTextCorrect();
@@ -55,20 +54,17 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentInTrashOnly() {
-        boolean isDocumentInTrashOnly = new YandexDiskFilesPage(driver)
-                .createButtonClick()
-                .createFolderOptionClick()
-                .setFolderName()
-                .saveButtonClick()
-                .openCreatedFolder()
-                .createButtonClick()
-                .createTextDocumentOptionClick()
-                .writeToDocument("Hello World!")
-                .renameDocumentFieldClick()
-                .setDocumentName()
-                .closeDocumentTab()
-                .selectDocument()
-                .deleteButtonClick()
+        FolderService
+                .createFolder()
+                .openCreatedFolder();
+        DocumentService
+                .createDocument()
+                .writeToDocument("Hello World!");
+        DocumentService
+                .renameDocument()
+                .closeDocumentTab();
+        boolean isDocumentInTrashOnly = FolderService
+                .deleteDocument()
                 .isDocumentInTrashOnly();
 
         Assert.assertFalse(isDocumentInTrashOnly);
