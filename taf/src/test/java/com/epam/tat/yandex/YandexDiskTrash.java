@@ -1,6 +1,7 @@
 package com.epam.tat.yandex;
 
 import com.epam.tat.testbase.TestBase;
+import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
@@ -13,11 +14,8 @@ public class YandexDiskTrash extends TestBase {
 
     @Test
     public void isFolderRemovedFromTrashAfterClean() {
-        boolean isFolderRemovedFromTrashAfterClean = new YandexDiskFilesPage(driver)
-                .createButtonClick()
-                .createFolderOptionClick()
-                .setFolderName()
-                .saveButtonClick()
+        boolean isFolderRemovedFromTrashAfterClean = FolderService
+                .createFolder()
                 .deleteButtonClick()
                 .trashMenuItemClick()
                 .emptyTrashButtonClick()
