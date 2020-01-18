@@ -1,5 +1,6 @@
 package com.epam.tat.testbase;
 
+import com.epam.tat.framework.driver.DriverSingleton;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
@@ -10,18 +11,18 @@ import com.epam.tat.yandex.disk.page.home.YandexDiskHomePage;
 
 public class TestBase {
 
-    private final String LOGIN = "taf.alexander.gritsok";
-    private final String PASSWORD = "WebDriverGo";
+    protected final String LOGIN = "taf.alexander.gritsok";
+    protected final String PASSWORD = "WebDriverGo";
     private String originalWindowHandle;
-    protected WebDriver driver;
+    protected static WebDriver driver;
 
     @BeforeClass
     public void setupBrowser() {
-        driver = new ChromeDriver();
+        driver = DriverSingleton.getDriver();
         logIn();
     }
 
-    public void logIn() {
+    private void logIn() {
         new YandexDiskHomePage(driver)
                 .openYandexDiskHomePage()
                 .logInButtonClick()
@@ -34,7 +35,7 @@ public class TestBase {
         originalWindowHandle = driver.getWindowHandle();
     }
 
-    public void closeAllTabsExceptFirst() {
+    private void closeAllTabsExceptFirst() {
         for (String windowHandle : driver.getWindowHandles()) {
             if (!windowHandle.equals(originalWindowHandle)) {
                 driver.switchTo().window(windowHandle);
@@ -54,6 +55,6 @@ public class TestBase {
 
     @AfterClass
     public void tearDownBrowser() {
-        driver.quit();
+        DriverSingleton.closeDriver();
     }
 }
