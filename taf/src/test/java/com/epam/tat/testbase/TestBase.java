@@ -1,13 +1,14 @@
 package com.epam.tat.testbase;
 
 import com.epam.tat.framework.driver.DriverSingleton;
+import com.epam.tat.framework.model.Account;
+import com.epam.tat.framework.model.AccountBuilder;
+import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
-import com.epam.tat.yandex.disk.page.home.YandexDiskHomePage;
 
 public class TestBase {
 
@@ -23,15 +24,10 @@ public class TestBase {
     }
 
     private void logIn() {
-        new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
+        Account testAccount = new AccountBuilder().login(LOGIN).password(PASSWORD).build();
+        AccountService
+                .logIn(testAccount)
                 .openYandexDiskFilesPage();
-
         originalWindowHandle = driver.getWindowHandle();
     }
 
