@@ -1,69 +1,37 @@
 package com.epam.tat.yandex;
 
+import com.epam.tat.framework.model.Account;
+import com.epam.tat.framework.model.AccountBuilder;
+import com.epam.tat.testbase.LoginTestBase;
+import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
+import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import com.epam.tat.yandex.disk.page.home.YandexDiskHomePage;
 
 /**
  * Test login into yandex disk using credentials (positive and negative checks).
  */
 
-public class YandexDiskLogIn {
-
-    private final String LOGIN = "taf.alexander.gritsok";
-    private final String PASSWORD = "WebDriverGo";
-    private final String INVALID_LOGIN = "";
-    private final String INVALID_PASSWORD = "";
-    private WebDriver driver;
-
-    @BeforeMethod
-    public void browserSetup() {
-        driver = new ChromeDriver();
-    }
+public class YandexDiskLogIn extends LoginTestBase {
 
     @Test
     public void validCredentialsLogInTest() {
-        boolean isLogInSuccessful = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(PASSWORD)
-                .logInButtonClick()
-                .isLogInSuccessful();
-        Assert.assertTrue(isLogInSuccessful);
+        Account testAccount = new AccountBuilder().login(LOGIN).password(PASSWORD).build();
+        new AccountService().logIn(testAccount);
+        Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInSuccessful());
     }
 
     @Test
     public void invalidLoginLogInTest() {
-        boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(INVALID_LOGIN)
-                .logInButtonClick()
-                .isLogInFailed();
-        Assert.assertTrue(isLogInFailed);
+        Account testAccount = new AccountBuilder().login(INCORRECT_VALUE).build();
+        new AccountService().logInUsingOnlyLogin(testAccount);
+        Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInFailed());
     }
 
     @Test
     public void invalidPasswordLogInTest() {
-        boolean isLogInFailed = new YandexDiskHomePage(driver)
-                .openYandexDiskHomePage()
-                .logInButtonClick()
-                .setLogin(LOGIN)
-                .logInButtonClick()
-                .setPassword(INVALID_PASSWORD)
-                .logInButtonClick()
-                .isLogInFailed();
-        Assert.assertTrue(isLogInFailed);
-    }
-
-    @AfterMethod
-    public void tearDownBrowser() {
-        driver.quit();
+        Account testAccount = new AccountBuilder().login(LOGIN).password(INCORRECT_VALUE).build();
+        new AccountService().logIn(testAccount);
+        Assert.assertTrue(new PassportYandexAuthorizationPage(driver).isLogInFailed());
     }
 }
