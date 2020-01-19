@@ -3,6 +3,7 @@ package com.epam.tat.testbase;
 import com.epam.tat.framework.driver.DriverSingleton;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.AccountBuilder;
+import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
@@ -19,7 +20,7 @@ public class TestBase {
 
     @BeforeClass
     public void setupBrowser() {
-        driver = DriverSingleton.getDriver();
+        driver = Browser.getInstance().getWrappedDriver();
         logIn();
     }
 
@@ -51,6 +52,6 @@ public class TestBase {
 
     @AfterClass
     public void tearDownBrowser() {
-        DriverSingleton.closeDriver();
+        Browser.getInstance().stopBrowser();
     }
 }

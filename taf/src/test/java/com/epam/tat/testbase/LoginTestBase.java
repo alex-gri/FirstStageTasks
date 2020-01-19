@@ -1,6 +1,7 @@
 package com.epam.tat.testbase;
 
 import com.epam.tat.framework.driver.DriverSingleton;
+import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -15,16 +16,16 @@ public class LoginTestBase {
 
     @BeforeClass
     public void setupBrowser() {
-        driver = DriverSingleton.getDriver();
+        driver = Browser.getInstance().getWrappedDriver();
     }
 
     @AfterMethod
     public void returnHomePage() {
-        driver.manage().deleteAllCookies();
+        Browser.getInstance().getWrappedDriver().manage().deleteAllCookies();
     }
 
     @AfterClass
     public void tearDownBrowser() {
-        DriverSingleton.closeDriver();
+        Browser.getInstance().stopBrowser();
     }
 }
