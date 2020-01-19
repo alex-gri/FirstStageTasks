@@ -12,30 +12,22 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
     private By emptyTrashButtonXpath = By.xpath("//*[text()='Очистить Корзину']/ancestor::button");
     private By confirmEmptyTrashButtonXpath = By.xpath("//*[text()='Очистить']/ancestor::button");
 
-    public YandexDiskTrashPage(WebDriver driver) {
-        super(driver);
-    }
-
     public boolean isItTrashPage() {
-        return new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(trashContentTitleXpath))
-                .isDisplayed();
+        return browserInstance.isDisplayed(trashContentTitleXpath);
     }
 
     public YandexDiskTrashPage emptyTrashButtonClick() {
-        waitForElementAndClick(emptyTrashButtonXpath);
+        browserInstance.click(emptyTrashButtonXpath);
         return this;
     }
 
     public YandexDiskTrashPage confirmEmptyTrashButtonClick() {
-        waitForElementAndClick(confirmEmptyTrashButtonXpath);
+        browserInstance.click(confirmEmptyTrashButtonXpath);
         return this;
     }
 
     // Clean button is enabled only when there is something in trash.
     public boolean isTrashEmpty() {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(emptyTrashButtonXpath));
-        return !driver.findElement(emptyTrashButtonXpath).isEnabled();
+        return !browserInstance.waitForVisibilityOfElement(emptyTrashButtonXpath).isEnabled();
     }
 }

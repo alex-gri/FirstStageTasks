@@ -24,6 +24,6 @@ public class YandexDiskHomePage {
 
     public PassportYandexAuthorizationPage logInButtonClick() {
         new WebDriverWait(driver, 20).until(ExpectedConditions.presenceOfElementLocated(logInButtonXpath)).click();
-        return new PassportYandexAuthorizationPage(driver);
+        return new PassportYandexAuthorizationPage();
     }
 }

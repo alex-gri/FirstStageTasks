@@ -1,18 +1,14 @@
 package com.epam.tat.yandex.disk.page.base;
 
+import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.context.YandexDiskCreatePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 import com.epam.tat.yandex.disk.page.menuitem.*;
 
-import java.util.ArrayList;
-
 public abstract class AbstractMenuPage {
 
-    protected WebDriver driver;
+    protected static Browser browserInstance;
 
     protected By recentMenuItem = By.xpath("//a[@title='Последние']");
     protected By filesMenuItem = By.xpath("//a[@title='Файлы']");
@@ -25,74 +21,63 @@ public abstract class AbstractMenuPage {
     protected By createButton = By.xpath("//button[contains(.,'Создать')]");
     protected By deleteButton = By.xpath("//span[text()='Удалить']//ancestor::button");
 
-    public AbstractMenuPage(WebDriver driver) {
-        this.driver = driver;
+    public AbstractMenuPage() {
+        this.browserInstance = Browser.getInstance();
     }
 
     public YandexDiskCreatePage createButtonClick() {
-        waitForElementAndClick(createButton);
-        return new YandexDiskCreatePage(driver);
+        browserInstance.click(createButton);
+        return new YandexDiskCreatePage();
     }
 
     public YandexDiskFolderPage deleteButtonClick() {
-        waitForElementAndClick(deleteButton);
-        return new YandexDiskFolderPage(driver);
+        browserInstance.click(deleteButton);
+        return new YandexDiskFolderPage();
     }
 
     public YandexDiskArchivePage archiveMenuItemClick() {
-        waitForElementAndClick(archiveMenuItem);
-        return new YandexDiskArchivePage(driver);
+        browserInstance.click(archiveMenuItem);
+        return new YandexDiskArchivePage();
     }
 
     public YandexDiskFilesPage filesMenuItemClickAfterClickOnAnotherItem() {
 
         // Changing current directory to trash first, because current could be Files already.
-        waitForElementAndClick(trashMenuItem);
-        waitForElementAndClick(filesMenuItem);
-        return new YandexDiskFilesPage(driver);
+        browserInstance.click(trashMenuItem);
+        browserInstance.click(filesMenuItem);
+        return new YandexDiskFilesPage();
     }
 
     public YandexDiskFilesPage filesMenuItemClick() {
-        waitForElementAndClick(filesMenuItem);
-        return new YandexDiskFilesPage(driver);
+        browserInstance.click(filesMenuItem);
+        return new YandexDiskFilesPage();
     }
 
     public YandexDiskHistoryPage historyMenuItemClick() {
-        waitForElementAndClick(historyMenuItem);
-        return new YandexDiskHistoryPage(driver);
+        browserInstance.click(historyMenuItem);
+        return new YandexDiskHistoryPage();
     }
 
     public YandexDiskPhotoPage photoMenuItemClick() {
-        waitForElementAndClick(photoMenuItem);
-        return new YandexDiskPhotoPage(driver);
+        browserInstance.click(photoMenuItem);
+        return new YandexDiskPhotoPage();
     }
 
     public YandexDiskRecentPage recentMenuItemClickAfterClickOnAnotherItem() {
 
         // Changing current directory to trash first, because current could be Recent already.
-        waitForElementAndClick(trashMenuItem);
-        waitForElementAndClick(recentMenuItem);
-        return new YandexDiskRecentPage(driver);
+        browserInstance.click(trashMenuItem);
+        browserInstance.click(recentMenuItem);
+        return new YandexDiskRecentPage();
     }
 
     public YandexDiskSharedPage sharedMenuItemClick() {
-        waitForElementAndClick(sharedMenuItem);
-        return new YandexDiskSharedPage(driver);
+        browserInstance.click(sharedMenuItem);
+        return new YandexDiskSharedPage();
     }
 
     public YandexDiskTrashPage trashMenuItemClick() {
-        waitForElementAndClick(trashMenuItem);
-        return new YandexDiskTrashPage(driver);
-    }
-
-    public void switchDriverToTab(int tabIndex) {
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        new WebDriverWait(driver, 20).until(WebDriver::switchTo).window(tabs.get(1));
-    }
-
-    public void waitForElementAndClick(By elementXpath) {
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.elementToBeClickable(elementXpath))
-                .click();
+        browserInstance.click(trashMenuItem);
+        return new YandexDiskTrashPage();
     }
 }

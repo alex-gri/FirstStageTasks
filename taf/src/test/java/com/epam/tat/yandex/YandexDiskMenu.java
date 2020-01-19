@@ -13,7 +13,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void archiveMenuItemLeadsToValidPageTest() {
-        boolean isItArchivePage = new YandexDiskFilesPage(driver)
+        boolean isItArchivePage = new YandexDiskFilesPage()
                 .archiveMenuItemClick()
                 .isItArchivePage();
 
@@ -22,7 +22,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void filesMenuItemLeadsToValidPageTest() {
-        boolean isItFilesPage = new YandexDiskFilesPage(driver)
+        boolean isItFilesPage = new YandexDiskFilesPage()
                 .filesMenuItemClickAfterClickOnAnotherItem()
                 .isItFilesPage();
 
@@ -31,7 +31,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void historyMenuItemLeadsToValidPageTest() {
-        boolean isItHistoryPage = new YandexDiskFilesPage(driver)
+        boolean isItHistoryPage = new YandexDiskFilesPage()
                 .historyMenuItemClick()
                 .isItHistoryPage();
 
@@ -40,7 +40,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void photoMenuItemLeadsToValidPageTest() {
-        boolean isItPhotoPage = new YandexDiskFilesPage(driver)
+        boolean isItPhotoPage = new YandexDiskFilesPage()
                 .photoMenuItemClick()
                 .isItPhotoPage();
 
@@ -49,7 +49,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void recentMenuItemLeadsToValidPageTest() {
-        boolean isItRecentPage = new YandexDiskFilesPage(driver)
+        boolean isItRecentPage = new YandexDiskFilesPage()
                 .recentMenuItemClickAfterClickOnAnotherItem()
                 .isItRecentPage();
 
@@ -58,7 +58,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void sharedMenuItemLeadsToValidPageTest() {
-        boolean isItSharedPage = new YandexDiskFilesPage(driver)
+        boolean isItSharedPage = new YandexDiskFilesPage()
                 .sharedMenuItemClick()
                 .isItSharedPage();
 
@@ -67,7 +67,7 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void trashMenuItemLeadsToValidPageTest() {
-        boolean isItTrashPage = new YandexDiskFilesPage(driver)
+        boolean isItTrashPage = new YandexDiskFilesPage()
                 .trashMenuItemClick()
                 .isItTrashPage();
 

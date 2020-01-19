@@ -44,7 +44,7 @@ public class TestBase {
     @AfterMethod (alwaysRun = true)
     public void returnFilesPage() {
         closeAllTabsExceptFirst();
-        new PassportYandexAuthorizationPage(driver)
+        new PassportYandexAuthorizationPage()
                 .openYandexDiskFilesPage()
                 .filesMenuItemClick();
     }

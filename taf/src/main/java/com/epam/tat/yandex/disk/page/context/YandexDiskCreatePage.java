@@ -4,7 +4,6 @@ import com.epam.tat.framework.util.TextSelectedCondition;
 import com.epam.tat.framework.util.PropertyManager;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -25,47 +24,41 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
 
     private String folderName;
 
-    public YandexDiskCreatePage(WebDriver driver) {
-        super(driver);
-    }
-
     public YandexDiskCreatePage createFolderOptionClick() {
-        waitForElementAndClick(createFolderOption);
+        browserInstance.click(createFolderOption);
         return this;
     }
 
     public YandexDiskTextDocumentPage createTextDocumentOptionClick() {
-        waitForElementAndClick(createTextDocumentOption);
-        switchDriverToTab(1);
-        return new YandexDiskTextDocumentPage(driver);
+        browserInstance.click(createTextDocumentOption);
+        browserInstance.swtichToTab(1);
+        return new YandexDiskTextDocumentPage();
     }
 
     public YandexDiskCreatePage setFolderName() {
 
         // Is default folder name "Новая папка" selected check.
-        new WebDriverWait(driver, 10).until(TextSelectedCondition.isDefaultNameSelected("Новая папка"));
+        new WebDriverWait(browserInstance.getWrappedDriver(), 10)
+                .until(TextSelectedCondition.isDefaultNameSelected("Новая папка"));
 
         folderName = String.valueOf(Math.abs(random.nextInt()));
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.presenceOfElementLocated(folderNameField))
-                .sendKeys(folderName);
+        browserInstance.type(folderNameField, folderName);
         return this;
     }
 
     public YandexDiskCreatePage saveButtonClick() {
 
         // Is folder name is fully typed in check.
-        new WebDriverWait(driver, 20)
+        new WebDriverWait(browserInstance.getWrappedDriver(), 10)
                 .until(ExpectedConditions.attributeToBe(folderNameField, "value", folderName));
-        waitForElementAndClick(saveButton);
+        browserInstance.click(saveButton);
         PropertyManager.writeProperty("folder.name", folderName);
         return this;
     }
 
     public YandexDiskFolderPage openCreatedFolder() {
-        Actions action = new Actions(driver);
-        action.doubleClick(new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(createdFolder))).build().perform();
-        return new YandexDiskFolderPage(driver, folderName);
+        Actions action = new Actions(browserInstance.getWrappedDriver());
+        action.doubleClick(browserInstance.waitForVisibilityOfElement(createdFolder)).build().perform();
+        return new YandexDiskFolderPage(folderName);
     }
 }

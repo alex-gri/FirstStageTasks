@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class Browser implements WrapsDriver {
 
@@ -55,14 +56,14 @@ public class Browser implements WrapsDriver {
     public void click(By by) {
         Log.info("Click: " + by);
         WebElement element = waitForVisibilityOfElement(by);
-        highlightBackground(element);
+        //highlightBackground(element);
         element.click();
     }
 
     public void type(By by, String keys) {
         Log.info("Typing: " + keys + "into: " + by);
         WebElement element = waitForVisibilityOfElement(by);
-        highlightBackground(element);
+        //highlightBackground(element);
         element.sendKeys(keys);
     }
 
@@ -88,6 +89,15 @@ public class Browser implements WrapsDriver {
         }
     }
 
+    public void swtichToTab(int tabIndex) {
+        ArrayList<String> tabs = new ArrayList<>(wrappedDriver.getWindowHandles());
+        new WebDriverWait(wrappedDriver, 20).until(WebDriver::switchTo).window(tabs.get(1));
+    }
+
+    public void closeCurrentTab() {
+        wrappedDriver.switchTo().window(wrappedDriver.getWindowHandle()).close();
+    }
+
     public WebElement waitForVisibilityOfElement(By by, int timeout) {
         Log.debug("Waiting for visibility of element by: " + by);
         return new WebDriverWait(wrappedDriver, timeout)
@@ -95,6 +105,14 @@ public class Browser implements WrapsDriver {
     }
     public WebElement waitForVisibilityOfElement(By by) {
         return waitForVisibilityOfElement(by, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS);
+    }
+
+    public boolean isDisplayed(By by) {
+        try {
+            return waitForVisibilityOfElement(by).isDisplayed();
+        } catch (WebDriverException e) {
+            return false;
+        }
     }
 
     public boolean isVisible(By by) {

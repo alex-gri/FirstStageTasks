@@ -1,19 +1,17 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
+import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.framework.util.PropertyManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class YandexDiskTextDocumentPage {
 
-    private WebDriver driver;
+    protected static Browser browserInstance;
     private Random random = new Random();
 
     By iframeXpath = By.xpath("//iframe");
@@ -21,23 +19,23 @@ public class YandexDiskTextDocumentPage {
     By topRenameFieldId = By.id("BreadcrumbTitle");
     By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
-    public YandexDiskTextDocumentPage(WebDriver driver) {
-        this.driver = driver;
+    public YandexDiskTextDocumentPage() {
+        this.browserInstance = Browser.getInstance();
     }
 
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
-        switchDriverToTab(1);
+        browserInstance.swtichToTab(1);
 
         /*
          * Switching driver to header's frame so we can wait page to load properly.
          * Waiting for document's save status to load before write any text.
          */
-        waitAndSwitchToFrame(iframeXpath);
+        browserInstance.swtichToFrame(iframeXpath);
         waitForSavedStatus();
-        driver.switchTo().defaultContent();
+        browserInstance.swtichToFrame(null);
 
         // Writing text to the document.
-        Actions actionsBuilder = new Actions(driver);
+        Actions actionsBuilder = new Actions(browserInstance.getWrappedDriver());
         actionsBuilder.sendKeys(textToWrite).perform();
 
         // Saving text to property-file to compare it later.
@@ -46,62 +44,45 @@ public class YandexDiskTextDocumentPage {
     }
 
     public YandexDiskTextDocumentPage renameDocumentFieldClick() {
-        waitAndSwitchToFrame(iframeXpath);
+        browserInstance.swtichToFrame(iframeXpath);
         waitForSavedStatus();
-        new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.presenceOfElementLocated(topRenameFieldId))
-                .click();
-        driver.switchTo().defaultContent();
+        browserInstance.click(topRenameFieldId);
+        browserInstance.swtichToFrame(null);
         return this;
     }
 
     public YandexDiskTextDocumentPage setDocumentName() {
-        waitAndSwitchToFrame(iframeXpath);
+        browserInstance.swtichToFrame(iframeXpath);
         String documentName = String.valueOf(Math.abs(random.nextInt()));
 
-        Actions actionsBuilder = new Actions(driver);
-        actionsBuilder
-                .keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL)
-                .sendKeys(documentName)
-                .sendKeys(Keys.ENTER).build().perform();
-
+        browserInstance.clear(topRenameFieldId);
+        browserInstance.type(topRenameFieldId, documentName);
         waitForSavedStatus();
 
         PropertyManager.writeProperty("document.name", documentName);
 
-        driver.switchTo().defaultContent();
+        browserInstance.swtichToFrame(null);
         return this;
     }
 
     public YandexDiskFolderPage closeDocumentTab() {
-        driver.switchTo().window(driver.getWindowHandle()).close();
-        switchDriverToTab(0);
-        return new YandexDiskFolderPage(driver);
+        browserInstance.closeCurrentTab();
+        browserInstance.swtichToTab(1);
+        return new YandexDiskFolderPage();
     }
 
     public boolean isTextCorrect() {
-        waitAndSwitchToFrame(iframeXpath);
+        browserInstance.swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
-        new WebDriverWait(driver, 20)
+        new WebDriverWait(browserInstance.getWrappedDriver(), 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
                 .forEach(webElement -> stringBuilder.append(webElement.getText()));
-        driver.switchTo().defaultContent();
+        browserInstance.swtichToFrame(null);
         return PropertyManager.readProperty("document.text").trim().equals(stringBuilder.toString().trim());
     }
 
     private void waitForSavedStatus() {
-        new WebDriverWait(driver, 50)
+        new WebDriverWait(browserInstance.getWrappedDriver(), 30)
                 .until(ExpectedConditions.textToBe(saveStatusId, "Сохранено в Yandex"));
-    }
-
-    private void waitAndSwitchToFrame(By frameXpath) {
-        new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameXpath));
-    }
-
-    // Not using inheritance since it's logically different page from AbstractMenuPage.
-    private void switchDriverToTab(int tabIndex) {
-        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs.get(tabIndex));
     }
 }

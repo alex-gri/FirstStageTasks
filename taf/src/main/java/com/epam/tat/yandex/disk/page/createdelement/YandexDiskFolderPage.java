@@ -2,11 +2,8 @@ package com.epam.tat.yandex.disk.page.createdelement;
 
 import com.epam.tat.framework.util.PropertyManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 
 public class YandexDiskFolderPage extends AbstractMenuPage {
@@ -15,29 +12,24 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
     private String partialFolderNameXpath = "//h1[text()='%s']";
     private String listingItemXpath = "//span[@title='%s.docx']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
 
-    public YandexDiskFolderPage(WebDriver driver, String createdFolderName) {
-        super(driver);
+    public YandexDiskFolderPage(String createdFolderName) {
         this.createdFolderName = createdFolderName;
     }
 
-    public YandexDiskFolderPage(WebDriver driver) {
-        super(driver);
+    public YandexDiskFolderPage() {
     }
 
     public boolean isFolderVisited() {
         By createdFolderNameXpath = By.xpath(String.format(partialFolderNameXpath, createdFolderName));
-        return new WebDriverWait(driver,30)
-                .until(ExpectedConditions.presenceOfElementLocated(createdFolderNameXpath))
-                .isDisplayed();
+        return browserInstance.isDisplayed(createdFolderNameXpath);
     }
 
     public YandexDiskTextDocumentPage openDocument() {
         By documentXpath = By.xpath(String.format(listingItemXpath, PropertyManager.readProperty("document.name")));
-        WebElement document = new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.presenceOfElementLocated(documentXpath));
-        new Actions(driver).doubleClick(document).perform();
-        switchDriverToTab(1);
-        return new YandexDiskTextDocumentPage(driver);
+        WebElement document = browserInstance.waitForVisibilityOfElement(documentXpath);
+        new Actions(browserInstance.getWrappedDriver()).doubleClick(document).perform();
+        browserInstance.swtichToTab(1);
+        return new YandexDiskTextDocumentPage();
     }
 
     public boolean isDocumentInAppropriateFolder() {
@@ -50,16 +42,12 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
 
     private boolean isCorrectNameDisplayed(String partialNameXpath, String nameToCheck) {
         By nameToCheckXpath = By.xpath(String.format(partialNameXpath, nameToCheck));
-        return new WebDriverWait(driver, 20)
-                .until(ExpectedConditions.visibilityOfElementLocated(nameToCheckXpath))
-                .isDisplayed();
+        return browserInstance.isDisplayed(nameToCheckXpath);
     }
 
     public YandexDiskFolderPage selectDocument() {
         By documentXpath = By.xpath(String.format(listingItemXpath, PropertyManager.readProperty("document.name")));
-        WebElement document = new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.presenceOfElementLocated(documentXpath));
-        new Actions(driver).click(document).perform();
+        browserInstance.waitForVisibilityOfElement(documentXpath).click();
         return this;
     }
 

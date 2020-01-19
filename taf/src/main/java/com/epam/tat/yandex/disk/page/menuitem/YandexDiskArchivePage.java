@@ -1,23 +1,13 @@
 package com.epam.tat.yandex.disk.page.menuitem;
 
+import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class YandexDiskArchivePage {
-
-    private WebDriver driver;
+public class YandexDiskArchivePage extends AbstractMenuPage {
 
     private By archiveContentTitle = By.xpath("//h1[text()='Архив']");
 
-    public YandexDiskArchivePage(WebDriver driver) {
-        this.driver = driver;
-    }
-
     public boolean isItArchivePage() {
-        return new WebDriverWait(driver, 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(archiveContentTitle))
-                .isDisplayed();
+        return browserInstance.isDisplayed(archiveContentTitle);
     }
 }
