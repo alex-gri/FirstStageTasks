@@ -1,6 +1,5 @@
 package com.epam.tat.testbase;
 
-import com.epam.tat.framework.driver.DriverSingleton;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;

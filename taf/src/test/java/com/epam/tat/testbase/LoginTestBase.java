@@ -1,6 +1,5 @@
 package com.epam.tat.testbase;
 
-import com.epam.tat.framework.driver.DriverSingleton;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
