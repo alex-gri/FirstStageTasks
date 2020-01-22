@@ -1,6 +1,6 @@
 package com.epam.tat.yandex.disk.page.service;
 
-import com.epam.tat.yandex.disk.page.context.YandexDiskCreatePage;
+import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 

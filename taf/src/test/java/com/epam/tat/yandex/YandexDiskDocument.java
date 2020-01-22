@@ -53,7 +53,7 @@ public class YandexDiskDocument extends TestBase {
     }
 
     @Test
-    public void isDocumentInTrashOnly() {
+    public void isDocumentInTrashOnlyTest() {
         FolderService
                 .createFolder()
                 .openCreatedFolder();
@@ -67,6 +67,6 @@ public class YandexDiskDocument extends TestBase {
                 .deleteDocument()
                 .isDocumentInTrashOnly();
 
-        Assert.assertFalse(isDocumentInTrashOnly);
+        Assert.assertTrue(isDocumentInTrashOnly);
     }
 }

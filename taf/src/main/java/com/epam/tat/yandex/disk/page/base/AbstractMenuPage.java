@@ -1,10 +1,16 @@
 package com.epam.tat.yandex.disk.page.base;
 
 import com.epam.tat.framework.ui.Browser;
-import com.epam.tat.yandex.disk.page.context.YandexDiskCreatePage;
+import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
-import com.epam.tat.yandex.disk.page.menuitem.*;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskArchivePage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskHistoryPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskPhotoPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskRecentPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskSharedPage;
 
 public abstract class AbstractMenuPage {
 
