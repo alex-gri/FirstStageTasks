@@ -4,6 +4,7 @@ import com.epam.tat.framework.driver.DriverSingleton;
 import com.epam.tat.framework.logger.Log;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -15,7 +16,8 @@ import java.util.ArrayList;
 
 public class Browser implements WrapsDriver {
 
-    private static final int WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS = 10;
+    private static final int WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS = 15;
+    private static final int TIMEOUT_SECONDS = 10;
     private static final ThreadLocal<Browser> instance = new ThreadLocal<>();
 
     private WebDriver wrappedDriver;
@@ -32,6 +34,7 @@ public class Browser implements WrapsDriver {
     public static synchronized Browser getInstance() {
         if (instance.get() == null) {
             instance.set(new Browser());
+            Log.debug("NEW BROWSER IS RUNNING NOW!");
         }
         return instance.get();
     }
@@ -39,12 +42,13 @@ public class Browser implements WrapsDriver {
     public void stopBrowser() {
         try {
             if (getWrappedDriver() != null) {
-                getWrappedDriver().quit();
+                DriverSingleton.closeDriver();
             }
         } catch (WebDriverException e) {
             Log.error(e.getMessage());
         } finally {
             instance.set(null);
+            Log.debug("BROWSER HAS STOPPED!");
         }
     }
 
@@ -54,29 +58,48 @@ public class Browser implements WrapsDriver {
     }
 
     public void click(By by) {
+        WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Click: " + by);
-        WebElement element = waitForVisibilityOfElement(by);
         //highlightBackground(element);
         element.click();
     }
 
+    public void clickNoWait(By by) {
+        WebElement element = wrappedDriver.findElement(by);
+        Log.info("Click: " + by);
+        //highlightBackground(element);
+        element.click();
+    }
+
+    public void waitForAttributeToBe(By by, String attributeName, String value) {
+        new WebDriverWait(wrappedDriver,TIMEOUT_SECONDS)
+                .until(ExpectedConditions.attributeToBe(by, attributeName, value));
+    }
+
     public void type(By by, String keys) {
-        Log.info("Typing: " + keys + "into: " + by);
-        WebElement element = waitForVisibilityOfElement(by);
+        WebElement element = waitForVisibilityOfElementLocated(by);
+        Log.info("Typing: " + keys + " into: " + by);
         //highlightBackground(element);
         element.sendKeys(keys);
     }
 
-    public void clear(By by) {
-        wrappedDriver
-                .findElement(by)
-                .sendKeys(Keys.chord(Keys.LEFT_CONTROL, "a"));
+    public void typeToBody(String keys) {
+        Log.info("Typing into body: " + keys);
+        Actions actionsBuilder = new Actions(wrappedDriver);
+        actionsBuilder.sendKeys(keys).perform();
     }
 
-    public String getText(By by) {
-        Log.debug("Getting text from: " + by);
-        waitForVisibilityOfElement(by);
-        return wrappedDriver.findElement(by).getText();
+    public void clear(By by) {
+        new Actions(wrappedDriver)
+                .keyDown(Keys.CONTROL).sendKeys("a").keyUp(Keys.CONTROL)
+                .sendKeys(Keys.DELETE).build().perform();
+        Log.debug("Cleared the text field :" + by);
+    }
+
+    public String getText(WebElement element) {
+        waitForVisibilityOf(element);
+        Log.debug("Getting text from: " + element);
+        return element.getText();
     }
 
     public void swtichToFrame(By by) {
@@ -91,49 +114,52 @@ public class Browser implements WrapsDriver {
 
     public void swtichToTab(int tabIndex) {
         ArrayList<String> tabs = new ArrayList<>(wrappedDriver.getWindowHandles());
-        new WebDriverWait(wrappedDriver, 20).until(WebDriver::switchTo).window(tabs.get(1));
+        new WebDriverWait(wrappedDriver, TIMEOUT_SECONDS).until(WebDriver::switchTo).window(tabs.get(tabIndex));
+        Log.debug("Swtiched to tab: " + tabIndex);
     }
 
     public void closeCurrentTab() {
+        Log.debug("Closing current tab");
         wrappedDriver.switchTo().window(wrappedDriver.getWindowHandle()).close();
     }
 
-    public WebElement waitForVisibilityOfElement(By by, int timeout) {
+    public WebElement waitForVisibilityOfElementLocated(By by, int timeout) {
         Log.debug("Waiting for visibility of element by: " + by);
         return new WebDriverWait(wrappedDriver, timeout)
                 .until(ExpectedConditions.visibilityOfElementLocated(by));
     }
-    public WebElement waitForVisibilityOfElement(By by) {
-        return waitForVisibilityOfElement(by, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS);
+
+    public WebElement waitForVisibilityOfElementLocated(By by) {
+        return waitForVisibilityOfElementLocated(by, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS);
+    }
+
+    public void waitForVisibilityOf(WebElement element) {
+        new WebDriverWait(wrappedDriver, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitForTextToBe(By by, String textToBe) {
+        Log.debug("Waiting for: " + by + "to have text: " + textToBe);
+        new WebDriverWait(wrappedDriver, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS)
+                .until(ExpectedConditions.textToBe(by, textToBe));
     }
 
     public boolean isDisplayed(By by) {
+        Log.info("Is element displayed check: " + by);
         try {
-            return waitForVisibilityOfElement(by).isDisplayed();
+            return waitForVisibilityOfElementLocated(by).isDisplayed();
         } catch (WebDriverException e) {
             return false;
         }
     }
 
-    public boolean isVisible(By by) {
-        try {
-            waitForVisibilityOfElement(by);
-            return true;
-        } catch (WebDriverException e) {
-            return false;
-        }
+    public void doubleClick(By by) {
+        Actions action = new Actions(wrappedDriver);
+        action.doubleClick(waitForVisibilityOfElementLocated(by)).build().perform();
+        Log.debug("Double click: " + by);
     }
 
-    public boolean isVisibleNoWait(By by) {
-        try {
-            waitForVisibilityOfElement(by, 0);
-            return true;
-        } catch (WebDriverException e) {
-            return false;
-        }
-    }
-
-    private void makeScreenshot() {
+    public void makeScreenshot() {
         File screenCapture = ((TakesScreenshot) wrappedDriver)
                 .getScreenshotAs(OutputType.FILE);
         try {
