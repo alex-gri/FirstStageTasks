@@ -1,42 +1,35 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
-import com.epam.tat.framework.util.PropertyManager;
+import com.epam.tat.framework.util.DataStorage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 
 public class YandexDiskFolderPage extends AbstractMenuPage {
 
-    private String createdFolderName;
+    private By documentXpath;
     private String partialFolderNameXpath = "//h1[text()='%s']";
     private String listingItemXpath = "//span[@title='%s.docx']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
-
-    public YandexDiskFolderPage(String createdFolderName) {
-        this.createdFolderName = createdFolderName;
-    }
 
     public YandexDiskFolderPage() {
     }
 
     public boolean isFolderVisited() {
-        By createdFolderNameXpath = By.xpath(String.format(partialFolderNameXpath, createdFolderName));
+        By createdFolderNameXpath = By.xpath(String.format(partialFolderNameXpath,
+                                                           DataStorage.getObjectByKey("folder.name")));
         return browserInstance.isDisplayed(createdFolderNameXpath);
     }
 
     public YandexDiskTextDocumentPage openDocument() {
-        By documentXpath = By.xpath(String.format(listingItemXpath, PropertyManager.readProperty("document.name")));
-        WebElement document = browserInstance.waitForVisibilityOfElement(documentXpath);
-        new Actions(browserInstance.getWrappedDriver()).doubleClick(document).perform();
+        documentXpath = By.xpath(String.format(listingItemXpath, getDocumentName()));
+        browserInstance.doubleClick(documentXpath);
         browserInstance.swtichToTab(1);
         return new YandexDiskTextDocumentPage();
     }
 
     public boolean isDocumentInAppropriateFolder() {
         boolean isFolderAppropriate = isCorrectNameDisplayed(partialFolderNameXpath,
-                                                             PropertyManager.readProperty("folder.name"));
-        boolean isDocumentInThisFolder = isCorrectNameDisplayed(listingItemXpath,
-                                                                PropertyManager.readProperty("document.name"));
+                                                            (String) DataStorage.getObjectByKey("folder.name"));
+        boolean isDocumentInThisFolder = isCorrectNameDisplayed(listingItemXpath, getDocumentName());
         return isFolderAppropriate && isDocumentInThisFolder;
     }
 
@@ -46,15 +39,23 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
     }
 
     public YandexDiskFolderPage selectDocument() {
-        By documentXpath = By.xpath(String.format(listingItemXpath, PropertyManager.readProperty("document.name")));
-        browserInstance.waitForVisibilityOfElement(documentXpath).click();
+        documentXpath = By.xpath(String.format(listingItemXpath, getDocumentName()));
+        browserInstance.waitForVisibilityOfElementLocated(documentXpath).click();
         return this;
     }
 
     public boolean isDocumentInTrashOnly() {
-        boolean isDocumentInSourceFolder = isCorrectNameDisplayed(listingItemXpath, PropertyManager.readProperty("document.name"));
-        trashMenuItemClick();
-        boolean isDocumentInTrash = isCorrectNameDisplayed(listingItemXpath, PropertyManager.readProperty("document.name"));
-        return !isDocumentInSourceFolder && isDocumentInTrash;
+        String documentName = getDocumentName();
+        boolean isDocumentInSourceFolder = isCorrectNameDisplayed(listingItemXpath, documentName);
+        if (isDocumentInSourceFolder) {
+            return false;
+        } else {
+            trashMenuItemClick();
+            return isCorrectNameDisplayed(listingItemXpath, documentName); // Is document in trash check.
+        }
+    }
+
+    private String getDocumentName() {
+        return (String) DataStorage.getObjectByKey("document.name");
     }
 }

@@ -1,10 +1,9 @@
-package com.epam.tat.yandex.disk.page.context;
+package com.epam.tat.yandex.disk.page.createcontext;
 
+import com.epam.tat.framework.util.DataStorage;
 import com.epam.tat.framework.util.TextSelectedCondition;
-import com.epam.tat.framework.util.PropertyManager;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
@@ -52,13 +51,12 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
         new WebDriverWait(browserInstance.getWrappedDriver(), 10)
                 .until(ExpectedConditions.attributeToBe(folderNameField, "value", folderName));
         browserInstance.click(saveButton);
-        PropertyManager.writeProperty("folder.name", folderName);
+        DataStorage.addObject("folder.name", folderName);
         return this;
     }
 
     public YandexDiskFolderPage openCreatedFolder() {
-        Actions action = new Actions(browserInstance.getWrappedDriver());
-        action.doubleClick(browserInstance.waitForVisibilityOfElement(createdFolder)).build().perform();
-        return new YandexDiskFolderPage(folderName);
+        browserInstance.doubleClick(createdFolder);
+        return new YandexDiskFolderPage();
     }
 }

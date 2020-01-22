@@ -1,9 +1,9 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
 import com.epam.tat.framework.ui.Browser;
-import com.epam.tat.framework.util.PropertyManager;
+import com.epam.tat.framework.util.DataStorage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -24,28 +24,26 @@ public class YandexDiskTextDocumentPage {
     }
 
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
-        browserInstance.swtichToTab(1);
 
         /*
          * Switching driver to header's frame so we can wait page to load properly.
          * Waiting for document's save status to load before write any text.
          */
         browserInstance.swtichToFrame(iframeXpath);
-        waitForSavedStatus();
+        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
         browserInstance.swtichToFrame(null);
 
         // Writing text to the document.
-        Actions actionsBuilder = new Actions(browserInstance.getWrappedDriver());
-        actionsBuilder.sendKeys(textToWrite).perform();
+        browserInstance.typeToBody(textToWrite);
 
         // Saving text to property-file to compare it later.
-        PropertyManager.writeProperty("document.text", textToWrite);
+        DataStorage.addObject("document.text", textToWrite);
         return this;
     }
 
     public YandexDiskTextDocumentPage renameDocumentFieldClick() {
         browserInstance.swtichToFrame(iframeXpath);
-        waitForSavedStatus();
+        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
         browserInstance.click(topRenameFieldId);
         browserInstance.swtichToFrame(null);
         return this;
@@ -57,9 +55,10 @@ public class YandexDiskTextDocumentPage {
 
         browserInstance.clear(topRenameFieldId);
         browserInstance.type(topRenameFieldId, documentName);
-        waitForSavedStatus();
+        browserInstance.getWrappedDriver().findElement(topRenameFieldId).sendKeys(Keys.ENTER);
+        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
 
-        PropertyManager.writeProperty("document.name", documentName);
+        DataStorage.addObject("document.name", documentName);
 
         browserInstance.swtichToFrame(null);
         return this;
@@ -67,7 +66,7 @@ public class YandexDiskTextDocumentPage {
 
     public YandexDiskFolderPage closeDocumentTab() {
         browserInstance.closeCurrentTab();
-        browserInstance.swtichToTab(1);
+        browserInstance.swtichToTab(0);
         return new YandexDiskFolderPage();
     }
 
@@ -76,13 +75,8 @@ public class YandexDiskTextDocumentPage {
         StringBuilder stringBuilder = new StringBuilder();
         new WebDriverWait(browserInstance.getWrappedDriver(), 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
-                .forEach(webElement -> stringBuilder.append(webElement.getText()));
+                .forEach(webElement -> stringBuilder.append(browserInstance.getText(webElement)));
         browserInstance.swtichToFrame(null);
-        return PropertyManager.readProperty("document.text").trim().equals(stringBuilder.toString().trim());
-    }
-
-    private void waitForSavedStatus() {
-        new WebDriverWait(browserInstance.getWrappedDriver(), 30)
-                .until(ExpectedConditions.textToBe(saveStatusId, "Сохранено в Yandex"));
+        return ((String) DataStorage.getObjectByKey("document.text")).trim().equals(stringBuilder.toString().trim());
     }
 }
