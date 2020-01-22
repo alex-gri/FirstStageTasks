@@ -2,6 +2,7 @@ package com.epam.tat.yandex;
 
 import com.epam.tat.testbase.TestBase;
 import com.epam.tat.yandex.disk.page.service.FolderService;
+import com.epam.tat.yandex.disk.page.service.TrashService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
@@ -13,13 +14,13 @@ import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 public class YandexDiskTrash extends TestBase {
 
     @Test
-    public void isFolderRemovedFromTrashAfterClean() {
-        boolean isFolderRemovedFromTrashAfterClean = FolderService
+    public void isFolderRemovedFromTrashAfterCleanTest() {
+        FolderService
                 .createFolder()
                 .deleteButtonClick()
-                .trashMenuItemClick()
-                .emptyTrashButtonClick()
-                .confirmEmptyTrashButtonClick()
+                .trashMenuItemClick();
+        boolean isFolderRemovedFromTrashAfterClean = TrashService
+                .EmptyTrash()
                 .isTrashEmpty();
 
         Assert.assertTrue(isFolderRemovedFromTrashAfterClean);
