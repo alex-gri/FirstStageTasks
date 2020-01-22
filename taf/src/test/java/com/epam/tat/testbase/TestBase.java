@@ -1,5 +1,6 @@
 package com.epam.tat.testbase;
 
+import com.epam.tat.framework.listener.TestListener;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
@@ -9,17 +10,19 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
+import org.testng.annotations.Listeners;
 
+@Listeners({TestListener.class})
 public class TestBase {
 
     protected final String LOGIN = "taf.alexander.gritsok";
     protected final String PASSWORD = "WebDriverGo";
     private String originalWindowHandle;
-    protected static WebDriver driver;
+    protected static Browser browser;
 
     @BeforeClass
     public void setupBrowser() {
-        driver = Browser.getInstance().getWrappedDriver();
+        browser = Browser.getInstance();
         logIn();
     }
 
@@ -28,17 +31,17 @@ public class TestBase {
         AccountService
                 .logIn(testAccount)
                 .openYandexDiskFilesPage();
-        originalWindowHandle = driver.getWindowHandle();
+        originalWindowHandle = browser.getWrappedDriver().getWindowHandle();
     }
 
     private void closeAllTabsExceptFirst() {
-        for (String windowHandle : driver.getWindowHandles()) {
+        for (String windowHandle : browser.getWrappedDriver().getWindowHandles()) {
             if (!windowHandle.equals(originalWindowHandle)) {
-                driver.switchTo().window(windowHandle);
-                driver.close();
+                browser.getWrappedDriver().switchTo().window(windowHandle);
+                browser.getWrappedDriver().close();
             }
         }
-        driver.switchTo().window(originalWindowHandle);
+        browser.getWrappedDriver().switchTo().window(originalWindowHandle);
     }
 
     @AfterMethod (alwaysRun = true)

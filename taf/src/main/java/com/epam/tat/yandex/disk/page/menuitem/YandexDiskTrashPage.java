@@ -1,9 +1,6 @@
 package com.epam.tat.yandex.disk.page.menuitem;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 
 public class YandexDiskTrashPage extends AbstractMenuPage {
@@ -17,7 +14,8 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
     }
 
     public YandexDiskTrashPage emptyTrashButtonClick() {
-        browserInstance.click(emptyTrashButtonXpath);
+        browserInstance.waitForAttributeToBe(emptyTrashButtonXpath, "aria-disabled", "false");
+        browserInstance.clickNoWait(emptyTrashButtonXpath);
         return this;
     }
 
@@ -28,6 +26,6 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
 
     // Clean button is enabled only when there is something in trash.
     public boolean isTrashEmpty() {
-        return !browserInstance.waitForVisibilityOfElement(emptyTrashButtonXpath).isEnabled();
+        return !browserInstance.waitForVisibilityOfElementLocated(emptyTrashButtonXpath).isEnabled();
     }
 }
