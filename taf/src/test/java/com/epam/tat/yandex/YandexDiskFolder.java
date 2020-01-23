@@ -1,6 +1,8 @@
 package com.epam.tat.yandex;
 
 
+import com.epam.tat.framework.model.Folder;
+import com.epam.tat.framework.model.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;
@@ -14,8 +16,9 @@ public class YandexDiskFolder extends TestBase {
 
     @Test
     public void createFolderAndVisitItTest() {
+        Folder testFolder = new FolderBuilder().setDefaultName().build();
         boolean isFolderCreatedAndVisited = FolderService
-                .createFolder()
+                .createFolder(testFolder)
                 .openCreatedFolder()
                 .isFolderVisited();
         Assert.assertTrue(isFolderCreatedAndVisited);

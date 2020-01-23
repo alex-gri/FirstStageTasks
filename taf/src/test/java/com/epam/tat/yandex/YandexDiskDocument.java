@@ -1,14 +1,12 @@
 package com.epam.tat.yandex;
 
+import com.epam.tat.framework.model.Folder;
+import com.epam.tat.framework.model.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
-import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
 import com.epam.tat.yandex.disk.page.service.DocumentService;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
-
-import java.sql.Driver;
 
 /**
  * Create new Word document inside that new folder, give it name,
@@ -21,8 +19,9 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentInAppropriateFolderTest() {
+        Folder testFolder = new FolderBuilder().setDefaultName().build();
         FolderService
-                .createFolder()
+                .createFolder(testFolder)
                 .openCreatedFolder();
         DocumentService
                 .createDocument()
@@ -37,8 +36,9 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentSavedAndOpenedCorrectlyTest() {
+        Folder testFolder = new FolderBuilder().setDefaultName().build();
         FolderService
-                .createFolder()
+                .createFolder(testFolder)
                 .openCreatedFolder();
         DocumentService
                 .createDocument()
@@ -54,8 +54,9 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentInTrashOnlyTest() {
+        Folder testFolder = new FolderBuilder().setDefaultName().build();
         FolderService
-                .createFolder()
+                .createFolder(testFolder)
                 .openCreatedFolder();
         DocumentService
                 .createDocument()
