@@ -7,7 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 
-@Listeners ({TestListener.class})
+@Listeners({TestListener.class})
 public class LoginTestBase {
 
     protected final String LOGIN = "taf.alexander.gritsok";

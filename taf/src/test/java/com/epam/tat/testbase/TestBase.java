@@ -5,7 +5,6 @@ import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.service.AccountService;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;

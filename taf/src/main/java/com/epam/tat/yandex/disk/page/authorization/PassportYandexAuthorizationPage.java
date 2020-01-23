@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.authorization;
 
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;

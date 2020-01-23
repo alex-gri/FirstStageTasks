@@ -9,11 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 
-import java.util.Random;
 
 public class YandexDiskCreatePage extends AbstractMenuPage {
-
-    private Random random = new Random();
 
     private By createFolderOption = By.xpath("//button[contains(.,'Папку')]");
     private By createTextDocumentOption = By.xpath("//button[contains(.,'Текстовый документ')]");
@@ -34,13 +31,13 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
         return new YandexDiskTextDocumentPage();
     }
 
-    public YandexDiskCreatePage setFolderName() {
+    public YandexDiskCreatePage setFolderName(String folderName) {
 
         // Is default folder name "Новая папка" selected check.
         new WebDriverWait(browserInstance.getWrappedDriver(), 10)
                 .until(TextSelectedCondition.isDefaultNameSelected("Новая папка"));
 
-        folderName = String.valueOf(Math.abs(random.nextInt()));
+        this.folderName = folderName;
         browserInstance.type(folderNameField, folderName);
         return this;
     }
