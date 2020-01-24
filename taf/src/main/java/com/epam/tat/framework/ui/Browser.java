@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 public class Browser implements WrapsDriver {
 
-    private static final int WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS = 15;
-    private static final int TIMEOUT_SECONDS = 10;
+    private static final int VISIBILITY_TIMEOUT_SECONDS = 15;
+    private static final int VALUE_TO_BE_TIMEOUT_SECONDS = 30;
     private static final ThreadLocal<Browser> instance = new ThreadLocal<>();
 
     private WebDriver wrappedDriver;
@@ -72,7 +72,7 @@ public class Browser implements WrapsDriver {
     }
 
     public void waitForAttributeToBe(By by, String attributeName, String value) {
-        new WebDriverWait(wrappedDriver,TIMEOUT_SECONDS)
+        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.attributeToBe(by, attributeName, value));
     }
 
@@ -114,7 +114,7 @@ public class Browser implements WrapsDriver {
 
     public void swtichToTab(int tabIndex) {
         ArrayList<String> tabs = new ArrayList<>(wrappedDriver.getWindowHandles());
-        new WebDriverWait(wrappedDriver, TIMEOUT_SECONDS).until(WebDriver::switchTo).window(tabs.get(tabIndex));
+        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS).until(WebDriver::switchTo).window(tabs.get(tabIndex));
         Log.debug("Swtiched to tab: " + tabIndex);
     }
 
@@ -130,17 +130,17 @@ public class Browser implements WrapsDriver {
     }
 
     public WebElement waitForVisibilityOfElementLocated(By by) {
-        return waitForVisibilityOfElementLocated(by, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS);
+        return waitForVisibilityOfElementLocated(by, VISIBILITY_TIMEOUT_SECONDS);
     }
 
     public void waitForVisibilityOf(WebElement element) {
-        new WebDriverWait(wrappedDriver, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS)
+        new WebDriverWait(wrappedDriver, VISIBILITY_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitForTextToBe(By by, String textToBe) {
-        Log.debug("Waiting for: " + by + "to have text: " + textToBe);
-        new WebDriverWait(wrappedDriver, WAIT_FOR_VISIBILITY_TIMEOUT_SECONDS)
+        Log.debug("Waiting for: " + by + " to have text: " + textToBe);
+        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.textToBe(by, textToBe));
     }
 
@@ -151,6 +151,21 @@ public class Browser implements WrapsDriver {
         } catch (WebDriverException e) {
             return false;
         }
+    }
+
+    public boolean isCorrectNameDisplayed(String partialNameXpath, String nameToCheck) {
+        By nameToCheckXpath = xpathBuilder(partialNameXpath, nameToCheck);
+        Log.info("Is element displayed check: " + nameToCheckXpath);
+        try {
+            return waitForVisibilityOfElementLocated(nameToCheckXpath).isDisplayed();
+        } catch (WebDriverException e) {
+            return false;
+        }
+        //return browserInstance.isDisplayed(nameToCheckXpath);
+    }
+
+    public By xpathBuilder(String partialNameXpath, String nameToCheck) {
+        return By.xpath(String.format(partialNameXpath, nameToCheck));
     }
 
     public void doubleClick(By by) {
