@@ -8,6 +8,9 @@ import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 /**
  * Test login into yandex disk using credentials (positive and negative checks).
  */
@@ -17,21 +20,25 @@ public class YandexDiskLogIn extends LoginTestBase {
     @Test
     public void validCredentialsLogInTest() {
         Account testAccount = new AccountBuilder().login(LOGIN).password(PASSWORD).build();
-        AccountService.logIn(testAccount);
-        Assert.assertTrue(new PassportYandexAuthorizationPage().isLogInSuccessful());
+        String loggedInAccountLogin = AccountService.logIn(testAccount)
+                .getLoggedInAccountLogin();
+        assertThat(loggedInAccountLogin, is(equalTo(testAccount.getLogin())));
     }
 
     @Test
     public void invalidLoginLogInTest() {
         Account testAccount = new AccountBuilder().login(INCORRECT_VALUE).build();
-        AccountService.logInUsingOnlyLogin(testAccount);
-        Assert.assertTrue(new PassportYandexAuthorizationPage().isLogInFailed());
+        boolean isLogInFailed = AccountService.logInUsingOnlyLogin(testAccount)
+                .isLogInErrorMessagePresent();
+        Assert.assertTrue(isLogInFailed);
+
     }
 
     @Test
     public void invalidPasswordLogInTest() {
         Account testAccount = new AccountBuilder().login(LOGIN).password(INCORRECT_VALUE).build();
-        AccountService.logIn(testAccount);
-        Assert.assertTrue(new PassportYandexAuthorizationPage().isLogInFailed());
+        boolean isLogInFailed = AccountService.logIn(testAccount)
+                .isLogInErrorMessagePresent();
+        Assert.assertTrue(isLogInFailed);
     }
 }

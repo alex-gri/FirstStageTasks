@@ -1,6 +1,5 @@
 package com.epam.tat.yandex.disk.page.authorization;
 
-import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
@@ -9,11 +8,13 @@ public class PassportYandexAuthorizationPage {
 
     private static Browser browserInstance;
 
+    private By failureMessage = By.xpath("//div[@class='passp-form-field__error']");
     private By loginTextBox = By.id("passp-field-login");
     private By passwordTextBox = By.id("passp-field-passwd");
     private By logInButton = By.xpath("//button[contains(.,'Войти')]");
-    private By successMessage = By.xpath("//span[@title='Загрузить файлы']");
-    private By failureMessage = By.xpath("//div[@class='passp-form-field__error']");
+    protected By login = By.xpath("//span[@class='user-account__name']");
+    protected By userButton = By.xpath("//div[@class='user-pic user-account__pic']");
+
 
     public PassportYandexAuthorizationPage() {
         this.browserInstance = Browser.getInstance();
@@ -38,11 +39,12 @@ public class PassportYandexAuthorizationPage {
         return new YandexDiskFilesPage();
     }
 
-    public boolean isLogInSuccessful() {
-        return browserInstance.isDisplayed(successMessage);
+    public boolean isLogInErrorMessagePresent() {
+        return browserInstance.isDisplayed(failureMessage);
     }
 
-    public boolean isLogInFailed() {
-        return browserInstance.isDisplayed(failureMessage);
+    public String getLoggedInAccountLogin() {
+        browserInstance.click(userButton);
+        return browserInstance.getText(browserInstance.waitForVisibilityOfElementLocated(login));
     }
 }
