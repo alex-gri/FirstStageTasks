@@ -1,7 +1,7 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
+import com.epam.tat.framework.model.Document;
 import com.epam.tat.framework.ui.Browser;
-import com.epam.tat.framework.util.DataStorage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,7 +15,7 @@ public class YandexDiskTextDocumentPage {
     private Random random = new Random();
 
     By iframeXpath = By.xpath("//iframe");
-    By saveStatusId = By.xpath("//form[@id='form1']//div[@id='AppHeaderPanel']//span[@id='BreadcrumbSaveStatus']");
+    By saveStatusId = By.id("BreadcrumbSaveStatus");
     By topRenameFieldId = By.id("BreadcrumbTitle");
     By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
@@ -35,9 +35,6 @@ public class YandexDiskTextDocumentPage {
 
         // Writing text to the document.
         browserInstance.typeToBody(textToWrite);
-
-        // Saving text to property-file to compare it later.
-        DataStorage.addObject("document.text", textToWrite);
         return this;
     }
 
@@ -49,17 +46,13 @@ public class YandexDiskTextDocumentPage {
         return this;
     }
 
-    public YandexDiskTextDocumentPage setDocumentName() {
+    public YandexDiskTextDocumentPage setDocumentName(String name) {
         browserInstance.swtichToFrame(iframeXpath);
-        String documentName = String.valueOf(Math.abs(random.nextInt()));
-
         browserInstance.clear(topRenameFieldId);
-        browserInstance.type(topRenameFieldId, documentName);
+        browserInstance.type(topRenameFieldId, name);
+        browserInstance.waitForTextToBe(topRenameFieldId, name);
         browserInstance.getWrappedDriver().findElement(topRenameFieldId).sendKeys(Keys.ENTER);
         browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
-
-        DataStorage.addObject("document.name", documentName);
-
         browserInstance.swtichToFrame(null);
         return this;
     }
@@ -70,13 +63,13 @@ public class YandexDiskTextDocumentPage {
         return new YandexDiskFolderPage();
     }
 
-    public boolean isTextCorrect() {
+    public boolean isTextCorrect(Document document) {
         browserInstance.swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
         new WebDriverWait(browserInstance.getWrappedDriver(), 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
                 .forEach(webElement -> stringBuilder.append(browserInstance.getText(webElement)));
         browserInstance.swtichToFrame(null);
-        return ((String) DataStorage.getObjectByKey("document.text")).trim().equals(stringBuilder.toString().trim());
+        return document.getText().equals(stringBuilder.toString().trim());
     }
 }
