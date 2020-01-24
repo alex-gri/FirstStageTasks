@@ -1,4 +1,6 @@
-package com.epam.tat.framework.model;
+package com.epam.tat.framework.model.builder;
+
+import com.epam.tat.framework.model.Document;
 
 import java.util.Random;
 

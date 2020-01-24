@@ -1,7 +1,7 @@
 package com.epam.tat.yandex;
 
 import com.epam.tat.framework.model.Account;
-import com.epam.tat.framework.model.AccountBuilder;
+import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.testbase.LoginTestBase;
 import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
 import com.epam.tat.yandex.disk.page.service.AccountService;

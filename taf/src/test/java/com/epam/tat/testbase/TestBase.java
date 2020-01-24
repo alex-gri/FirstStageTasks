@@ -2,7 +2,7 @@ package com.epam.tat.testbase;
 
 import com.epam.tat.framework.listener.TestListener;
 import com.epam.tat.framework.model.Account;
-import com.epam.tat.framework.model.AccountBuilder;
+import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.annotations.AfterClass;

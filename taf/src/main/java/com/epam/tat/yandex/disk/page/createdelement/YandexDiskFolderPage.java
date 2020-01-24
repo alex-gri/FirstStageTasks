@@ -29,11 +29,6 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
         return isFolderAppropriate && isDocumentInThisFolder;
     }
 
-//    private boolean isCorrectNameDisplayed(String partialNameXpath, String nameToCheck) {
-//        By nameToCheckXpath = By.xpath(String.format(partialNameXpath, nameToCheck));
-//        return browserInstance.isDisplayed(nameToCheckXpath);
-//    }
-
     public YandexDiskFolderPage selectDocument(Document document) {
         documentXpath = By.xpath(String.format(partialDocumentXpath, document.getName()));
         browserInstance.waitForVisibilityOfElementLocated(documentXpath).click();

@@ -1,7 +1,7 @@
 package com.epam.tat.yandex;
 
 import com.epam.tat.framework.model.Folder;
-import com.epam.tat.framework.model.FolderBuilder;
+import com.epam.tat.framework.model.builder.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import com.epam.tat.yandex.disk.page.service.TrashService;
