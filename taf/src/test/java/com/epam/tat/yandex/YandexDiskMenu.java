@@ -1,9 +1,11 @@
 package com.epam.tat.yandex;
 
 import com.epam.tat.testbase.TestBase;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Check that all main menu items works correctly and lead to correct page.
@@ -13,64 +15,57 @@ public class YandexDiskMenu extends TestBase {
 
     @Test
     public void archiveMenuItemLeadsToValidPageTest() {
-        boolean isItArchivePage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .archiveMenuItemClick()
-                .isItArchivePage();
-
-        Assert.assertTrue(isItArchivePage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Архив"));
     }
 
     @Test
     public void filesMenuItemLeadsToValidPageTest() {
-        boolean isItFilesPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .filesMenuItemClickAfterClickOnAnotherItem()
-                .isItFilesPage();
-
-        Assert.assertTrue(isItFilesPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Файлы"));
     }
 
     @Test
     public void historyMenuItemLeadsToValidPageTest() {
-        boolean isItHistoryPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .historyMenuItemClick()
-                .isItHistoryPage();
-
-        Assert.assertTrue(isItHistoryPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("История"));
     }
 
     @Test
     public void photoMenuItemLeadsToValidPageTest() {
-        boolean isItPhotoPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .photoMenuItemClick()
-                .isItPhotoPage();
-
-        Assert.assertTrue(isItPhotoPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Все фотографии"));
     }
 
     @Test
     public void recentMenuItemLeadsToValidPageTest() {
-        boolean isItRecentPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .recentMenuItemClickAfterClickOnAnotherItem()
-                .isItRecentPage();
-
-        Assert.assertTrue(isItRecentPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Последние файлы"));
     }
 
     @Test
     public void sharedMenuItemLeadsToValidPageTest() {
-        boolean isItSharedPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .sharedMenuItemClick()
-                .isItSharedPage();
-
-        Assert.assertTrue(isItSharedPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Публичные ссылки"));
     }
 
     @Test
     public void trashMenuItemLeadsToValidPageTest() {
-        boolean isItTrashPage = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskFilesPage()
                 .trashMenuItemClick()
-                .isItTrashPage();
-
-        Assert.assertTrue(isItTrashPage);
+                .getContentTitle();
+        assertThat(contentTitle, is("Корзина"));
     }
 }

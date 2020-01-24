@@ -26,6 +26,7 @@ public abstract class AbstractMenuPage {
 
     protected By createButton = By.xpath("//button[contains(.,'Создать')]");
     protected By deleteButton = By.xpath("//span[text()='Удалить']//ancestor::button");
+    protected By contentTitle = By.tagName("h1");
 
     public AbstractMenuPage() {
         this.browserInstance = Browser.getInstance();
@@ -85,5 +86,9 @@ public abstract class AbstractMenuPage {
     public YandexDiskTrashPage trashMenuItemClick() {
         browserInstance.click(trashMenuItem);
         return new YandexDiskTrashPage();
+    }
+
+    public String getContentTitle() {
+        return browserInstance.getText(browserInstance.waitForVisibilityOfElementLocated(contentTitle));
     }
 }
