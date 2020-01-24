@@ -9,11 +9,11 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
 
     private By documentXpath;
     private String partialFolderXpath = "//h1[text()='%s']";
+    private By openedFolderXpath = By.tagName("h1");
     private String partialDocumentXpath = "//span[text()='%s.docx']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
 
-    public boolean isFolderVisited(Folder folder) {
-        By createdFolderNameXpath = By.xpath(String.format(partialFolderXpath, folder.getName()));
-        return browserInstance.isDisplayed(createdFolderNameXpath);
+    public String getOpenedFolderName() {
+        return browserInstance.waitForVisibilityOfElementLocated(openedFolderXpath).getAttribute("title");
     }
 
     public YandexDiskTextDocumentPage openDocument(Document document) {
