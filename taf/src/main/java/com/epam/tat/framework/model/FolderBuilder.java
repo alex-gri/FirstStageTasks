@@ -13,7 +13,7 @@ public class FolderBuilder {
         return this;
     }
 
-    public FolderBuilder setCustomName(String name) {
+    public FolderBuilder setName(String name) {
         folder.setName(name);
         return this;
     }

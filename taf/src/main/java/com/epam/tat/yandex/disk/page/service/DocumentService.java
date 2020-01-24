@@ -1,7 +1,7 @@
 package com.epam.tat.yandex.disk.page.service;
 
 import com.epam.tat.framework.logger.Log;
-import com.epam.tat.framework.util.DataStorage;
+import com.epam.tat.framework.model.Document;
 import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
 
@@ -9,21 +9,14 @@ public class DocumentService {
 
     private DocumentService() {}
 
-    public static YandexDiskTextDocumentPage createDocument() {
+    public static YandexDiskTextDocumentPage createDocument(Document document) {
         Log.info("[Document] Creating a document");
-        return new YandexDiskCreatePage()
+        new YandexDiskCreatePage()
                 .createButtonClick()
                 .createTextDocumentOptionClick();
-    }
-
-    public static YandexDiskTextDocumentPage renameDocument() {
-        Log.info("[Document] Renaming a document with random name");
-        return new YandexDiskTextDocumentPage()
+        return document.getDocumentPage()
+                .writeToDocument(document.getText())
                 .renameDocumentFieldClick()
-                .setDocumentName();
-    }
-
-    public static String getDocumentName() {
-        return (String) DataStorage.getObjectByKey("document.name");
+                .setDocumentName(document.getName());
     }
 }

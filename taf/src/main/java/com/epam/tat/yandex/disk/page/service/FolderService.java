@@ -1,11 +1,10 @@
 package com.epam.tat.yandex.disk.page.service;
 
 import com.epam.tat.framework.logger.Log;
+import com.epam.tat.framework.model.Document;
 import com.epam.tat.framework.model.Folder;
-import com.epam.tat.framework.util.DataStorage;
 import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 
 public class FolderService {
 
@@ -20,14 +19,10 @@ public class FolderService {
                 .saveButtonClick();
     }
 
-    public static YandexDiskFolderPage deleteDocument() {
+    public static YandexDiskFolderPage deleteDocument(Document document) {
         Log.info("[Folder] Removing document from current folder");
         return new YandexDiskFolderPage()
-                .selectDocument()
+                .selectDocument(document)
                 .deleteButtonClick();
-    }
-
-    public static String getFolderName() {
-        return (String) DataStorage.getObjectByKey("folder.name");
     }
 }
