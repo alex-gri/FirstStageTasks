@@ -1,5 +1,7 @@
 package com.epam.tat.yandex;
 
+import com.epam.tat.framework.model.Document;
+import com.epam.tat.framework.model.DocumentBuilder;
 import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.model.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
@@ -19,54 +21,51 @@ public class YandexDiskDocument extends TestBase {
 
     @Test
     public void isDocumentInAppropriateFolderTest() {
-        Folder testFolder = new FolderBuilder().setDefaultName().build();
+        Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
+        Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
+
         FolderService
-                .createFolder(testFolder)
-                .openCreatedFolder();
-        DocumentService
-                .createDocument()
-                .writeToDocument("Hello World!");
+                .createFolder(defaultTestFolder)
+                .openCreatedFolder(defaultTestFolder);
         boolean isDocumentInAppropriateFolder = DocumentService
-                .renameDocument()
+                .createDocument(defaultTestDocument) // Document opens automatically.
                 .closeDocumentTab()
-                .isDocumentInAppropriateFolder();
+                .isDocumentInAppropriateFolder(defaultTestDocument, defaultTestFolder);
 
         Assert.assertTrue(isDocumentInAppropriateFolder);
     }
 
     @Test
     public void isDocumentSavedAndOpenedCorrectlyTest() {
-        Folder testFolder = new FolderBuilder().setDefaultName().build();
+        Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
+        Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
+
         FolderService
-                .createFolder(testFolder)
-                .openCreatedFolder();
-        DocumentService
-                .createDocument()
-                .writeToDocument("Hello World!");
+                .createFolder(defaultTestFolder)
+                .openCreatedFolder(defaultTestFolder);
         boolean isDocumentSavedAndOpenedCorrectly = DocumentService
-                .renameDocument()
+                .createDocument(defaultTestDocument) // Document opens automatically.
                 .closeDocumentTab()
-                .openDocument()
-                .isTextCorrect();
+                .openDocument(defaultTestDocument)
+                .isTextCorrect(defaultTestDocument);
 
         Assert.assertTrue(isDocumentSavedAndOpenedCorrectly);
     }
 
     @Test
     public void isDocumentInTrashOnlyTest() {
-        Folder testFolder = new FolderBuilder().setDefaultName().build();
+        Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
+        Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
+
         FolderService
-                .createFolder(testFolder)
-                .openCreatedFolder();
+                .createFolder(defaultTestFolder)
+                .openCreatedFolder(defaultTestFolder);
         DocumentService
-                .createDocument()
-                .writeToDocument("Hello World!");
-        DocumentService
-                .renameDocument()
+                .createDocument(defaultTestDocument)
                 .closeDocumentTab();
         boolean isDocumentInTrashOnly = FolderService
-                .deleteDocument()
-                .isDocumentInTrashOnly();
+                .deleteDocument(defaultTestDocument)
+                .isDocumentInTrashOnly(defaultTestDocument);
 
         Assert.assertTrue(isDocumentInTrashOnly);
     }

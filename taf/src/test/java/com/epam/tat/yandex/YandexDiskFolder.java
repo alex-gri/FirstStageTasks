@@ -16,11 +16,11 @@ public class YandexDiskFolder extends TestBase {
 
     @Test
     public void createFolderAndVisitItTest() {
-        Folder testFolder = new FolderBuilder().setDefaultName().build();
+        Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
         boolean isFolderCreatedAndVisited = FolderService
-                .createFolder(testFolder)
-                .openCreatedFolder()
-                .isFolderVisited();
+                .createFolder(defaultTestFolder)
+                .openCreatedFolder(defaultTestFolder)
+                .isFolderVisited(defaultTestFolder);
         Assert.assertTrue(isFolderCreatedAndVisited);
     }
 }
