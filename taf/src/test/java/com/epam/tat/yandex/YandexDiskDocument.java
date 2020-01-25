@@ -5,10 +5,15 @@ import com.epam.tat.framework.model.builder.DocumentBuilder;
 import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.model.builder.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
+import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 import com.epam.tat.yandex.disk.page.service.DocumentService;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 
 /**
  * Create new Word document inside that new folder, give it name,
@@ -27,12 +32,12 @@ public class YandexDiskDocument extends TestBase {
         FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder);
-        boolean isDocumentInAppropriateFolder = DocumentService
+        String folderNameOfDocument = DocumentService
                 .createDocument(defaultTestDocument) // Document opens automatically.
                 .closeDocumentTab()
-                .isDocumentInAppropriateFolder(defaultTestDocument, defaultTestFolder);
+                .getContentTitle();
 
-        Assert.assertTrue(isDocumentInAppropriateFolder);
+        assertThat(folderNameOfDocument, is(equalTo(defaultTestFolder.getName())));
     }
 
     @Test
@@ -43,13 +48,13 @@ public class YandexDiskDocument extends TestBase {
         FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder);
-        boolean isDocumentSavedAndOpenedCorrectly = DocumentService
+        String documentText = DocumentService
                 .createDocument(defaultTestDocument) // Document opens automatically.
                 .closeDocumentTab()
                 .openDocument(defaultTestDocument)
-                .isTextCorrect(defaultTestDocument);
+                .getDocumentText();
 
-        Assert.assertTrue(isDocumentSavedAndOpenedCorrectly);
+        assertThat(documentText, is(equalTo(defaultTestDocument.getText())));
     }
 
     @Test
@@ -61,7 +66,7 @@ public class YandexDiskDocument extends TestBase {
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder);
         DocumentService
-                .createDocument(defaultTestDocument)
+                .createDocument(defaultTestDocument) // Document opens automatically.
                 .closeDocumentTab();
         boolean isDocumentInTrashOnly = FolderService
                 .deleteDocument(defaultTestDocument)

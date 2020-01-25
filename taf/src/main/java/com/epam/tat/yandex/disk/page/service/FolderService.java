@@ -25,4 +25,9 @@ public class FolderService {
                 .selectDocument(document)
                 .deleteButtonClick();
     }
+
+    public static boolean isDocumentPresent(Document document) {
+        return new YandexDiskFolderPage()
+                .isDocumentPresent(document);
+    }
 }

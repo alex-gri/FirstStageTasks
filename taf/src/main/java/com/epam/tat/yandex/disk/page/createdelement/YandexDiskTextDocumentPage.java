@@ -1,18 +1,14 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
-import com.epam.tat.framework.model.Document;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.Random;
-
 public class YandexDiskTextDocumentPage {
 
     protected static Browser browserInstance;
-    private Random random = new Random();
 
     By iframeXpath = By.xpath("//iframe");
     By saveStatusId = By.id("BreadcrumbSaveStatus");
@@ -63,13 +59,13 @@ public class YandexDiskTextDocumentPage {
         return new YandexDiskFolderPage();
     }
 
-    public boolean isTextCorrect(Document document) {
+    public String getDocumentText() {
         browserInstance.swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
         new WebDriverWait(browserInstance.getWrappedDriver(), 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
                 .forEach(webElement -> stringBuilder.append(browserInstance.getText(webElement)));
         browserInstance.swtichToFrame(null);
-        return document.getText().equals(stringBuilder.toString().trim());
+        return stringBuilder.toString().trim();
     }
 }
