@@ -60,6 +60,7 @@ public class Browser implements WrapsDriver {
     public void click(By by) {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Click: " + by);
+        makeScreenshot();
         //highlightBackground(element);
         element.click();
     }
@@ -79,6 +80,7 @@ public class Browser implements WrapsDriver {
     public void type(By by, String keys) {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Typing: " + keys + " into: " + by);
+        makeScreenshot();
         //highlightBackground(element);
         element.sendKeys(keys);
     }
@@ -153,17 +155,6 @@ public class Browser implements WrapsDriver {
         }
     }
 
-    public boolean isCorrectNameDisplayed(String partialNameXpath, String nameToCheck) {
-        By nameToCheckXpath = xpathBuilder(partialNameXpath, nameToCheck);
-        Log.info("Is element displayed check: " + nameToCheckXpath);
-        try {
-            return waitForVisibilityOfElementLocated(nameToCheckXpath).isDisplayed();
-        } catch (WebDriverException e) {
-            return false;
-        }
-        //return browserInstance.isDisplayed(nameToCheckXpath);
-    }
-
     public By xpathBuilder(String partialNameXpath, String nameToCheck) {
         return By.xpath(String.format(partialNameXpath, nameToCheck));
     }
@@ -182,6 +173,7 @@ public class Browser implements WrapsDriver {
                     ".//screenshots/"
                             + getCurrentTimeAsString() +
                             ".png"));
+            Log.screenshot(screenCapture);
         } catch (IOException e) {
             Log.error("Failed to save screenshot: " + e.getLocalizedMessage());
         }
