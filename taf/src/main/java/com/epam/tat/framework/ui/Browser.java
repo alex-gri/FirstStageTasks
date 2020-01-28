@@ -61,7 +61,7 @@ public class Browser implements WrapsDriver {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Click: " + by);
         makeScreenshot();
-        //highlightBackground(element);
+        highlightBackground(element);
         element.click();
     }
 
@@ -81,7 +81,7 @@ public class Browser implements WrapsDriver {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Typing: " + keys + " into: " + by);
         makeScreenshot();
-        //highlightBackground(element);
+        highlightBackground(element);
         element.sendKeys(keys);
     }
 
@@ -166,13 +166,10 @@ public class Browser implements WrapsDriver {
     }
 
     public void makeScreenshot() {
-        File screenCapture = ((TakesScreenshot) wrappedDriver)
-                .getScreenshotAs(OutputType.FILE);
+        File screenCapture = new File("./screenshots/" + getCurrentTimeAsString() + ".png");
         try {
-            FileUtils.copyFile(screenCapture, new File(
-                    ".//screenshots/"
-                            + getCurrentTimeAsString() +
-                            ".png"));
+            File screenshotAsFile = ((TakesScreenshot) wrappedDriver).getScreenshotAs(OutputType.FILE);
+            FileUtils.copyFile(screenshotAsFile, screenCapture);
             Log.screenshot(screenCapture);
         } catch (IOException e) {
             Log.error("Failed to save screenshot: " + e.getLocalizedMessage());
@@ -185,10 +182,13 @@ public class Browser implements WrapsDriver {
     }
 
     private void highlightBackground(WebElement element) {
-        String backgroundColor = element.getCssValue("background-color");
+        String backgroundColor = element.getCssValue("background");
+        //String elementBorder = element.getCssValue("border");
         JavascriptExecutor js = ((JavascriptExecutor) getWrappedDriver());
-        js.executeScript("arguments[0].styles.background-color = '" + "#ffffff" + "'", element);
+        js.executeScript("arguments[0].style.background = '" + "rgb(255, 255, 0) none repeat scroll 0% 0% / auto padding-box border-box" + "'", element);
+        //js.executeScript("arguments[0].style.border='3px solid red'", element);
         makeScreenshot();
-        js.executeScript("arguments[0].styles.background-color = '" + backgroundColor + "'", element);
+        //js.executeScript("arguments[0].style.border='" + elementBorder + "'", element);
+        js.executeScript("arguments[0].style.background = '" + backgroundColor + "'", element);
     }
 }

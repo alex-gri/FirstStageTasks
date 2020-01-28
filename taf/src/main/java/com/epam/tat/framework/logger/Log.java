@@ -8,27 +8,27 @@ import java.io.File;
 
 public class Log {
 
-    private static final Logger LOG = LogManager.getLogger("com.epam.tat");
+    private static final Logger LOGGER = LogManager.getLogger("com.epam.tat");
+
+    private Log() {}
 
     public static void debug(String message) {
-        LOG.debug(message);
-        Reporter.log(message, 1);
+        LOGGER.debug(message);
+        Reporter.log(message + "<br />");
     }
 
     public static void info(String message) {
-        LOG.info(message);
-        Reporter.log(message, 2);
+        LOGGER.info(message);
+        Reporter.log(message + "<br />");
     }
 
     public static void error(String message) {
-        LOG.error(message);
-        Reporter.log(message, 3);
+        LOGGER.error(message);
+        Reporter.log(message + "<br />");
     }
 
     public static void screenshot(File screenshot) {
-        String logMessage = "Screenshot captured: " + screenshot.getAbsolutePath();
-        LOG.info(logMessage);
-        Reporter.log(logMessage, 2);
-        Reporter.log("<a href='"+ screenshot.getAbsolutePath() + "'>" + screenshot.getName() +"</a>");
+        LOGGER.info("Screenshot captured: " + screenshot.getAbsolutePath());
+        Reporter.log("<a href='"+ screenshot.getAbsolutePath() + "' target=\"blank\">" + screenshot.getName() + "</a><br />");
     }
 }
