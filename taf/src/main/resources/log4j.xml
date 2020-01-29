@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd" >
+<log4j:configuration>
+
+    <appender name="Console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p [%c] %m %n" />
+        </layout>
+    </appender>
+
+    <appender name="Reporter" class="com.epam.tat.framework.logger.CustomAppender">
+    </appender>
+
+    <appender name="SW_ROLLING_FILE"
+              class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="target/logs/app-infoLOG1.html" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="500KB" />
+        <param name="MaxBackupIndex" value="5" />
+        <layout class="org.apache.log4j.HTMLLayout">
+            <param name="ConversionPattern"
+                   value="[%d{ISO8601}] %-5p %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="com.epam.tat1" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="SW_ROLLING_FILE" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="Reporter" />
+    </logger>
+
+
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="Console" />
+    </root>
+
+
+</log4j:configuration>
