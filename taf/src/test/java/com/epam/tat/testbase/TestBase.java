@@ -1,5 +1,6 @@
 package com.epam.tat.testbase;
 
+import com.epam.tat.framework.listener.SuiteListener;
 import com.epam.tat.framework.listener.TestListener;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
@@ -11,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
 import org.testng.annotations.Listeners;
 
-@Listeners({TestListener.class})
+@Listeners({TestListener.class, SuiteListener.class})
 public class TestBase {
 
     protected final String LOGIN = "taf.alexander.gritsok";
