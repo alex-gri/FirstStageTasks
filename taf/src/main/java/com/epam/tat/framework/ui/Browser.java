@@ -60,14 +60,14 @@ public class Browser implements WrapsDriver {
     public void click(By by) {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Click: " + by);
-        highlightBackground(element);
+        highlightElement(element);
         element.click();
     }
 
     public void clickNoWait(By by) {
         WebElement element = wrappedDriver.findElement(by);
         Log.info("Click without wait: " + by);
-        highlightBackground(element);
+        highlightElement(element);
         element.click();
     }
 
@@ -79,7 +79,7 @@ public class Browser implements WrapsDriver {
     public void type(By by, String keys) {
         WebElement element = waitForVisibilityOfElementLocated(by);
         Log.info("Typing: " + keys + " into: " + by);
-        highlightBackground(element);
+        highlightElement(element);
         element.sendKeys(keys);
     }
 
@@ -179,14 +179,11 @@ public class Browser implements WrapsDriver {
         return ZonedDateTime.now().format(formatter);
     }
 
-    private void highlightBackground(WebElement element) {
-        String backgroundColor = element.getCssValue("background");
+    private void highlightElement(WebElement element) {
         String elementBorder = element.getCssValue("border");
         JavascriptExecutor js = ((JavascriptExecutor) getWrappedDriver());
-        js.executeScript("arguments[0].style.background = '" + "rgb(255, 255, 0) none repeat scroll 0% 0% / auto padding-box border-box" + "'", element);
         js.executeScript("arguments[0].style.border='3px solid red'", element);
         makeScreenshot();
         js.executeScript("arguments[0].style.border='" + elementBorder + "'", element);
-        js.executeScript("arguments[0].style.background = '" + backgroundColor + "'", element);
     }
 }
