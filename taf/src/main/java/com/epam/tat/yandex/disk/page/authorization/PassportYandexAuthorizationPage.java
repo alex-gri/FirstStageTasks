@@ -45,6 +45,6 @@ public class PassportYandexAuthorizationPage {
 
     public String getLoggedInAccountLogin() {
         browserInstance.click(userButton);
-        return browserInstance.getText(browserInstance.waitForVisibilityOfElementLocated(login));
+        return browserInstance.getText(login);
     }
 }

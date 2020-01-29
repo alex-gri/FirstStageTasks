@@ -102,6 +102,12 @@ public class Browser implements WrapsDriver {
         return element.getText();
     }
 
+    public String getText(By by) {
+        WebElement element = waitForVisibilityOfElementLocated(by);
+        Log.debug("Getting text from: " + by);
+        return element.getText();
+    }
+
     public void swtichToFrame(By by) {
         if (by == null) {
             Log.debug("Switching to default content");
@@ -164,7 +170,7 @@ public class Browser implements WrapsDriver {
     }
 
     public void makeScreenshot() {
-        File screenCapture = new File("./screenshots/" + getCurrentTimeAsString() + ".png");
+        File screenCapture = new File("screenshots/" + getCurrentTimeAsString() + ".png");
         try {
             File screenshotAsFile = ((TakesScreenshot) wrappedDriver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshotAsFile, screenCapture);

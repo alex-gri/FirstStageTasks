@@ -89,6 +89,6 @@ public abstract class AbstractMenuPage {
     }
 
     public String getContentTitle() {
-        return browserInstance.getText(browserInstance.waitForVisibilityOfElementLocated(contentTitle));
+        return browserInstance.getText(contentTitle);
     }
 }
