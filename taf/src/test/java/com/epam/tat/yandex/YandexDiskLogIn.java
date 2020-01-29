@@ -3,13 +3,13 @@ package com.epam.tat.yandex;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.testbase.LoginTestBase;
-import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
 import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
 
 /**
  * Test login into yandex disk using credentials (positive and negative checks).
@@ -31,7 +31,6 @@ public class YandexDiskLogIn extends LoginTestBase {
         boolean isLogInFailed = AccountService.logInUsingOnlyLogin(testAccount)
                 .isLogInErrorMessagePresent();
         Assert.assertTrue(isLogInFailed);
-
     }
 
     @Test
