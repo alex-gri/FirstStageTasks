@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.createdelement;
 
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -20,6 +21,7 @@ public class YandexDiskTextDocumentPage {
     }
 
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
+        Log.report("Typing into document: " + textToWrite);
 
         /*
          * Switching driver to header's frame so we can wait page to load properly.
@@ -43,6 +45,7 @@ public class YandexDiskTextDocumentPage {
     }
 
     public YandexDiskTextDocumentPage setDocumentName(String name) {
+        Log.report("Setting document name to: " + name);
         browserInstance.swtichToFrame(iframeXpath);
         browserInstance.clear(topRenameFieldId);
         browserInstance.type(topRenameFieldId, name);
@@ -54,12 +57,14 @@ public class YandexDiskTextDocumentPage {
     }
 
     public YandexDiskFolderPage closeDocumentTab() {
+        Log.report("Closing document");
         browserInstance.closeCurrentTab();
         browserInstance.swtichToTab(0);
         return new YandexDiskFolderPage();
     }
 
     public String getDocumentText() {
+        Log.report("Getting text from document");
         browserInstance.swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
         new WebDriverWait(browserInstance.getWrappedDriver(), 20)

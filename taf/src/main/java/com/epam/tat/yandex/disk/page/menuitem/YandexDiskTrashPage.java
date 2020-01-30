@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.menuitem;
 
+import com.epam.tat.framework.logger.Log;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 
@@ -15,6 +16,7 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
     }
 
     public YandexDiskTrashPage confirmEmptyTrashButtonClick() {
+        Log.report("Confirming emptying");
         browserInstance.click(confirmEmptyTrashButtonXpath);
         return this;
     }

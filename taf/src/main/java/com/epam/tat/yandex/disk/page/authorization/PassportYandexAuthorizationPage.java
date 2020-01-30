@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.authorization;
 
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
@@ -21,16 +22,19 @@ public class PassportYandexAuthorizationPage {
     }
 
     public PassportYandexAuthorizationPage setLogin(String login) {
+        Log.report("Typing login: " + login);
         browserInstance.type(loginTextBox, login);
         return this;
     }
 
     public PassportYandexAuthorizationPage setPassword(String password) {
+        Log.report("Typing password: " + password);
         browserInstance.type(passwordTextBox, password);
         return this;
     }
 
     public PassportYandexAuthorizationPage logInButtonClick() {
+        Log.report("Confirming input");
         browserInstance.click(logInButton);
         return this;
     }
@@ -40,10 +44,12 @@ public class PassportYandexAuthorizationPage {
     }
 
     public boolean isLogInErrorMessagePresent() {
+        Log.report("Checking if error occurred");
         return browserInstance.isDisplayed(failureMessage);
     }
 
     public String getLoggedInAccountLogin() {
+        Log.report("Checking logged in account's login");
         browserInstance.click(userButton);
         return browserInstance.getText(login);
     }

@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.createcontext;
 
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.util.TextSelectedCondition;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
@@ -32,6 +33,7 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
     }
 
     public YandexDiskCreatePage setFolderName(String folderName) {
+        Log.report("Setting folder's name as: " + folderName);
 
         // Is default folder name "Новая папка" selected check.
         new WebDriverWait(browserInstance.getWrappedDriver(), 10)
@@ -52,6 +54,7 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
     }
 
     public YandexDiskFolderPage openCreatedFolder(Folder folder) {
+        Log.report("Opening folder: " + folder.getName());
         By folderXpath = browserInstance.xpathBuilder(folderPartialXpath, folder.getName());
         browserInstance.doubleClick(folderXpath);
         return folder.getFolderPage();

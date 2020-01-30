@@ -10,7 +10,7 @@ public class DocumentService {
     private DocumentService() {}
 
     public static YandexDiskTextDocumentPage createDocument(Document document) {
-        Log.info("[Document] Creating a document");
+        Log.report("[Document] Creating a document. It opens automatically");
         new YandexDiskCreatePage()
                 .createButtonClick()
                 .createTextDocumentOptionClick();

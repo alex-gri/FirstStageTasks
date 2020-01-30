@@ -1,5 +1,6 @@
 package com.epam.tat.yandex.disk.page.base;
 
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import org.openqa.selenium.By;
@@ -38,16 +39,19 @@ public abstract class AbstractMenuPage {
     }
 
     public YandexDiskFolderPage deleteButtonClick() {
+        Log.report("Removing the document");
         browserInstance.click(deleteButton);
         return new YandexDiskFolderPage();
     }
 
     public YandexDiskArchivePage archiveMenuItemClick() {
+        Log.report("Moving to Archive page");
         browserInstance.click(archiveMenuItem);
         return new YandexDiskArchivePage();
     }
 
     public YandexDiskFilesPage filesMenuItemClickAfterClickOnAnotherItem() {
+        Log.report("Moving to Files page");
 
         // Changing current directory to trash first, because current could be Files already.
         browserInstance.click(trashMenuItem);
@@ -56,21 +60,25 @@ public abstract class AbstractMenuPage {
     }
 
     public YandexDiskFilesPage filesMenuItemClick() {
+        Log.report("Moving to Files page");
         browserInstance.click(filesMenuItem);
         return new YandexDiskFilesPage();
     }
 
     public YandexDiskHistoryPage historyMenuItemClick() {
+        Log.report("Moving to History page");
         browserInstance.click(historyMenuItem);
         return new YandexDiskHistoryPage();
     }
 
     public YandexDiskPhotoPage photoMenuItemClick() {
+        Log.report("Moving to Photo page");
         browserInstance.click(photoMenuItem);
         return new YandexDiskPhotoPage();
     }
 
     public YandexDiskRecentPage recentMenuItemClickAfterClickOnAnotherItem() {
+        Log.report("Moving to Recent page");
 
         // Changing current directory to trash first, because current could be Recent already.
         browserInstance.click(trashMenuItem);
@@ -79,16 +87,21 @@ public abstract class AbstractMenuPage {
     }
 
     public YandexDiskSharedPage sharedMenuItemClick() {
+        Log.report("Moving to Shared page");
+
         browserInstance.click(sharedMenuItem);
         return new YandexDiskSharedPage();
     }
 
     public YandexDiskTrashPage trashMenuItemClick() {
+        Log.report("Moving to Trash page");
+
         browserInstance.click(trashMenuItem);
         return new YandexDiskTrashPage();
     }
 
     public String getContentTitle() {
+        Log.report("Getting title of current page's content");
         return browserInstance.getText(contentTitle);
     }
 }

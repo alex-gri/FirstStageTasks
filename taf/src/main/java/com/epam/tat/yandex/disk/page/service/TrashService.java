@@ -8,7 +8,7 @@ public class TrashService {
     private TrashService() {}
 
     public static YandexDiskTrashPage emptyTrash() {
-        Log.info("[Trash] Emptying the trash...");
+        Log.report("[Trash] Emptying the trash...");
         return new YandexDiskTrashPage()
                 .emptyTrashButtonClick()
                 .confirmEmptyTrashButtonClick();

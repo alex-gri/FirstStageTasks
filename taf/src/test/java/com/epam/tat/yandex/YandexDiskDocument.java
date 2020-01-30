@@ -5,7 +5,6 @@ import com.epam.tat.framework.model.builder.DocumentBuilder;
 import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.model.builder.FolderBuilder;
 import com.epam.tat.testbase.TestBase;
-import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 import com.epam.tat.yandex.disk.page.service.DocumentService;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import org.testng.Assert;

@@ -11,7 +11,7 @@ public class FolderService {
     private FolderService() {}
 
     public static YandexDiskCreatePage createFolder(Folder folder) {
-        Log.info("[Folder] Creating a folder with random name");
+        Log.report("[Folder] Creating a folder with random name");
         return folder.getFolderPage()
                 .createButtonClick()
                 .createFolderOptionClick()
@@ -20,7 +20,7 @@ public class FolderService {
     }
 
     public static YandexDiskFolderPage deleteDocument(Document document) {
-        Log.info("[Folder] Removing document from current folder");
+        Log.report("[Folder] Removing document from current folder");
         return new YandexDiskFolderPage()
                 .selectDocument(document)
                 .deleteButtonClick();
