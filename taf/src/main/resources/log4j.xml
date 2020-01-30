@@ -10,9 +10,6 @@
     </appender>
 
     <appender name="Reporter" class="com.epam.tat.framework.logger.TestNGReportAppender">
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%-d{yyyy-MM-dd   HH:mm:ss}   [%c] [%-5p] " />
-        </layout>
     </appender>
 
     <appender name="SW_ROLLING_FILE"
