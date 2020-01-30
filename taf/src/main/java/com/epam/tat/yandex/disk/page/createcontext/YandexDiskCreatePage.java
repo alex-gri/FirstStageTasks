@@ -5,7 +5,6 @@ import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.util.TextSelectedCondition;
 import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
@@ -47,8 +46,7 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
     public YandexDiskCreatePage saveButtonClick() {
 
         // Is folder name is fully typed in check.
-        new WebDriverWait(browserInstance.getWrappedDriver(), 10)
-                .until(ExpectedConditions.attributeToBe(folderNameField, "value", folderName));
+        browserInstance.waitForAttributeToBe(folderNameField, "value", folderName);
         browserInstance.click(saveButton);
         return this;
     }
@@ -57,6 +55,7 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
         Log.report("Opening folder: " + folder.getName());
         By folderXpath = browserInstance.xpathBuilder(folderPartialXpath, folder.getName());
         browserInstance.doubleClick(folderXpath);
+        browserInstance.waitForAttributeToBe(contentTitle, "title", folder.getName());
         return folder.getFolderPage();
     }
 }
