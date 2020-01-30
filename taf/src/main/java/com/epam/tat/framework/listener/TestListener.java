@@ -9,17 +9,18 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult result) {
-        Log.debug("[TEST STARTED] " + result.getName());
+        Log.report("[TEST STARTED] " + result.getName());
+        Log.report("SAM SEBE REPORTER");
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        Log.debug("[TEST FINISHED] " + result.getName());
+        Log.report("[TEST FINISHED] " + result.getName());
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         Browser.getInstance().makeScreenshot();
-        Log.debug("[TEST FAILED] " + result.getName());
+        Log.report("[TEST FAILED] " + result.getName());
     }
 }

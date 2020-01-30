@@ -10,7 +10,7 @@ public class AccountService {
     private AccountService() {}
 
     public static PassportYandexAuthorizationPage logIn(Account account) {
-        Log.info("[Authorization] Logging in Yandex Disk...");
+        Log.report("[Authorization] Logging in Yandex Disk...");
         return new YandexDiskHomePage()
                 .openYandexDiskHomePage()
                 .logInButtonClick()
@@ -21,7 +21,7 @@ public class AccountService {
     }
 
     public static PassportYandexAuthorizationPage logInUsingOnlyLogin(Account account) {
-        Log.info("[Authorization] Logging in Yandex Disk using INCORRECT login...");
+        Log.report("[Authorization] Logging in Yandex Disk using INCORRECT login...");
         return new YandexDiskHomePage()
                 .openYandexDiskHomePage()
                 .logInButtonClick()
