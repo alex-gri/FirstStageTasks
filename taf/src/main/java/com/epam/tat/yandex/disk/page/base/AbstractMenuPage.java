@@ -104,4 +104,9 @@ public abstract class AbstractMenuPage {
         Log.report("Getting title of current page's content");
         return browserInstance.getText(contentTitle);
     }
+
+    public void waitForContentTitleToBe(String title) {
+        Log.report("Waiting for content title of the current page to be: ");
+        browserInstance.waitForAttributeToBe(contentTitle, "title", title);
+    }
 }

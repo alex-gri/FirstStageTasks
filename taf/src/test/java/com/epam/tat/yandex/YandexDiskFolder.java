@@ -22,7 +22,7 @@ public class YandexDiskFolder extends TestBase {
         String openedFolderName = FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder)
-                .getOpenedFolderName();
+                .getContentTitle();
         assertThat(openedFolderName, is(equalTo(defaultTestFolder.getName())));
     }
 }

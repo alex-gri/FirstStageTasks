@@ -8,13 +8,7 @@ import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 public class YandexDiskFolderPage extends AbstractMenuPage {
 
     private By documentXpath;
-    private By openedFolderXpath = By.tagName("h1");
     private String partialDocumentXpath = "//span[text()='%s.docx']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_file js-prevent-deselect']";
-
-    public String getOpenedFolderName() {
-        Log.report("Checking name of the current folder");
-        return browserInstance.waitForVisibilityOfElementLocated(openedFolderXpath).getAttribute("title");
-    }
 
     public YandexDiskTextDocumentPage openDocument(Document document) {
         Log.report("Opening document: " + document.getName());

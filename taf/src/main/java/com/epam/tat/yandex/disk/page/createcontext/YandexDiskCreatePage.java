@@ -55,7 +55,7 @@ public class YandexDiskCreatePage extends AbstractMenuPage {
         Log.report("Opening folder: " + folder.getName());
         By folderXpath = browserInstance.xpathBuilder(folderPartialXpath, folder.getName());
         browserInstance.doubleClick(folderXpath);
-        browserInstance.waitForAttributeToBe(contentTitle, "title", folder.getName());
+        waitForContentTitleToBe(folder.getName());
         return folder.getFolderPage();
     }
 }
