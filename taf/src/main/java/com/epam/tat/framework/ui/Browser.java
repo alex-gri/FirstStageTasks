@@ -1,6 +1,7 @@
 package com.epam.tat.framework.ui;
 
 import com.epam.tat.framework.driver.DriverSingleton;
+import com.epam.tat.framework.exception.NotSupportedBrowserException;
 import com.epam.tat.framework.logger.Log;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -23,7 +24,11 @@ public class Browser implements WrapsDriver {
     private WebDriver wrappedDriver;
 
     private Browser() {
-        this.wrappedDriver = DriverSingleton.getDriver();
+        try {
+            this.wrappedDriver = DriverSingleton.getDriver();
+        } catch (NotSupportedBrowserException e) {
+            Log.error(e.getMessage());
+        }
     }
 
     @Override
