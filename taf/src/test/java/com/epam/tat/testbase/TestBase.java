@@ -1,8 +1,6 @@
 package com.epam.tat.testbase;
 
 import com.epam.tat.Constants;
-import com.epam.tat.framework.listener.SuiteListener;
-import com.epam.tat.framework.listener.TestListener;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
@@ -10,10 +8,8 @@ import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Listeners;
 import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
 
-@Listeners({TestListener.class, SuiteListener.class})
 public class TestBase {
 
     private String originalWindowHandle;
