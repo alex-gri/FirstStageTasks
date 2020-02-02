@@ -1,4 +1,4 @@
-package com.epam.tat.framework.util;
+package com.epam.tat.framework.runner.cli;
 
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;

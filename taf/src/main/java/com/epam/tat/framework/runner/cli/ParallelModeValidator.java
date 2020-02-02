@@ -1,4 +1,4 @@
-package com.epam.tat.framework.util;
+package com.epam.tat.framework.runner.cli;
 
 import com.beust.jcommander.IParameterValidator;
 import com.beust.jcommander.ParameterException;
@@ -12,7 +12,7 @@ public class ParallelModeValidator implements IParameterValidator {
     @Override
     public void validate(String name, String value) throws ParameterException {
         try {
-            ParallelMode.valueOf(value);
+            ParallelMode.valueOf(value.toUpperCase());
         } catch (IllegalArgumentException e) {
             Log.error(name + " value should be one of " + Arrays.asList(ParallelMode.values()));
         }
