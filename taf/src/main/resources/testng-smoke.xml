@@ -3,7 +3,7 @@
 <suite name="Single test" verbose="1" parallel="none" thread-count="1">
     <test name="Log In" >
             <classes>
-                <class name="com.epam.tat.yandex.YandexDiskLogIn">
+                <class name="com.epam.tat.test.yandex.YandexDiskLogIn">
                     <methods><include name="validCredentialsLogInTest"></include></methods>
                 </class>
             </classes>
