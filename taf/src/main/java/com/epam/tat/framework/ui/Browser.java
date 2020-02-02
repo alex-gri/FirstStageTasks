@@ -175,7 +175,7 @@ public class Browser implements WrapsDriver {
     }
 
     public void makeScreenshot() {
-        File screenCapture = new File("screenshots/" + getCurrentTimeAsString() + ".png");
+        File screenCapture = new File("logs/screenshots/" + getCurrentTimeAsString() + ".png");
         try {
             File screenshotAsFile = ((TakesScreenshot) wrappedDriver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshotAsFile, screenCapture);
