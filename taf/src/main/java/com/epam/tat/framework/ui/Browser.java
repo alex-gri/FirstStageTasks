@@ -25,7 +25,7 @@ public class Browser implements WrapsDriver {
 
     private Browser() {
         try {
-            this.wrappedDriver = DriverSingleton.getDriver();
+            this.wrappedDriver = DriverSingleton.getInstance().getDriver();
         } catch (NotSupportedBrowserException e) {
             Log.error(e.getMessage());
         }
@@ -47,7 +47,7 @@ public class Browser implements WrapsDriver {
     public void stopBrowser() {
         try {
             if (getWrappedDriver() != null) {
-                DriverSingleton.closeDriver();
+                DriverSingleton.getInstance().closeDriver();
             }
         } catch (WebDriverException e) {
             Log.error(e.getMessage());
