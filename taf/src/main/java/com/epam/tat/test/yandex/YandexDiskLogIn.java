@@ -1,9 +1,9 @@
-package com.epam.tat.yandex;
+package com.epam.tat.test.yandex;
 
-import com.epam.tat.Constants;
+import com.epam.tat.test.Constants ;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
-import com.epam.tat.testbase.LoginTestBase;
+import com.epam.tat.test.testbase.LoginTestBase;
 import com.epam.tat.yandex.disk.page.service.AccountService;
 import org.testng.Assert;
 import org.testng.annotations.Test;

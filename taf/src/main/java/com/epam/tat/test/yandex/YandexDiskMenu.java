@@ -1,6 +1,6 @@
-package com.epam.tat.yandex;
+package com.epam.tat.test.yandex;
 
-import com.epam.tat.testbase.TestBase;
+import com.epam.tat.test.testbase.TestBase;
 import org.testng.annotations.Test;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 

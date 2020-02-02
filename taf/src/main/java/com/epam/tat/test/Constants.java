@@ -1,4 +1,4 @@
-package com.epam.tat;
+package com.epam.tat.test;
 
 public class Constants {
     public static final String LOGIN = "taf.alexander.gritsok";

@@ -1,4 +1,4 @@
-package com.epam.tat.testbase;
+package com.epam.tat.test.testbase;
 
 import com.epam.tat.framework.ui.Browser;
 import org.testng.annotations.AfterMethod;

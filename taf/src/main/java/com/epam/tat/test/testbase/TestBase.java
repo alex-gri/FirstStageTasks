@@ -1,6 +1,6 @@
-package com.epam.tat.testbase;
+package com.epam.tat.test.testbase;
 
-import com.epam.tat.Constants;
+import com.epam.tat.test.Constants;
 import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;

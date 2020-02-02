@@ -1,8 +1,8 @@
-package com.epam.tat.yandex;
+package com.epam.tat.test.yandex;
 
 import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.model.builder.FolderBuilder;
-import com.epam.tat.testbase.TestBase;
+import com.epam.tat.test.testbase.TestBase;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import com.epam.tat.yandex.disk.page.service.TrashService;
 import org.testng.Assert;
