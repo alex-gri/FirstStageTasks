@@ -25,6 +25,7 @@ public class Browser implements WrapsDriver {
 
     private Browser() {
         try {
+            DriverSingleton.getInstance().setDriver(DriverSingleton.createDriverInstance());
             this.wrappedDriver = DriverSingleton.getInstance().getDriver();
         } catch (NotSupportedBrowserException e) {
             Log.error(e.getMessage());
@@ -46,8 +47,8 @@ public class Browser implements WrapsDriver {
 
     public void stopBrowser() {
         try {
-            if (getWrappedDriver() != null) {
-                DriverSingleton.getInstance().closeDriver();
+            if (wrappedDriver != null) {
+                DriverSingleton.getInstance().removeDriver();
             }
         } catch (WebDriverException e) {
             Log.error(e.getMessage());
@@ -175,7 +176,7 @@ public class Browser implements WrapsDriver {
     }
 
     public void makeScreenshot() {
-        File screenCapture = new File("logs/screenshots/" + getCurrentTimeAsString() + ".png");
+        File screenCapture = new File("logs/screenshots/" + getScreenshotName() + ".png");
         try {
             File screenshotAsFile = ((TakesScreenshot) wrappedDriver).getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshotAsFile, screenCapture);
@@ -185,9 +186,13 @@ public class Browser implements WrapsDriver {
         }
     }
 
-    private String getCurrentTimeAsString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "uuuu-MM-dd_HH-mm-ss" );
-        return ZonedDateTime.now().format(formatter);
+    private String getScreenshotName() {
+        StringBuilder stringBuilder = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "MM-dd_HH-mm-ss" );
+        stringBuilder.append(ZonedDateTime.now().format(formatter))
+                .append("-")
+                .append(Thread.currentThread().getName());
+        return stringBuilder.toString();
     }
 
     private void highlightElement(WebElement element) {
