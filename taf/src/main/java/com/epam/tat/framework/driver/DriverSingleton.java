@@ -11,51 +11,54 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class DriverSingleton {
 
-    private static final ThreadLocal<DriverSingleton> instance = new ThreadLocal<>();
-    private WebDriver driver;
+    private static DriverSingleton instance = new DriverSingleton();
+    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     private DriverSingleton() {
     }
 
     public static synchronized DriverSingleton getInstance() {
-        if (instance.get() == null) {
-            instance.set(new DriverSingleton());
-            Log.debug("New WebDriver has been created!");
-        }
-        return instance.get();
+        return instance;
     }
 
-    public WebDriver getDriver() throws NotSupportedBrowserException {
-        if (driver == null) {
-            switch (Arguments.instance().getBrowserType()) {
-                case FIREFOX:
-                    setupFirefoxDriver();
-                    break;
-                case CHROME:
-                    setupChromeDriver();
-                    break;
-                default: throw new NotSupportedBrowserException(
-                        "Not supported browser" + Arguments.instance().getBrowserType());
-            }
-            driver.manage().window().maximize();
+    public static WebDriver createDriverInstance() throws NotSupportedBrowserException {
+        WebDriver driver = null;
+
+        switch (Arguments.instance().getBrowserType()) {
+            case FIREFOX:
+                setupFirefoxDriver();
+                break;
+            case CHROME:
+                driver = setupChromeDriver();
+                break;
+            default: throw new NotSupportedBrowserException(
+                    "Not supported browser" + Arguments.instance().getBrowserType());
         }
         return driver;
     }
 
-    private void setupFirefoxDriver() {
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver();
+    public void setDriver(WebDriver newdriver) {
+        driver.set(newdriver);
     }
 
-    private void setupChromeDriver() {
+    public  WebDriver getDriver() {
+        return driver.get();
+    }
+
+    public  void removeDriver() {
+        driver.get().quit();
+        driver.remove();
+    }
+
+    private static WebDriver setupFirefoxDriver() {
+        WebDriverManager.firefoxdriver().setup();
+        return new FirefoxDriver();
+    }
+
+    private static WebDriver setupChromeDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--ignore-certificate-errors");
-        driver = new ChromeDriver(options);
-    }
-
-    public void closeDriver() {
-        driver.quit();
-        driver = null;
+        options.addArguments("--ignore-certificate-errors", "start-maximized");
+        return new ChromeDriver(options);
     }
 }
