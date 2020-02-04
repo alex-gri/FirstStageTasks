@@ -7,21 +7,19 @@ import org.openqa.selenium.By;
 public class YandexDiskHomePage {
 
     private static final String URL = "https://disk.yandex.by/";
-    private static Browser browserInstance;
 
     private By logInButtonXpath = By.xpath("//a[@class='button button_login header__login-link']");
 
     public YandexDiskHomePage() {
-        this.browserInstance = Browser.getInstance();
     }
 
     public YandexDiskHomePage openYandexDiskHomePage() {
-        browserInstance.get(URL);
+        Browser.getInstance().get(URL);
         return this;
     }
 
     public PassportYandexAuthorizationPage logInButtonClick() {
-        browserInstance.click(logInButtonXpath);
+        Browser.getInstance().click(logInButtonXpath);
         return new PassportYandexAuthorizationPage();
     }
 }

@@ -7,11 +7,9 @@ import org.testng.annotations.BeforeClass;
 
 public class LoginTestBase {
 
-    protected static Browser browser;
-
     @BeforeClass
     public void setupBrowser() {
-        browser = Browser.getInstance();
+        Browser.getInstance();
     }
 
     @AfterMethod

@@ -15,8 +15,6 @@ import com.epam.tat.yandex.disk.page.menuitem.YandexDiskSharedPage;
 
 public abstract class AbstractMenuPage {
 
-    protected static Browser browserInstance;
-
     protected By recentMenuItem = By.xpath("//a[@title='Последние']");
     protected By filesMenuItem = By.xpath("//a[@title='Файлы']");
     protected By photoMenuItem = By.xpath("//a[@title='Фото']");
@@ -30,23 +28,22 @@ public abstract class AbstractMenuPage {
     protected By contentTitle = By.tagName("h1");
 
     public AbstractMenuPage() {
-        this.browserInstance = Browser.getInstance();
     }
 
     public YandexDiskCreatePage createButtonClick() {
-        browserInstance.click(createButton);
+        Browser.getInstance().click(createButton);
         return new YandexDiskCreatePage();
     }
 
     public YandexDiskFolderPage deleteButtonClick() {
         Log.report("Removing the document");
-        browserInstance.click(deleteButton);
+        Browser.getInstance().click(deleteButton);
         return new YandexDiskFolderPage();
     }
 
     public YandexDiskArchivePage archiveMenuItemClick() {
         Log.report("Moving to Archive page");
-        browserInstance.click(archiveMenuItem);
+        Browser.getInstance().click(archiveMenuItem);
         return new YandexDiskArchivePage();
     }
 
@@ -54,26 +51,26 @@ public abstract class AbstractMenuPage {
         Log.report("Moving to Files page");
 
         // Changing current directory to trash first, because current could be Files already.
-        browserInstance.click(trashMenuItem);
-        browserInstance.click(filesMenuItem);
+        Browser.getInstance().click(trashMenuItem);
+        Browser.getInstance().click(filesMenuItem);
         return new YandexDiskFilesPage();
     }
 
     public YandexDiskFilesPage filesMenuItemClick() {
         Log.report("Moving to Files page");
-        browserInstance.click(filesMenuItem);
+        Browser.getInstance().click(filesMenuItem);
         return new YandexDiskFilesPage();
     }
 
     public YandexDiskHistoryPage historyMenuItemClick() {
         Log.report("Moving to History page");
-        browserInstance.click(historyMenuItem);
+        Browser.getInstance().click(historyMenuItem);
         return new YandexDiskHistoryPage();
     }
 
     public YandexDiskPhotoPage photoMenuItemClick() {
         Log.report("Moving to Photo page");
-        browserInstance.click(photoMenuItem);
+        Browser.getInstance().click(photoMenuItem);
         return new YandexDiskPhotoPage();
     }
 
@@ -81,32 +78,32 @@ public abstract class AbstractMenuPage {
         Log.report("Moving to Recent page");
 
         // Changing current directory to trash first, because current could be Recent already.
-        browserInstance.click(trashMenuItem);
-        browserInstance.click(recentMenuItem);
+        Browser.getInstance().click(trashMenuItem);
+        Browser.getInstance().click(recentMenuItem);
         return new YandexDiskRecentPage();
     }
 
     public YandexDiskSharedPage sharedMenuItemClick() {
         Log.report("Moving to Shared page");
 
-        browserInstance.click(sharedMenuItem);
+        Browser.getInstance().click(sharedMenuItem);
         return new YandexDiskSharedPage();
     }
 
     public YandexDiskTrashPage trashMenuItemClick() {
         Log.report("Moving to Trash page");
 
-        browserInstance.click(trashMenuItem);
+        Browser.getInstance().click(trashMenuItem);
         return new YandexDiskTrashPage();
     }
 
     public String getContentTitle() {
         Log.report("Getting title of current page's content");
-        return browserInstance.getText(contentTitle);
+        return Browser.getInstance().getText(contentTitle);
     }
 
     public void waitForContentTitleToBe(String title) {
         Log.report("Waiting for content title of the current page to be: ");
-        browserInstance.waitForAttributeToBe(contentTitle, "title", title);
+        Browser.getInstance().waitForAttributeToBe(contentTitle, "title", title);
     }
 }

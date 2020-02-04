@@ -13,11 +13,9 @@ import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPa
 public class TestBase {
 
     private String originalWindowHandle;
-    protected static Browser browserInstance;
 
     @BeforeClass
     public void setupBrowser() {
-        browserInstance = Browser.getInstance();
         logIn();
     }
 
@@ -26,17 +24,17 @@ public class TestBase {
         AccountService
                 .logIn(testAccount)
                 .openYandexDiskFilesPage();
-        originalWindowHandle = browserInstance.getWrappedDriver().getWindowHandle();
+        originalWindowHandle = Browser.getInstance().getWrappedDriver().getWindowHandle();
     }
 
     private void closeAllTabsExceptFirst() {
-        for (String windowHandle : browserInstance.getWrappedDriver().getWindowHandles()) {
+        for (String windowHandle : Browser.getInstance().getWrappedDriver().getWindowHandles()) {
             if (!windowHandle.equals(originalWindowHandle)) {
-                browserInstance.getWrappedDriver().switchTo().window(windowHandle);
-                browserInstance.getWrappedDriver().close();
+                Browser.getInstance().getWrappedDriver().switchTo().window(windowHandle);
+                Browser.getInstance().getWrappedDriver().close();
             }
         }
-        browserInstance.getWrappedDriver().switchTo().window(originalWindowHandle);
+        Browser.getInstance().getWrappedDriver().switchTo().window(originalWindowHandle);
     }
 
     @AfterMethod(alwaysRun = true)

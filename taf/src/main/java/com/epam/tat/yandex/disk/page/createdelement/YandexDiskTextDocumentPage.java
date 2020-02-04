@@ -9,15 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class YandexDiskTextDocumentPage {
 
-    protected static Browser browserInstance;
-
     By iframeXpath = By.xpath("//iframe");
     By saveStatusId = By.id("BreadcrumbSaveStatus");
     By topRenameFieldId = By.id("BreadcrumbTitle");
     By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
     public YandexDiskTextDocumentPage() {
-        this.browserInstance = Browser.getInstance();
     }
 
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
@@ -27,50 +24,50 @@ public class YandexDiskTextDocumentPage {
          * Switching driver to header's frame so we can wait page to load properly.
          * Waiting for document's save status to load before write any text.
          */
-        browserInstance.swtichToFrame(iframeXpath);
-        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
-        browserInstance.swtichToFrame(null);
+        Browser.getInstance().swtichToFrame(iframeXpath);
+        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().swtichToFrame(null);
 
         // Writing text to the document.
-        browserInstance.typeToBody(textToWrite);
+        Browser.getInstance().typeToBody(textToWrite);
         return this;
     }
 
     public YandexDiskTextDocumentPage renameDocumentFieldClick() {
-        browserInstance.swtichToFrame(iframeXpath);
-        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
-        browserInstance.click(topRenameFieldId);
-        browserInstance.swtichToFrame(null);
+        Browser.getInstance().swtichToFrame(iframeXpath);
+        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().click(topRenameFieldId);
+        Browser.getInstance().swtichToFrame(null);
         return this;
     }
 
     public YandexDiskTextDocumentPage setDocumentName(String name) {
         Log.report("Setting document name to: " + name);
-        browserInstance.swtichToFrame(iframeXpath);
-        browserInstance.clear(topRenameFieldId);
-        browserInstance.type(topRenameFieldId, name);
-        browserInstance.waitForTextToBe(topRenameFieldId, name);
-        browserInstance.getWrappedDriver().findElement(topRenameFieldId).sendKeys(Keys.ENTER);
-        browserInstance.waitForTextToBe(saveStatusId, "Сохранено в Yandex");
-        browserInstance.swtichToFrame(null);
+        Browser.getInstance().swtichToFrame(iframeXpath);
+        Browser.getInstance().clear(topRenameFieldId);
+        Browser.getInstance().type(topRenameFieldId, name);
+        Browser.getInstance().waitForTextToBe(topRenameFieldId, name);
+        Browser.getInstance().getWrappedDriver().findElement(topRenameFieldId).sendKeys(Keys.ENTER);
+        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().swtichToFrame(null);
         return this;
     }
 
     public YandexDiskFolderPage closeDocumentTab() {
         Log.report("Closing document");
-        browserInstance.closeCurrentTab();
-        browserInstance.swtichToTab(0);
+        Browser.getInstance().closeCurrentTab();
+        Browser.getInstance().swtichToTab(0);
         return new YandexDiskFolderPage();
     }
 
     public String getDocumentText() {
         Log.report("Getting text from document");
-        browserInstance.swtichToFrame(iframeXpath);
+        Browser.getInstance().swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
-        new WebDriverWait(browserInstance.getWrappedDriver(), 20)
+        new WebDriverWait(Browser.getInstance().getWrappedDriver(), 20)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
-                .forEach(webElement -> stringBuilder.append(browserInstance.getText(webElement)));
-        browserInstance.swtichToFrame(null);
+                .forEach(webElement -> stringBuilder.append(Browser.getInstance().getText(webElement)));
+        Browser.getInstance().swtichToFrame(null);
         return stringBuilder.toString().trim();
     }
 }

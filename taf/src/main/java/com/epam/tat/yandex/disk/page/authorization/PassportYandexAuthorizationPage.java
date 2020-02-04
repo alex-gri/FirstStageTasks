@@ -7,8 +7,6 @@ import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 
 public class PassportYandexAuthorizationPage {
 
-    private static Browser browserInstance;
-
     private By failureMessage = By.xpath("//div[@class='passp-form-field__error']");
     private By loginTextBox = By.id("passp-field-login");
     private By passwordTextBox = By.id("passp-field-passwd");
@@ -18,24 +16,23 @@ public class PassportYandexAuthorizationPage {
 
 
     public PassportYandexAuthorizationPage() {
-        this.browserInstance = Browser.getInstance();
     }
 
     public PassportYandexAuthorizationPage setLogin(String login) {
         Log.report("Typing login: " + login);
-        browserInstance.type(loginTextBox, login);
+        Browser.getInstance().type(loginTextBox, login);
         return this;
     }
 
     public PassportYandexAuthorizationPage setPassword(String password) {
         Log.report("Typing password: " + password);
-        browserInstance.type(passwordTextBox, password);
+        Browser.getInstance().type(passwordTextBox, password);
         return this;
     }
 
     public PassportYandexAuthorizationPage logInButtonClick() {
         Log.report("Confirming input");
-        browserInstance.click(logInButton);
+        Browser.getInstance().click(logInButton);
         return this;
     }
 
@@ -45,12 +42,12 @@ public class PassportYandexAuthorizationPage {
 
     public boolean isLogInErrorMessagePresent() {
         Log.report("Checking if error occurred");
-        return browserInstance.isDisplayed(failureMessage);
+        return Browser.getInstance().isDisplayed(failureMessage);
     }
 
     public String getLoggedInAccountLogin() {
         Log.report("Checking logged in account's login");
-        browserInstance.click(userButton);
-        return browserInstance.getText(login);
+        Browser.getInstance().click(userButton);
+        return Browser.getInstance().getText(login);
     }
 }
