@@ -5,11 +5,13 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-abstract public class CommonAbstractPage {
+import java.util.Objects;
 
-    protected final int WAIT_TIMEOUT_SECONDS = 30;
+public abstract class CommonAbstractPage {
+
+    protected static final int WAIT_TIMEOUT_SECONDS = 30;
     protected WebDriver driver;
     protected Logger logger = LogManager.getLogger();
     protected static String keeperOfCalculatedCost;
@@ -19,9 +21,11 @@ abstract public class CommonAbstractPage {
         PageFactory.initElements(driver, this);
     }
 
-    protected static ExpectedCondition<Boolean> jQueryAJAXsCompleted() {
-        return driver -> (Boolean) ((JavascriptExecutor)
-                driver).executeScript("return !!window.jQuery && window.jQuery.active == 0");
+    public void waitForPageLoadIsComplete() {
+        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS).until(webDriver ->
+                ((JavascriptExecutor) Objects.requireNonNull(driver))
+                        .executeScript( "return document.readyState")
+                        .equals("complete"));
     }
 
     public String getTotalCostValue() {

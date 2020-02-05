@@ -55,8 +55,10 @@ public class GoogleCloudPlatformPricingCalculatorPage extends CommonAbstractPage
     }
 
     public boolean isCalculatorPageFullyOpened() {
-        return new WebDriverWait(driver, 20)
-                .until(jQueryAJAXsCompleted());
+        waitForPageLoadIsComplete();
+
+        // If wait method fails, return would not work out.
+        return true;
     }
 
     public GoogleCloudPlatformPricingCalculatorPage addPlatformToCalculator(CloudPlatform platform) {
