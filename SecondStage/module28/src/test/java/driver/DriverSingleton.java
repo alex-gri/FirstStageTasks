@@ -9,21 +9,31 @@ public class DriverSingleton {
 
     private static WebDriver driver;
 
+    private DriverSingleton() {
+    }
+
     public static WebDriver getDriver() {
         if (driver == null) {
             switch (System.getProperty("browser")) {
-                case "firefox": {
-                    WebDriverManager.firefoxdriver().setup();
-                    driver = new FirefoxDriver();
-                }
-                default: {
-                    WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-                }
+                case "firefox":
+                    setupFirefoxDriver();
+                    break;
+                default:
+                    setupChromeDriver();
             }
             driver.manage().window().maximize();
         }
         return driver;
+    }
+
+    private static void setupChromeDriver() {
+        WebDriverManager.chromedriver().setup();
+        driver = new ChromeDriver();
+    }
+
+    private static void setupFirefoxDriver() {
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
     }
 
     public static void closeDriver() {
