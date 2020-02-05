@@ -1,0 +1,28 @@
+package com.epam.tat.yandex.disk.page.menuitem;
+
+import com.epam.tat.framework.logger.Log;
+import org.openqa.selenium.By;
+import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
+
+public class YandexDiskTrashPage extends AbstractMenuPage {
+
+    private By emptyTrashButtonXpath = By.xpath("//*[text()='Очистить Корзину']/ancestor::button");
+    private By confirmEmptyTrashButtonXpath = By.xpath("//*[text()='Очистить']/ancestor::button");
+
+    public YandexDiskTrashPage emptyTrashButtonClick() {
+        browserInstance.waitForAttributeToBe(emptyTrashButtonXpath, "aria-disabled", "false");
+        browserInstance.clickNoWait(emptyTrashButtonXpath);
+        return this;
+    }
+
+    public YandexDiskTrashPage confirmEmptyTrashButtonClick() {
+        Log.report("Confirming emptying");
+        browserInstance.click(confirmEmptyTrashButtonXpath);
+        return this;
+    }
+
+    // Clean button is enabled only when there is something in trash.
+    public boolean isTrashEmpty() {
+        return !browserInstance.waitForVisibilityOfElementLocated(emptyTrashButtonXpath).isEnabled();
+    }
+}
