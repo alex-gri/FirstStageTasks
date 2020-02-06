@@ -17,7 +17,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 public class YandexDisk extends TestBase {
-    @Test
+
+    @Test (description = "Create document and check if it's in the folder where we wanted it to be")
     public void isDocumentInAppropriateFolderTest() {
         Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
         Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
@@ -30,10 +31,11 @@ public class YandexDisk extends TestBase {
                 .closeDocumentTab()
                 .getContentTitle();
 
-        assertThat(folderNameOfDocument, is(equalTo(defaultTestFolder.getName())));
+        assertThat("Name of the folder where document is doesn't match to the name of provided test-folded",
+                   folderNameOfDocument, is(equalTo(defaultTestFolder.getName())));
     }
 
-    @Test
+    @Test (description = "Create document, type text in it, save it, open and check if text saved correctly")
     public void isDocumentSavedAndOpenedCorrectlyTest() {
         Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
         Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
@@ -47,10 +49,11 @@ public class YandexDisk extends TestBase {
                 .openDocument(defaultTestDocument)
                 .getDocumentText();
 
-        assertThat(documentText, is(equalTo(defaultTestDocument.getText())));
+        assertThat("Text in document after reopening doesn't match to the text given earlier at creating stage",
+                   documentText, is(equalTo(defaultTestDocument.getText())));
     }
 
-    @Test
+    @Test (description = "Create document, delete it and check if it's visible only in trash")
     public void isDocumentInTrashOnlyTest() {
         Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
         Document defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
@@ -65,77 +68,78 @@ public class YandexDisk extends TestBase {
                 .deleteDocument(defaultTestDocument)
                 .isDocumentInTrashOnly(defaultTestDocument);
 
-        Assert.assertTrue(isDocumentInTrashOnly);
+        Assert.assertTrue(isDocumentInTrashOnly, "Document was not deleted from it's folder");
     }
 
-    @Test
+    @Test (description = "Create folder, open it and check if it has the name that we wanted")
     public void createFolderAndVisitItTest() {
         Folder defaultTestFolder = new FolderBuilder().setDefaultName().build();
         String openedFolderName = FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder)
                 .getContentTitle();
-        assertThat(openedFolderName, is(equalTo(defaultTestFolder.getName())));
+        assertThat("Name of opened folder doesn't match to the name of provided test-folder",
+                   openedFolderName, is(equalTo(defaultTestFolder.getName())));
     }
 
-    @Test
+    @Test (description = "Click Archive in menu and check if it opens")
     public void archiveMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .archiveMenuItemClick()
                 .getContentTitle();
-        assertThat(contentTitle, is("Архив"));
+        assertThat("Opened page is not Archive", contentTitle, is("Архив"));
     }
 
-    @Test
+    @Test (description = "Click Files in menu and check if it opens")
     public void filesMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .filesMenuItemClickAfterClickOnAnotherItem()
                 .getContentTitle();
-        assertThat(contentTitle, is("Файлы"));
+        assertThat("Opened page is not Files", contentTitle, is("Файлы"));
     }
 
-    @Test
+    @Test (description = "Click History in menu and check if it opens")
     public void historyMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .historyMenuItemClick()
                 .getContentTitle();
-        assertThat(contentTitle, is("История"));
+        assertThat("Opened page is not History", contentTitle, is("История"));
     }
 
-    @Test
+    @Test (description = "Click Photo in menu and check if it opens")
     public void photoMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .photoMenuItemClick()
                 .getContentTitle();
-        assertThat(contentTitle, is("Все фотографии"));
+        assertThat("Opened page is not Photo", contentTitle, is("Все фотографии"));
     }
 
-    @Test
+    @Test (description = "Click Recent in menu and check if it opens")
     public void recentMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .recentMenuItemClickAfterClickOnAnotherItem()
                 .getContentTitle();
-        assertThat(contentTitle, is("Последние файлы"));
+        assertThat("Opened page is not Recent", contentTitle, is("Последние файлы"));
     }
 
-    @Test
+    @Test (description = "Click Shared in menu and check if it opens")
     public void sharedMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .sharedMenuItemClick()
                 .getContentTitle();
-        assertThat(contentTitle, is("Публичные ссылки"));
+        assertThat("Opened page is not Shared", contentTitle, is("Публичные ссылки"));
     }
 
-    @Test
+    @Test (description = "Click Trash in menu and check if it opens")
     public void trashMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
                 .trashMenuItemClick()
                 .getContentTitle();
-        assertThat(contentTitle, is("Корзина"));
+        assertThat("Opened page is not trash", contentTitle, is("Корзина"));
     }
 
-    @Test
-    public void isFolderRemovedFromTrashAfterCleanTest() {
+    @Test (description = "Create folder, delete it, empty trash and check if trash is empty")
+    public void isFolderRemovedFromTrashAfterEmptyTest() {
         Folder testFolder = new FolderBuilder().setDefaultName().build();
         FolderService
                 .createFolder(testFolder)
@@ -145,6 +149,6 @@ public class YandexDisk extends TestBase {
                 .emptyTrash()
                 .isTrashEmpty();
 
-        Assert.assertTrue(isFolderRemovedFromTrashAfterClean);
+        Assert.assertTrue(isFolderRemovedFromTrashAfterClean, "Trash was not emptied");
     }
 }

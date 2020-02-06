@@ -18,27 +18,28 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class YandexDiskLogIn extends LoginTestBase {
 
-    @Test
+    @Test (description = "Log in using valid credentials")
     public void validCredentialsLogInTest() {
         Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.PASSWORD).build();
         String loggedInAccountLogin = AccountService.logIn(testAccount)
                 .getLoggedInAccountLogin();
-        assertThat(loggedInAccountLogin, is(equalTo(testAccount.getLogin())));
+        assertThat("Logged in account's login doesn't match to the given test-account's login",
+                   loggedInAccountLogin, is(equalTo(testAccount.getLogin())));
     }
 
-    @Test
+    @Test (description = "Log in using invalid login")
     public void invalidLoginLogInTest() {
         Account testAccount = new AccountBuilder().login(Constants.INCORRECT_VALUE).build();
         boolean isLogInFailed = AccountService.logInUsingOnlyLogin(testAccount)
                 .isLogInErrorMessagePresent();
-        Assert.assertTrue(isLogInFailed);
+        Assert.assertTrue(isLogInFailed, "Log in state is not 'failed'");
     }
 
-    @Test
+    @Test (description = "Log in using valid login and invalid password")
     public void invalidPasswordLogInTest() {
         Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.INCORRECT_VALUE).build();
         boolean isLogInFailed = AccountService.logIn(testAccount)
                 .isLogInErrorMessagePresent();
-        Assert.assertTrue(isLogInFailed);
+        Assert.assertTrue(isLogInFailed, "Log in state is not 'failed'");
     }
 }
