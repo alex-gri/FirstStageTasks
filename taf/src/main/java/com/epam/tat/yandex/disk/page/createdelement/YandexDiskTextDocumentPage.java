@@ -2,6 +2,7 @@ package com.epam.tat.yandex.disk.page.createdelement;
 
 import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
+import com.epam.tat.test.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -64,7 +65,7 @@ public class YandexDiskTextDocumentPage {
         Log.report("Getting text from document");
         Browser.getInstance().swtichToFrame(iframeXpath);
         StringBuilder stringBuilder = new StringBuilder();
-        new WebDriverWait(Browser.getInstance().getWrappedDriver(), 20)
+        new WebDriverWait(Browser.getInstance().getWrappedDriver(), Constants.VISIBILITY_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.presenceOfAllElementsLocatedBy(outlineContent))
                 .forEach(webElement -> stringBuilder.append(Browser.getInstance().getText(webElement)));
         Browser.getInstance().swtichToFrame(null);

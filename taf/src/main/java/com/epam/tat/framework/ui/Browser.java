@@ -3,6 +3,7 @@ package com.epam.tat.framework.ui;
 import com.epam.tat.framework.driver.DriverSingleton;
 import com.epam.tat.framework.exception.NotSupportedBrowserException;
 import com.epam.tat.framework.logger.Log;
+import com.epam.tat.test.Constants;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -17,8 +18,6 @@ import java.util.ArrayList;
 
 public class Browser implements WrapsDriver {
 
-    private static final int VISIBILITY_TIMEOUT_SECONDS = 15;
-    private static final int VALUE_TO_BE_TIMEOUT_SECONDS = 30;
     private static final ThreadLocal<Browser> instance = new ThreadLocal<>();
 
     private WebDriver wrappedDriver;
@@ -78,7 +77,7 @@ public class Browser implements WrapsDriver {
     }
 
     public void waitForAttributeToBe(By by, String attributeName, String value) {
-        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS)
+        new WebDriverWait(wrappedDriver, Constants.VALUE_TO_BE_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.attributeToBe(by, attributeName, value));
     }
 
@@ -126,7 +125,7 @@ public class Browser implements WrapsDriver {
 
     public void swtichToTab(int tabIndex) {
         ArrayList<String> tabs = new ArrayList<>(wrappedDriver.getWindowHandles());
-        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS).until(WebDriver::switchTo).window(tabs.get(tabIndex));
+        new WebDriverWait(wrappedDriver, Constants.VALUE_TO_BE_TIMEOUT_SECONDS).until(WebDriver::switchTo).window(tabs.get(tabIndex));
         Log.debug("Swtiched to tab: " + tabIndex);
     }
 
@@ -142,17 +141,17 @@ public class Browser implements WrapsDriver {
     }
 
     public WebElement waitForVisibilityOfElementLocated(By by) {
-        return waitForVisibilityOfElementLocated(by, VISIBILITY_TIMEOUT_SECONDS);
+        return waitForVisibilityOfElementLocated(by, Constants.VISIBILITY_TIMEOUT_SECONDS);
     }
 
     public void waitForVisibilityOf(WebElement element) {
-        new WebDriverWait(wrappedDriver, VISIBILITY_TIMEOUT_SECONDS)
+        new WebDriverWait(wrappedDriver, Constants.VISIBILITY_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
     public void waitForTextToBe(By by, String textToBe) {
         Log.debug("Waiting for: " + by + " to have text: " + textToBe);
-        new WebDriverWait(wrappedDriver, VALUE_TO_BE_TIMEOUT_SECONDS)
+        new WebDriverWait(wrappedDriver, Constants.VALUE_TO_BE_TIMEOUT_SECONDS)
                 .until(ExpectedConditions.textToBe(by, textToBe));
     }
 
