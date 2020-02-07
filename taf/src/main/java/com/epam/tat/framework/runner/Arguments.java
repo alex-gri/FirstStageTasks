@@ -12,12 +12,12 @@ public class Arguments {
 
     private static Arguments instance;
 
-    @Parameter(names = {"--suites", "-s"}, description = "The list of TestNG suites", required = true)
+    @Parameter(names = {"--suites", "-s"}, description = "The list of TestNG suites")
     private List<String> suites = new ArrayList<>();
 
-    @Parameter(names = {"--browser", "-b"}, description = "Browser type", required = true,
+    @Parameter(names = {"--browser", "-b"}, description = "Browser type",
                converter = BrowserTypeConverter.class)
-    private BrowserType browserType;
+    private BrowserType browserType = BrowserType.CHROME;
 
     @Parameter(names = {"--logger", "-l"}, description = "Log4j.xml config")
     private String logger = "./src/main/resources/log4j.xml";
