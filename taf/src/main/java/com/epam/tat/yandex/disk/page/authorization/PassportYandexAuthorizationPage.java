@@ -47,7 +47,10 @@ public class PassportYandexAuthorizationPage {
 
     public String getLoggedInAccountLogin() {
         Log.report("Checking logged in account's login");
-        Browser.getInstance().click(userButton);
         return Browser.getInstance().getText(login);
+    }
+
+    public void profileAvatarButtonClick() {
+        Browser.getInstance().click(userButton);
     }
 }
