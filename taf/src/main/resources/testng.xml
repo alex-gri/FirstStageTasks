@@ -3,7 +3,7 @@
 <suite name="YandexDisk" verbose="1">
     <test name="log in" >
         <classes>
-            <class name="com.epam.tat.framework.runner.CucumberLogIn"/>
+            <class name="com.epam.tat.test.yandex.cucumber.CucumberLogIn"/>
         </classes>
     </test>
 </suite>

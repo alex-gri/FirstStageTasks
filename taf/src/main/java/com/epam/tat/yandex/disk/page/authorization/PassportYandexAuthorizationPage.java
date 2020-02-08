@@ -14,7 +14,6 @@ public class PassportYandexAuthorizationPage {
     protected By login = By.xpath("//span[@class='user-account__name']");
     protected By userButton = By.xpath("//div[@class='user-pic user-account__pic']");
 
-
     public PassportYandexAuthorizationPage() {
     }
 
@@ -50,7 +49,8 @@ public class PassportYandexAuthorizationPage {
         return Browser.getInstance().getText(login);
     }
 
-    public void profileAvatarButtonClick() {
+    public PassportYandexAuthorizationPage profileAvatarButtonClick() {
         Browser.getInstance().click(userButton);
+        return this;
     }
 }
