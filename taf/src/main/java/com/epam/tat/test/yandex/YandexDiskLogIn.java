@@ -22,6 +22,7 @@ public class YandexDiskLogIn extends LoginTestBase {
     public void validCredentialsLogInTest() {
         Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.PASSWORD).build();
         String loggedInAccountLogin = AccountService.logIn(testAccount)
+                .profileAvatarButtonClick()
                 .getLoggedInAccountLogin();
         assertThat("Logged in account's login doesn't match to the given test-account's login",
                    loggedInAccountLogin, is(equalTo(testAccount.getLogin())));
