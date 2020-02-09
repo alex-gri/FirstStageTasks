@@ -21,6 +21,12 @@ Feature: Yandex disk log in
     And user clicks submit
     Then user sees error message
 
+  Scenario: Log in with empty login
+    Given user is on home page
+    When user clicks log in
+    And user clicks submit
+    Then user sees error message
+
   Scenario: Log in with invalid password
     Given user is on home page
     And user has valid login and invalid password
