@@ -16,6 +16,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -29,6 +30,7 @@ public class DocumentStepDefinitions {
     @Given("user is on Files page")
     public void userIsOnFilesPage() {
         // It is already opened in BeforeClass
+        defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
     }
 
     @When("user creates folder with <random folder name>")
@@ -64,11 +66,6 @@ public class DocumentStepDefinitions {
         new YandexDiskTextDocumentPage().writeToDocument(defaultTestDocument.getText());
     }
 
-    @And("user has sample of document that consist of text and name")
-    public void userHasSampleOfDocumentThatIncludesTextAndName() {
-        defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
-    }
-
     @And("user sets <random document name>")
     public void userSetsRandomDocumentName() {
         DocumentService.setDocumentNameTo(defaultTestDocument);
@@ -93,5 +90,18 @@ public class DocumentStepDefinitions {
                 .openYandexDiskFilesPage()
                 .filesMenuItemClick()
                 .waitForContentTitleToBe("Файлы");
+    }
+
+    @And("deletes that document")
+    public void deletesThatDocument() {
+        FolderService.deleteDocument(defaultTestDocument);
+    }
+
+    @Then("user should not see document in the current folder")
+    public void userShouldNotSeeDocumentInTheCurrentFolder() {
+        boolean isDocumentInTrashOnly = new YandexDiskFolderPage()
+                .isDocumentInTrashOnly(defaultTestDocument);
+
+        Assert.assertTrue(isDocumentInTrashOnly, "Document was not deleted from it's folder");
     }
 }
