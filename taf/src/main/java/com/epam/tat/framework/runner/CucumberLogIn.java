@@ -1,4 +1,4 @@
-package com.epam.tat.test.yandex.cucumber;
+package com.epam.tat.framework.runner;
 
 import com.epam.tat.framework.ui.Browser;
 import io.cucumber.testng.*;
