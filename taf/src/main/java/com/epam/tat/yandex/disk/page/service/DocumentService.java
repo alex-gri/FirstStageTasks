@@ -14,8 +14,12 @@ public class DocumentService {
         new YandexDiskCreatePage()
                 .createButtonClick()
                 .createTextDocumentOptionClick();
+        return document.getDocumentPage();
+    }
+
+    public static YandexDiskTextDocumentPage setDocumentNameTo(Document document) {
+        Log.report("[Document] Changing document's name");
         return document.getDocumentPage()
-                .writeToDocument(document.getText())
                 .renameDocumentFieldClick()
                 .setDocumentName(document.getName());
     }

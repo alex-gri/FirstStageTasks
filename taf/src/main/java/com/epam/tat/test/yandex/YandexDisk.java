@@ -26,8 +26,11 @@ public class YandexDisk extends TestBase {
         FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder);
+        DocumentService
+                .createDocument(defaultTestDocument); // Document opens automatically.
         String folderNameOfDocument = DocumentService
-                .createDocument(defaultTestDocument) // Document opens automatically.
+                .setDocumentNameTo(defaultTestDocument)
+                .writeToDocument(defaultTestDocument.getText())
                 .closeDocumentTab()
                 .getContentTitle();
 
@@ -43,8 +46,11 @@ public class YandexDisk extends TestBase {
         FolderService
                 .createFolder(defaultTestFolder)
                 .openCreatedFolder(defaultTestFolder);
+        DocumentService
+                .createDocument(defaultTestDocument); // Document opens automatically.
         String documentText = DocumentService
-                .createDocument(defaultTestDocument) // Document opens automatically.
+                .setDocumentNameTo(defaultTestDocument)
+                .writeToDocument(defaultTestDocument.getText())
                 .closeDocumentTab()
                 .openDocument(defaultTestDocument)
                 .getDocumentText();
