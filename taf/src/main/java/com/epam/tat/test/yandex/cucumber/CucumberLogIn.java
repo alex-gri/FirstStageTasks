@@ -6,8 +6,8 @@ import org.testng.annotations.AfterClass;
 
 @CucumberOptions(
         strict = true,
-        features = {"src/main/resources/features"},
-        glue = {"com.epam.tat.test.yandex.cucumber"},
+        features = {"src/main/resources/features/login.feature"},
+        glue = {"com.epam.tat.test.yandex.cucumber.login"},
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty",

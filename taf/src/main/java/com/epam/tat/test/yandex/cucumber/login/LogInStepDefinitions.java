@@ -1,4 +1,4 @@
-package com.epam.tat.test.yandex.cucumber;
+package com.epam.tat.test.yandex.cucumber.login;
 
 import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.model.Account;
