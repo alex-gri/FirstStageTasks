@@ -4,16 +4,14 @@ import com.epam.tat.framework.model.Account;
 import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.test.Constants;
-import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPage;
 import com.epam.tat.yandex.disk.page.service.AccountService;
-import io.cucumber.java.After;
 import io.cucumber.testng.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 @CucumberOptions(
         strict = true,
-        features = {"src/main/resources/features/document.feature"},
+        features = {"src/main/resources/features/files.feature"},
         glue = {"com.epam.tat.test.yandex.cucumber.disk", },
         plugin = {
                 "pretty",
@@ -23,7 +21,6 @@ import org.testng.annotations.BeforeClass;
 
 public class CucumberDisk extends AbstractTestNGCucumberTests {
 
-    //private static String originalWindowHandle;
     private static ThreadLocal<String> instance = new ThreadLocal<>();
 
     @BeforeClass
@@ -37,7 +34,6 @@ public class CucumberDisk extends AbstractTestNGCucumberTests {
                 .logIn(testAccount)
                 .openYandexDiskFilesPage();
         instance.set(Browser.getInstance().getWrappedDriver().getWindowHandle());
-        //originalWindowHandle = Browser.getInstance().getWrappedDriver().getWindowHandle();
     }
 
     public static void closeAllTabsExceptFirst() {
@@ -49,8 +45,6 @@ public class CucumberDisk extends AbstractTestNGCucumberTests {
         }
         Browser.getInstance().getWrappedDriver().switchTo().window(instance.get());
     }
-
-
 
     @AfterClass
     public void tearDownBrowser() {
