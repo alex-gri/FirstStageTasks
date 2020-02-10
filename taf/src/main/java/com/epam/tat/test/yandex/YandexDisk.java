@@ -123,7 +123,7 @@ public class YandexDisk extends TestBase {
     @Test (description = "Click Recent in menu and check if it opens")
     public void recentMenuItemLeadsToValidPageTest() {
         String contentTitle = new YandexDiskFilesPage()
-                .recentMenuItemClickAfterClickOnAnotherItem()
+                .recentMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not Recent", contentTitle, is("Последние файлы"));
     }

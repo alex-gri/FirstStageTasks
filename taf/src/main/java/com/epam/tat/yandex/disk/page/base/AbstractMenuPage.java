@@ -74,11 +74,8 @@ public abstract class AbstractMenuPage {
         return new YandexDiskPhotoPage();
     }
 
-    public YandexDiskRecentPage recentMenuItemClickAfterClickOnAnotherItem() {
+    public YandexDiskRecentPage recentMenuItemClick() {
         Log.report("Moving to Recent page");
-
-        // Changing current directory to trash first, because current could be Recent already.
-        Browser.getInstance().click(trashMenuItem);
         Browser.getInstance().click(recentMenuItem);
         return new YandexDiskRecentPage();
     }
