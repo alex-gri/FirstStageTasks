@@ -41,8 +41,8 @@ public class FilesStepDefinitions {
         defaultTestDocument = new DocumentBuilder().setDefaultName().setDefaultText().build();
     }
 
-    @When("user creates folder with <random folder name>")
-    public void userCreatesFolderWithRandomName() {
+    @When("user creates folder that named randomly")
+    public void userCreatesFolderWithName() {
         defaultTestFolder = new FolderBuilder().setDefaultName().build();
         FolderService.createFolder(defaultTestFolder);
     }
@@ -100,7 +100,7 @@ public class FilesStepDefinitions {
     }
 
     @Then("user should see correct <random folder name> in the title")
-    public void userShouldSeeCorrectFolderNameInTheTitle() {
+    public void userShouldSeeCorrectRandomFolderNameInTheTitle() {
         String openedFolderName = new YandexDiskFolderPage()
                 .getContentTitle();
         assertThat("Name of opened folder doesn't match to the name of provided test-folder",
@@ -213,5 +213,19 @@ public class FilesStepDefinitions {
     public void userTypesTextIntoIt(String text) {
         defaultTestDocument.setText(text);
         new YandexDiskTextDocumentPage().writeToDocument(text);
+    }
+
+    @When("^user creates folder with (.*)$")
+    public void userCreatesFolderWithFolderName(String outlinedFolderName) {
+        defaultTestFolder = new FolderBuilder().setName(outlinedFolderName).build();
+        FolderService.createFolder(defaultTestFolder);
+    }
+
+    @Then("^user should see correct (.*) in the title$")
+    public void userShouldSeeCorrectFolderNameInTheTitle(String outlinedFolderName) {
+        String openedFolderName = new YandexDiskFolderPage()
+                .getContentTitle();
+        assertThat("Name of opened folder doesn't match to the name of provided test-folder",
+                openedFolderName, is(equalTo(outlinedFolderName)));
     }
 }

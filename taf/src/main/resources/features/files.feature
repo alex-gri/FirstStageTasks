@@ -1,8 +1,20 @@
 Feature: Yandex disk files
 
+  Scenario Outline: Create folder, open it and see it's correct name as a title
+    Given user is on Files page
+    When user creates folder with <folder name>
+    And opens that folder
+    Then user should see correct <folder name> in the title
+
+    Examples:
+      | folder name |
+      | I           |
+      | Feel        |
+      | Good!       |
+
   Scenario: Document is created, saved and reopened correctly
     Given user is on Files page
-    When user creates folder with <random folder name>
+    When user creates folder that named randomly
     And opens that folder
     And creates text document
     And user types "Hello World!" into it
@@ -13,7 +25,7 @@ Feature: Yandex disk files
 
   Scenario: Create folder, delete it, empty trash and it should be empty
     Given user is on Files page
-    When user creates folder with <random folder name>
+    When user creates folder that named randomly
     And deletes that folder
     And user clicks <Trash>
     And user clicks Empty Trash
@@ -21,7 +33,7 @@ Feature: Yandex disk files
 
   Scenario: Document is created in correct folder
     Given user is on Files page
-    When user creates folder with <random folder name>
+    When user creates folder that named randomly
     And opens that folder
     And creates text document
     And user sets <random document name>
@@ -30,7 +42,7 @@ Feature: Yandex disk files
 
   Scenario: Document is created, saved, deleted and should be only in trash
     Given user is on Files page
-    When user creates folder with <random folder name>
+    When user creates folder that named randomly
     And opens that folder
     And creates text document
     And user sets <random document name>
@@ -41,7 +53,7 @@ Feature: Yandex disk files
 
   Scenario: Create folder, open it and see it's correct name as a title
     Given user is on Files page
-    When user creates folder with <random folder name>
+    When user creates folder that named randomly
     And opens that folder
     Then user should see correct <random folder name> in the title
 
