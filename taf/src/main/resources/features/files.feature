@@ -43,7 +43,7 @@ Feature: Yandex disk files
   Scenario: Document is created, saved, deleted and should be only in trash
     Given user is on Files page
     When user creates folder that named randomly
-    And opens that folder
+    And clicks open folder
     And creates text document
     And user sets <random document name>
     And closes that document

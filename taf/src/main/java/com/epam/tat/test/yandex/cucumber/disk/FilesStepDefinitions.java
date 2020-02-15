@@ -47,7 +47,7 @@ public class FilesStepDefinitions {
         FolderService.createFolder(defaultTestFolder);
     }
 
-    @And("opens that folder")
+    @And("^(?:opens that folder|clicks open folder)$")
     public void opensThatFolder() {
         new YandexDiskCreatePage().openCreatedFolder(defaultTestFolder);
     }
