@@ -69,11 +69,6 @@ public class FilesStepDefinitions {
                 folderNameOfDocument, is(equalTo(defaultTestFolder.getName())));
     }
 
-    @And("user types <text> into it")
-    public void userTypesTextIntoIt() {
-        new YandexDiskTextDocumentPage().writeToDocument(defaultTestDocument.getText());
-    }
-
     @And("user sets <random document name>")
     public void userSetsRandomDocumentName() {
         DocumentService.setDocumentNameTo(defaultTestDocument);
@@ -102,7 +97,6 @@ public class FilesStepDefinitions {
         if (isDocumentInCurrentFolder) {
         Assert.assertFalse(isDocumentInCurrentFolder, "Document was not deleted from it's folder");
         }
-        //sharedBool = isDocumentInCurrentFolder;
     }
 
     @Then("user should see correct <random folder name> in the title")
@@ -213,5 +207,11 @@ public class FilesStepDefinitions {
         boolean isTrashEmpty = new YandexDiskTrashPage()
                 .isTrashEmpty();
         Assert.assertTrue(isTrashEmpty, "Trash was not emptied");
+    }
+
+    @And("^user types \"(.*)\" into it$")
+    public void userTypesTextIntoIt(String text) {
+        defaultTestDocument.setText(text);
+        new YandexDiskTextDocumentPage().writeToDocument(text);
     }
 }
