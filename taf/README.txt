@@ -1,3 +1,5 @@
+To avoid error in test where folder with the same name already exists change Examples at files.feature file.
+
 Package project using maven and run it from 'demo-jar-with-dependencies' using console:
 java -jar demo-jar-with-dependencies.jar --suites testng.xml
 
