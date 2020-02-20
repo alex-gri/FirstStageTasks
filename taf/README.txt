@@ -1,4 +1,4 @@
-To run packaged project from 'demo-jar-with-dependencies' using console:
+Package project using maven and run it from 'demo-jar-with-dependencies' using console:
 java -jar demo-jar-with-dependencies.jar --suites testng-all.xml
 
 To run in parallel:
