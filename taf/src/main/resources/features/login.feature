@@ -5,6 +5,8 @@ Feature: Yandex disk log in
   Scenario: Log in with valid credentials
     Given user is on home page
     And user has valid credentials
+      | login                 | password    |
+      | taf.alexander.gritsok | WebDriverGo |
     When user clicks log in
     And user enters login
     And user clicks submit

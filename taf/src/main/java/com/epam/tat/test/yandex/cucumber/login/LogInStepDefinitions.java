@@ -12,7 +12,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.DataTableType;
 import org.testng.Assert;
+
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -23,14 +27,22 @@ public class LogInStepDefinitions {
     private Account testAccount;
     private PassportYandexAuthorizationPage authorizationPage;
 
+    @DataTableType
+    public Account accountEntry(Map<String, String> entry) {
+        return new Account(
+                entry.get("login"),
+                entry.get("password"));
+    }
+
     @Given("user is on home page")
     public void userIsOnHomePage() {
         new YandexDiskHomePage().openYandexDiskHomePage();
     }
 
+
     @And("user has valid credentials")
-    public void userHasValidCredentials() {
-        testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.PASSWORD).build();
+    public void userHasValidCredentials(List<Account> accounts) {
+        testAccount = accounts.get(0);
     }
 
     @When("user clicks log in")
