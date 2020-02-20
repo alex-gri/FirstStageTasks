@@ -12,7 +12,7 @@ public class Arguments {
 
     private static Arguments instance;
 
-    @Parameter(names = {"--suites", "-s"}, description = "The list of TestNG suites")
+    @Parameter(names = {"--suites", "-s"}, description = "The list of TestNG suites", required = true)
     private List<String> suites = new ArrayList<>();
 
     @Parameter(names = {"--browser", "-b"}, description = "Browser type",

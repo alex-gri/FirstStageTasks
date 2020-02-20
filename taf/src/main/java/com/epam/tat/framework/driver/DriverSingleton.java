@@ -1,7 +1,6 @@
 package com.epam.tat.framework.driver;
 
 import com.epam.tat.framework.exception.NotSupportedBrowserException;
-import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.runner.Arguments;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;

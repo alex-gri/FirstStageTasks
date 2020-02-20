@@ -1,7 +1,8 @@
 package com.epam.tat.framework.runner;
 
 import com.epam.tat.framework.ui.Browser;
-import io.cucumber.testng.*;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.testng.annotations.AfterClass;
 
 @CucumberOptions(

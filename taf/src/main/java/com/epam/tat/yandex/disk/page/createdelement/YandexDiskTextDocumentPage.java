@@ -10,10 +10,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class YandexDiskTextDocumentPage {
 
-    By iframeXpath = By.xpath("//iframe");
-    By saveStatusId = By.id("BreadcrumbSaveStatus");
-    By topRenameFieldId = By.id("BreadcrumbTitle");
-    By outlineContent = By.xpath("//*[@class='OutlineContent']");
+    private By iframeXpath = By.xpath("//iframe");
+    private By saveStatusId = By.id("BreadcrumbSaveStatus");
+    private By topRenameFieldId = By.id("BreadcrumbTitle");
+    private By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
     public YandexDiskTextDocumentPage() {
     }

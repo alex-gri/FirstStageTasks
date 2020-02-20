@@ -5,7 +5,8 @@ import com.epam.tat.framework.model.builder.AccountBuilder;
 import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.test.Constants;
 import com.epam.tat.yandex.disk.page.service.AccountService;
-import io.cucumber.testng.*;
+import io.cucumber.testng.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
