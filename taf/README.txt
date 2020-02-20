@@ -1,5 +1,5 @@
 Package project using maven and run it from 'demo-jar-with-dependencies' using console:
-java -jar demo-jar-with-dependencies.jar --suites testng-all.xml
+java -jar demo-jar-with-dependencies.jar --suites testng.xml
 
 To run in parallel:
 java -jar demo-jar-with-dependencies.jar --suites testng-all.xml -p classes -t 2
