@@ -15,6 +15,3 @@ Arguments in short:
     {"--parallel", "-p"}, description = "Entities that you want to run in parallel", default - NONE
     
     {"--threads", "-t"}, description = "Threads count", default = 1
-
-
-
