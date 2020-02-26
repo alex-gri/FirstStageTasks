@@ -1,25 +1,25 @@
 package bo;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import java.util.Comparator;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
-import java.util.Set;
-
-@JacksonXmlRootElement(localName = "weather")
-@JsonIgnoreProperties({"astronomy", "maxtempC", "maxtempF", "mintempF", "uvIndex", "totalSnow_cm", "sunHour",
-"avgtempC", "avgtempF"})
 public class Weather {
 
-    @JacksonXmlProperty(localName = "date")
     private String date;
 
-    @JacksonXmlProperty(localName = "mintempC")
     private Integer mintempC;
 
-    @JacksonXmlElementWrapper(localName="hourly")
-    private Set<Hourly> hourly;
+    private SortedSet<Hourly> hourly;
+
+    public Weather() {
+        hourly = new TreeSet<Hourly>(new Comparator<Hourly>() {
+            @Override
+            public int compare(Hourly o1, Hourly o2) {
+                return 1;
+            }
+        });
+    }
 
     public String getDate() {
         return date;
@@ -37,12 +37,16 @@ public class Weather {
         this.mintempC = mintempC;
     }
 
-    public Set<Hourly> getHourly() {
+    public SortedSet<Hourly> getHourly() {
         return hourly;
     }
 
-    public void setHourly(Set<Hourly> hourly) {
-        this.hourly = hourly;
+    public Hourly getLastHourly() {
+        return hourly.last();
+    }
+
+    public void setHourly(Hourly hourly) {
+        this.hourly.add(hourly);
     }
 
     @Override
