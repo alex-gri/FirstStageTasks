@@ -7,15 +7,13 @@ import java.util.TreeSet;
 public class Weather {
 
     private String date;
-
     private Integer mintempC;
-
-    private SortedSet<Hourly> hourly;
+    private SortedSet<Float> precipMM;
 
     public Weather() {
-        hourly = new TreeSet<Hourly>(new Comparator<Hourly>() {
+        precipMM = new TreeSet<Float>(new Comparator<Float>() {
             @Override
-            public int compare(Hourly o1, Hourly o2) {
+            public int compare(Float o1, Float o2) {
                 return 1;
             }
         });
@@ -37,16 +35,12 @@ public class Weather {
         this.mintempC = mintempC;
     }
 
-    public SortedSet<Hourly> getHourly() {
-        return hourly;
+    public SortedSet<Float> getPrecipMM() {
+        return precipMM;
     }
 
-    public Hourly getLastHourly() {
-        return hourly.last();
-    }
-
-    public void setHourly(Hourly hourly) {
-        this.hourly.add(hourly);
+    public void addPrecipMM(Float precipMM) {
+        this.precipMM.add(precipMM);
     }
 
     @Override
@@ -54,7 +48,7 @@ public class Weather {
         return "Weather{" +
                 "date='" + date + '\'' +
                 ", mintempC=" + mintempC +
-                ", hourly=" + hourly +
+                ", precipMM=" + precipMM +
                 '}';
     }
 }

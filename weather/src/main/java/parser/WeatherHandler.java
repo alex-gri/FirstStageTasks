@@ -1,7 +1,6 @@
 package parser;
 
 
-import bo.Hourly;
 import bo.Weather;
 import bo.WeatherHistory;
 import org.xml.sax.Attributes;
@@ -13,7 +12,6 @@ public class WeatherHandler extends DefaultHandler {
     private static final String WEATHER = "weather";
     private static final String DATE = "date";
     private static final String MINTEMPC = "mintempC";
-    private static final String HOURLY = "hourly";
     private static final String PRECIPMM = "precipMM";
 
     private WeatherHistory weatherHistory;
@@ -35,8 +33,6 @@ public class WeatherHandler extends DefaultHandler {
             case WEATHER:
                 weatherHistory.setWeather(new Weather());
                 break;
-            case HOURLY:
-                weatherHistory.getLastWeather().setHourly(new Hourly());
         }
     }
 
@@ -50,7 +46,7 @@ public class WeatherHandler extends DefaultHandler {
                 weatherHistory.getLastWeather().setMintempC(Integer.valueOf(elementValue));
                 break;
             case PRECIPMM:
-                weatherHistory.getLastWeather().getLastHourly().setPrecipMM(Float.parseFloat(elementValue));
+                weatherHistory.getLastWeather().addPrecipMM(Float.parseFloat(elementValue));
                 break;
         }
     }
