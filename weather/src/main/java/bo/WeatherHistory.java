@@ -25,13 +25,13 @@ public class WeatherHistory {
         return weather.last();
     }
 
-    public void setWeather(Weather weather) {
+    public void addWeather(Weather weather) {
         this.weather.add(weather);
     }
 
     @Override
     public String toString() {
-        return "WeatherParser{" +
+        return "WeatherHistory{" +
                 "weather=" + weather +
                 '}';
     }

@@ -23,15 +23,10 @@ public class WeatherHandler extends DefaultHandler {
     }
 
     @Override
-    public void endDocument() throws SAXException {
-        super.endDocument();
-    }
-
-    @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         switch (qName) {
             case WEATHER:
-                weatherHistory.setWeather(new Weather());
+                weatherHistory.addWeather(new Weather());
                 break;
         }
     }
