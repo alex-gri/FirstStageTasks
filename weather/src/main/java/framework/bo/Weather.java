@@ -1,4 +1,4 @@
-package bo;
+package framework.bo;
 
 import java.util.Comparator;
 import java.util.SortedSet;

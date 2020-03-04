@@ -1,8 +1,8 @@
-package parser;
+package framework.parser;
 
 
-import bo.Weather;
-import bo.WeatherHistory;
+import framework.bo.Weather;
+import framework.bo.WeatherHistory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
