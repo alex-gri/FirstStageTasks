@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="TrickyThursdays" verbose="1">
+    <test name="Money rains test" >
+        <classes>
+            <class name="test.WeatherTest"/>
+        </classes>
+    </test>
+</suite>
