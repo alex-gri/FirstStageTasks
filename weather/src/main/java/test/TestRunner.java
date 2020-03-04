@@ -23,8 +23,6 @@ public class TestRunner {
         testNG.addListener(new SuiteListener());
         testNG.addListener(new TestListener());
         testNG.setTestSuites(Arguments.instance().getSuites());
-        testNG.setParallel(Arguments.instance().getParallel());
-        testNG.setThreadCount(Arguments.instance().getThreadCount());
         return testNG;
     }
 
