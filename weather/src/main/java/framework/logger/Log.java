@@ -22,10 +22,6 @@ public class Log {
         LOGGER.error(message);
     }
 
-    public static void report(String message) {
-        Reporter.log(message + htmlNewLine);
-    }
-
     public static void logAndReport(String message) {
         LOGGER.info(message);
         Reporter.log(message + htmlNewLine);
