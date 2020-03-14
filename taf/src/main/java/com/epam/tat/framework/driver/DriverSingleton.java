@@ -7,6 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DriverSingleton {
 
@@ -57,7 +62,15 @@ public class DriverSingleton {
     private static WebDriver setupChromeDriver() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--ignore-certificate-errors", "start-maximized");
+        options.addArguments("--ignore-certificate-errors")
+                .addArguments("start-maximized")
+                .addArguments("enable-automation")
+                .addArguments("--headless")
+                .addArguments("--no-sandbox")
+                .addArguments("--disable-infobars")
+                .addArguments("--disable-dev-shm-usage")
+                .addArguments("--disable-browser-side-navigation")
+                .addArguments("--disable-gpu");
         return new ChromeDriver(options);
     }
 }
