@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Objects;
+
+import static com.epam.tat.test.Constants.PAGE_LOAD_TIMEOUT_SECONDS;
 
 public class Browser implements WrapsDriver {
 
@@ -138,6 +141,26 @@ public class Browser implements WrapsDriver {
         Log.debug("Waiting for visibility of element by: " + by);
         return new WebDriverWait(wrappedDriver, timeout)
                 .until(ExpectedConditions.visibilityOfElementLocated(by));
+    }
+
+    public boolean isVisibleNoWait(By by) {
+        Log.debug("Is element visible by: " + by);
+        try {
+            return new WebDriverWait(wrappedDriver, 5)
+                    .until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
+        } catch (Exception e) {
+            Log.debug("Element was not found: " + by);
+            return false;
+        }
+    }
+
+    public void waitForPageLoadIsComplete() {
+        Log.info("Waiting for page to load...");
+        new WebDriverWait(wrappedDriver, PAGE_LOAD_TIMEOUT_SECONDS).until(webDriver ->
+                ((JavascriptExecutor) Objects.requireNonNull(wrappedDriver))
+                        .executeScript( "return document.readyState")
+                        .equals("complete"));
+        Log.info("Page loading is completed");
     }
 
     public WebElement waitForVisibilityOfElementLocated(By by) {

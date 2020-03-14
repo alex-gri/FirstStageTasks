@@ -17,7 +17,8 @@ public class AccountService {
                 .setLogin(account.getLogin())
                 .logInButtonClick()
                 .setPassword(account.getPassword())
-                .logInButtonClick();
+                .logInButtonClick()
+                .verifyOverlay();
     }
 
     public static PassportYandexAuthorizationPage logInUsingOnlyLogin(Account account) {
