@@ -65,12 +65,19 @@ public class DriverSingleton {
         options.addArguments("--ignore-certificate-errors")
                 .addArguments("start-maximized")
                 .addArguments("enable-automation")
-                .addArguments("--headless")
                 .addArguments("--no-sandbox")
                 .addArguments("--disable-infobars")
                 .addArguments("--disable-dev-shm-usage")
                 .addArguments("--disable-browser-side-navigation")
                 .addArguments("--disable-gpu");
-        return new ChromeDriver(options);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability("chromeOptions", options);
+        WebDriver driver = null;
+        try {
+            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return driver;
     }
 }
