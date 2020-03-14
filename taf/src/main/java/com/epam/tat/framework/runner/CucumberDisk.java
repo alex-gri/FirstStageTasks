@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 
 @CucumberOptions(
         strict = true,
-        features = {"src/main/resources/features/files.feature"},
+        features = {"features/files.feature"},
         glue = {"com.epam.tat.test.yandex.cucumber.disk", },
         plugin = {
                 "pretty",
