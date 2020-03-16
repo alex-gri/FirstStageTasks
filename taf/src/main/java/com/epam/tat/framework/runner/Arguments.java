@@ -32,6 +32,9 @@ public class Arguments {
                converter = ThreadCountConverter.class)
     private Integer threadCount = 1;
 
+    @Parameter(names = {"--hub", "-h"}, description = "Selenium hub address and port")
+    private String hub = "localhost:4444";
+
     public Arguments() {
     }
 
@@ -60,5 +63,9 @@ public class Arguments {
 
     public Integer getThreadCount() {
         return threadCount;
+    }
+
+    public String getHub() {
+        return hub;
     }
 }

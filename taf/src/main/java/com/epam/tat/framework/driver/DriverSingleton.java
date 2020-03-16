@@ -2,9 +2,7 @@ package com.epam.tat.framework.driver;
 
 import com.epam.tat.framework.exception.NotSupportedBrowserException;
 import com.epam.tat.framework.runner.Arguments;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -55,12 +53,10 @@ public class DriverSingleton {
     }
 
     private static WebDriver setupFirefoxDriver() {
-        WebDriverManager.firefoxdriver().setup();
         return new FirefoxDriver();
     }
 
     private static WebDriver setupChromeDriver() {
-        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--ignore-certificate-errors")
                 .addArguments("start-maximized")
@@ -74,7 +70,9 @@ public class DriverSingleton {
         capabilities.setCapability("chromeOptions", options);
         WebDriver driver = null;
         try {
-            driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), capabilities);
+            StringBuilder hubAddress = new StringBuilder();
+            hubAddress.append("http://").append(Arguments.instance().getHub()).append("/wd/hub");
+            driver = new RemoteWebDriver(new URL(hubAddress.toString()), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
