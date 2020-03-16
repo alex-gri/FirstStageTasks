@@ -4,7 +4,7 @@ Feature: Yandex disk files
     Given user is on Files page
     When user creates folder with <folder name>
     And opens that folder
-    Then user should see correct <folder name> in the title
+    Then user should see <folder name> from Examples in the title
 
     Examples:
       | folder name |

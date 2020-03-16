@@ -221,7 +221,7 @@ public class FilesStepDefinitions {
         FolderService.createFolder(defaultTestFolder);
     }
 
-    @Then("^user should see correct (.*) in the title$")
+    @Then("^user should see (.*) from Examples in the title$")
     public void userShouldSeeCorrectFolderNameInTheTitle(String outlinedFolderName) {
         String openedFolderName = new YandexDiskFolderPage()
                 .getContentTitle();
