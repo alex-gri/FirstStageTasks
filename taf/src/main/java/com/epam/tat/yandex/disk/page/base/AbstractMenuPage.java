@@ -9,16 +9,16 @@ import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
 
 public abstract class AbstractMenuPage {
 
-    protected By recentMenuItem = By.xpath("//a[@title='Последние']");
-    protected By filesMenuItem = By.xpath("//a[@title='Файлы']");
-    protected By photoMenuItem = By.xpath("//a[@title='Фото']");
-    protected By sharedMenuItem = By.xpath("//a[@title='Общий доступ']");
-    protected By historyMenuItem = By.xpath("//a[@title='История']");
-    protected By archiveMenuItem = By.xpath("//a[@title='Архив']");
-    protected By trashMenuItem = By.xpath("//a[@title='Корзина']");
+    protected By recentMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[1]/a");
+    protected By filesMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[2]/a");
+    protected By photoMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[3]/a");
+    protected By sharedMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[4]/a");
+    protected By historyMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[5]/a");
+    protected By archiveMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[6]/a");
+    protected By trashMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[6]/a");
 
-    protected By createButton = By.xpath("//button[contains(.,'Создать')]");
-    protected By deleteButton = By.xpath("//span[text()='Удалить']//ancestor::button");
+    protected By createButton = By.xpath("//span[@class='create-resource-popup-with-anchor']/button");
+    protected By deleteButton = By.xpath("//div[@class='groupable-buttons__visible-buttons']/span[3]//button");
     protected By contentTitle = By.tagName("h1");
 
     public AbstractMenuPage() {

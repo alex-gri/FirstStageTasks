@@ -10,7 +10,7 @@ public class PassportYandexAuthorizationPage {
     private By failureMessage = By.xpath("//div[@class='passp-form-field__error']");
     private By loginTextBox = By.id("passp-field-login");
     private By passwordTextBox = By.id("passp-field-passwd");
-    private By logInButton = By.xpath("//button[contains(.,'Войти')]");
+    private By logInButton = By.xpath("//div[@class='passp-button passp-sign-in-button']/button");
     private By dialogOverlay = By.xpath("//div[@class='dialog__body']");
     private By dialogCloseButton = By.xpath("//button[@class='control button2 button2_view_default button2_size_l button2_theme_clear-inverse albums2-onboarding-base__close']");
     protected By login = By.xpath("//span[@class='user-account__name']");

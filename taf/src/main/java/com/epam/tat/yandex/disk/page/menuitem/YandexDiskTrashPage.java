@@ -7,8 +7,8 @@ import com.epam.tat.yandex.disk.page.base.AbstractMenuPage;
 
 public class YandexDiskTrashPage extends AbstractMenuPage {
 
-    private By emptyTrashButtonXpath = By.xpath("//*[text()='Очистить Корзину']/ancestor::button");
-    private By confirmEmptyTrashButtonXpath = By.xpath("//*[text()='Очистить']/ancestor::button");
+    private By emptyTrashButtonXpath = By.xpath("//div[@class='listing-head__additional-actions']/button");
+    private By confirmEmptyTrashButtonXpath = By.xpath("//div[@class='confirmation-dialog__footer']/button[2]");
 
     public YandexDiskTrashPage emptyTrashButtonClick() {
         Browser.getInstance().waitForAttributeToBe(emptyTrashButtonXpath, "aria-disabled", "false");

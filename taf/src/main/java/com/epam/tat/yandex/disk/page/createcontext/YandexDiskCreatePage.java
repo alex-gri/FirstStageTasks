@@ -13,10 +13,10 @@ import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 
 public class YandexDiskCreatePage extends AbstractMenuPage {
 
-    private By createFolderOption = By.xpath("//button[contains(.,'Папку')]");
-    private By createTextDocumentOption = By.xpath("//button[contains(.,'Текстовый документ')]");
+    private By createFolderOption = By.xpath("//div[@class='create-resource-popup-with-anchor__create-items']/button[1]");
+    private By createTextDocumentOption = By.xpath("//div[@class='create-resource-popup-with-anchor__create-items']/button[2]");
     private By folderNameField = By.xpath("//form[@class='rename-dialog__rename-form']//input");
-    private By saveButton = By.xpath("//button[contains(.,'Сохранить')]");
+    private By saveButton = By.xpath("//div[@class='confirmation-dialog__footer']/button");
     private String folderPartialXpath = "//span[text()='%s']//ancestor::*[@class='listing-item listing-item_theme_tile listing-item_size_m listing-item_type_dir listing-item_selected js-prevent-deselect']";
 
     private String folderName;
