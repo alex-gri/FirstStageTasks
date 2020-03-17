@@ -71,7 +71,8 @@ public class DriverSingleton {
         WebDriver driver = null;
         try {
             StringBuilder hubAddress = new StringBuilder();
-            hubAddress.append("http://").append(Arguments.instance().getHost()).append("/wd/hub");
+            hubAddress.append("http://").append(Arguments.instance().getHost()).append(":")
+                      .append(Arguments.instance().getPort()).append("/wd/hub");
             driver = new RemoteWebDriver(new URL(hubAddress.toString()), capabilities);
         } catch (MalformedURLException e) {
             e.printStackTrace();
