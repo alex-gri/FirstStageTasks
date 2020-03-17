@@ -5,15 +5,15 @@ import com.beust.jcommander.ParameterException;
 import com.epam.tat.framework.listener.SuiteListener;
 import com.epam.tat.framework.listener.TestListener;
 import com.epam.tat.framework.logger.Log;
-import com.epam.tat.framework.util.StringUtils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.testng.TestNG;
 
 public class TestRunner {
 
     public static void main(String[] args) {
         parseCli(args);
-        Log.logAndReport("Starting app with parameters: " + StringUtils.removeCommas(args));
+        Log.logAndReport("Starting app with parameters: " + StringUtils.join(args, ' '));
         createTestNG().run();
         Log.logAndReport("App finished");
     }
