@@ -86,7 +86,7 @@ public class LogInStepDefinitions {
 
     @And("user has invalid login")
     public void userHasInvalidLogin() {
-        testAccount = new AccountBuilder().login(Constants.INCORRECT_VALUE).build();
+        testAccount = new AccountBuilder().invalidLogin().build();
     }
 
     @Then("user sees error message")
@@ -106,6 +106,6 @@ public class LogInStepDefinitions {
 
     @And("user has valid login and invalid password")
     public void userHasValidLoginAndInvalidPassword() {
-        testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.INCORRECT_VALUE).build();
+        testAccount = new AccountBuilder().login(Constants.LOGIN).invalidPassword().build();
     }
 }

@@ -30,7 +30,7 @@ public class YandexDiskLogIn extends LoginTestBase {
 
     @Test (description = "Log in using invalid login")
     public void invalidLoginLogInTest() {
-        Account testAccount = new AccountBuilder().login(Constants.INCORRECT_VALUE).build();
+        Account testAccount = new AccountBuilder().invalidLogin().build();
         boolean isLogInFailed = AccountService.logInUsingOnlyLogin(testAccount)
                 .isLogInErrorMessagePresent();
         Assert.assertTrue(isLogInFailed, "Log in state is not 'failed'");
@@ -38,7 +38,7 @@ public class YandexDiskLogIn extends LoginTestBase {
 
     @Test (description = "Log in using valid login and invalid password")
     public void invalidPasswordLogInTest() {
-        Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.INCORRECT_VALUE).build();
+        Account testAccount = new AccountBuilder().login(Constants.LOGIN).invalidPassword().build();
         boolean isLogInFailed = AccountService.logIn(testAccount)
                 .isLogInErrorMessagePresent();
         Assert.assertTrue(isLogInFailed, "Log in state is not 'failed'");
