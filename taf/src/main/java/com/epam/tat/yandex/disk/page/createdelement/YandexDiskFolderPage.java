@@ -33,12 +33,7 @@ public class YandexDiskFolderPage extends AbstractMenuPage {
     }
 
     public boolean isDocumentInTrashOnly(Document document) {
-        boolean isDocumentInSourceFolder = isDocumentPresent(document);
-        if (isDocumentInSourceFolder) {
-            return false;
-        } else {
             trashMenuItemClick();
             return isDocumentPresent(document); // Is document in trash check.
-        }
     }
 }

@@ -116,14 +116,15 @@ public class Browser implements WrapsDriver {
         return element.getText();
     }
 
-    public void swtichToFrame(By by) {
-        if (by == null) {
-            Log.debug("Switching to default content");
-            wrappedDriver.switchTo().defaultContent();
-        } else {
-            Log.debug("Switching to frame: " + by);
-            wrappedDriver.switchTo().frame(waitForVisibilityOfElementLocated(by));
-        }
+    public void swtichToIframe() {
+        Log.info("Looking for iframe");
+        WebElement iframe = wrappedDriver.findElement(By.tagName("iframe"));
+        Log.info("iframe found. Switching to iframe.");
+        wrappedDriver.switchTo().frame(iframe);
+        Log.info("Looking for body of iframe");
+        WebElement body = wrappedDriver.findElement(By.tagName("body"));
+        Log.info("Body of iframe found");
+        body.click();
     }
 
     public void swtichToTab(int tabIndex) {
@@ -146,10 +147,22 @@ public class Browser implements WrapsDriver {
     public boolean isVisibleNoWait(By by) {
         Log.debug("Is element visible by: " + by);
         try {
-            return new WebDriverWait(wrappedDriver, 5)
+            return new WebDriverWait(wrappedDriver, 0)
                     .until(ExpectedConditions.visibilityOfElementLocated(by)).isDisplayed();
         } catch (Exception e) {
             Log.debug("Element was not found: " + by);
+            return false;
+        }
+    }
+
+    public boolean isPresentAtWait(By by) {
+        Log.debug("Is element present at wait: " + by);
+        try {
+            new WebDriverWait(wrappedDriver, Constants.VISIBILITY_TIMEOUT_SECONDS)
+                    .until(ExpectedConditions.presenceOfElementLocated(by));
+            return true;
+        } catch (Exception e) {
+            Log.debug("Element was not found after wait time: " + by);
             return false;
         }
     }
@@ -158,7 +171,7 @@ public class Browser implements WrapsDriver {
         Log.info("Waiting for page to load...");
         new WebDriverWait(wrappedDriver, PAGE_LOAD_TIMEOUT_SECONDS).until(webDriver ->
                 ((JavascriptExecutor) Objects.requireNonNull(wrappedDriver))
-                        .executeScript( "return document.readyState")
+                        .executeScript("return document.readyState")
                         .equals("complete"));
         Log.info("Page loading is completed");
     }
@@ -210,10 +223,12 @@ public class Browser implements WrapsDriver {
 
     private String getScreenshotName() {
         StringBuilder stringBuilder = new StringBuilder();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "MM-dd_HH-mm-ss" );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd_HH-mm-ss");
         stringBuilder.append(ZonedDateTime.now().format(formatter))
                 .append("-")
-                .append(Thread.currentThread().getName());
+                .append(Thread.currentThread().getName())
+                .append("-")
+                .append(System.currentTimeMillis());
         return stringBuilder.toString();
     }
 

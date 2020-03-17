@@ -9,6 +9,7 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
 
     private By emptyTrashButtonXpath = By.xpath("//div[@class='listing-head__additional-actions']/button");
     private By confirmEmptyTrashButtonXpath = By.xpath("//div[@class='confirmation-dialog__footer']/button[2]");
+    private By termOfEmptiness = By.xpath("//div[@class='listing__items']/div[@class='listing-item listing-item_theme_tile-empty listing-item_size_m' and position()=1]");
 
     public YandexDiskTrashPage emptyTrashButtonClick() {
         Browser.getInstance().waitForAttributeToBe(emptyTrashButtonXpath, "aria-disabled", "false");
@@ -17,13 +18,13 @@ public class YandexDiskTrashPage extends AbstractMenuPage {
     }
 
     public YandexDiskTrashPage confirmEmptyTrashButtonClick() {
-        Log.report("Confirming emptying");
+        Log.logAndReport("Confirming emptying");
         Browser.getInstance().click(confirmEmptyTrashButtonXpath);
         return this;
     }
 
-    // Clean button is enabled only when there is something in trash.
+    // Checking that first cell of file-grid is free.
     public boolean isTrashEmpty() {
-        return !Browser.getInstance().waitForVisibilityOfElementLocated(emptyTrashButtonXpath).isEnabled();
+        return Browser.getInstance().isPresentAtWait(termOfEmptiness);
     }
 }
