@@ -109,7 +109,6 @@ public class FilesStepDefinitions {
 
     @But("can see it in the trash")
     public void canSeeItInTheTrash() {
-        new YandexDiskFolderPage().trashMenuItemClick();
         boolean isDocumentInTrash = new YandexDiskFolderPage().isDocumentInTrashOnly(defaultTestDocument);
         Assert.assertTrue(isDocumentInTrash, "There is no document in trash");
     }
