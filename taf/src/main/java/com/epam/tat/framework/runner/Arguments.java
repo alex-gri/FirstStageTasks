@@ -22,7 +22,7 @@ public class Arguments {
     @Parameter(names = {"--logger", "-l"}, description = "Log4j.xml config")
     private String logger = "./src/main/resources/log4j.xml";
 
-    @Parameter(names = {"--parallel", "-p"}, description = "Entities that you want to run in parallel",
+    @Parameter(names = {"--parallel", "-par"}, description = "Entities that you want to run in parallel",
                validateWith = ParallelModeValidator.class,
                converter = ParallelModeConverter.class)
     private ParallelMode parallel = ParallelMode.NONE;
@@ -32,8 +32,11 @@ public class Arguments {
                converter = ThreadCountConverter.class)
     private Integer threadCount = 1;
 
-    @Parameter(names = {"--hub", "-h"}, description = "Selenium hub address and port")
-    private String hub = "localhost:4444";
+    @Parameter(names = {"--host", "-h"}, description = "Selenium grid host ")
+    private String host = "localhost";
+
+    @Parameter(names = {"--port", "-p"}, description = "Selenium port")
+    private Integer port = 4444;
 
     public Arguments() {
     }
@@ -65,7 +68,11 @@ public class Arguments {
         return threadCount;
     }
 
-    public String getHub() {
-        return hub;
+    public String getHost() {
+        return host;
+    }
+
+    public Integer getPort() {
+        return port;
     }
 }
