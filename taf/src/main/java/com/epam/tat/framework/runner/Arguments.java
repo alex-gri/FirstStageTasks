@@ -28,14 +28,13 @@ public class Arguments {
     private ParallelMode parallel = ParallelMode.NONE;
 
     @Parameter(names = {"--threads", "-t"}, description = "Threads count",
-               validateWith = { PositiveInteger.class, ThreadValidator.class },
-               converter = ThreadCountConverter.class)
+               validateWith = { PositiveInteger.class, ThreadValidator.class })
     private Integer threadCount = 1;
 
     @Parameter(names = {"--host", "-h"}, description = "Selenium grid host ")
     private String host = "localhost";
 
-    @Parameter(names = {"--port", "-p"}, description = "Selenium port")
+    @Parameter(names = {"--port", "-p"}, description = "Selenium port", validateWith = PositiveInteger.class)
     private Integer port = 4444;
 
     public Arguments() {
