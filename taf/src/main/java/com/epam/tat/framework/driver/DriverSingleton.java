@@ -1,6 +1,7 @@
 package com.epam.tat.framework.driver;
 
 import com.epam.tat.framework.exception.NotSupportedBrowserException;
+import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.runner.Arguments;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -75,7 +76,7 @@ public class DriverSingleton {
                       .append(Arguments.instance().getPort()).append("/wd/hub");
             driver = new RemoteWebDriver(new URL(hubAddress.toString()), capabilities);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Log.error(e.getMessage());
         }
         return driver;
     }

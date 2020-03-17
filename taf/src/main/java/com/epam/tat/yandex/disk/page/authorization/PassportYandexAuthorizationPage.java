@@ -15,8 +15,6 @@ public class PassportYandexAuthorizationPage {
     private By dialogCloseButton = By.xpath("//button[@class='control button2 button2_view_default button2_size_l button2_theme_clear-inverse albums2-onboarding-base__close']");
     protected By login = By.xpath("//span[@class='user-account__name']");
     protected By userButton = By.xpath("//div[@class='user-pic user-account__pic']");
-    public PassportYandexAuthorizationPage() {
-    }
 
     public PassportYandexAuthorizationPage setLogin(String login) {
         Log.report("Typing login: " + login);

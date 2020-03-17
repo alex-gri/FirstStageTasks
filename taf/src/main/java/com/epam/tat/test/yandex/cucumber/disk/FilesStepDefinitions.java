@@ -9,7 +9,7 @@ import com.epam.tat.yandex.disk.page.authorization.PassportYandexAuthorizationPa
 import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskTextDocumentPage;
-import com.epam.tat.yandex.disk.page.menuitem.*;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
 import com.epam.tat.yandex.disk.page.service.DocumentService;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import com.epam.tat.yandex.disk.page.service.TrashService;
@@ -194,7 +194,7 @@ public class FilesStepDefinitions {
 
     @And("deletes that folder")
     public void deletesThatFolder() {
-        new YandexDiskFolderPage().deleteButtonClick();
+        new YandexDiskFolderPage().deleteFolderButtonClick();
     }
 
     @And("user clicks Empty Trash")

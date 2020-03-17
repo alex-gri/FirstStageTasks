@@ -32,7 +32,7 @@ public class TestRunner {
         Log.info("Parsing CLIs using JCommander");
         JCommander jCommander = new JCommander();
         try {
-            jCommander.newBuilder()
+            JCommander.newBuilder()
                     .args(args)
                     .addObject(Arguments.instance())
                     .build()

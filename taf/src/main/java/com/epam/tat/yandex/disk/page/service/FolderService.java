@@ -23,7 +23,7 @@ public class FolderService {
         Log.report("[Folder] Removing document from current folder");
         return new YandexDiskFolderPage()
                 .selectDocument(document)
-                .deleteButtonClick();
+                .deleteDocumentButtonClick();
     }
 
     public static boolean isDocumentPresent(Document document) {

@@ -33,7 +33,7 @@ public class CucumberDisk extends AbstractTestNGCucumberTests {
         Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.PASSWORD).build();
         AccountService
                 .logIn(testAccount)
-                .openYandexDiskFilesPage();
+                .openYandexDiskTrashPage();
         instance.set(Browser.getInstance().getWrappedDriver().getWindowHandle());
     }
 
@@ -49,6 +49,7 @@ public class CucumberDisk extends AbstractTestNGCucumberTests {
 
     @AfterClass
     public void tearDownBrowser() {
+        instance.remove();
         Browser.getInstance().stopBrowser();
     }
 }

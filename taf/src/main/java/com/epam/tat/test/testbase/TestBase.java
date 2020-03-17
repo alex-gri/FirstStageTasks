@@ -23,7 +23,7 @@ public class TestBase {
         Account testAccount = new AccountBuilder().login(Constants.LOGIN).password(Constants.PASSWORD).build();
         AccountService
                 .logIn(testAccount)
-                .openYandexDiskFilesPage();
+                .openYandexDiskTrashPage();
         originalWindowHandle = Browser.getInstance().getWrappedDriver().getWindowHandle();
     }
 
@@ -41,7 +41,7 @@ public class TestBase {
     public void returnFilesPage() {
         closeAllTabsExceptFirst();
         new PassportYandexAuthorizationPage()
-                .openYandexDiskFilesPage()
+                .openYandexDiskTrashPage()
                 .filesMenuItemClick()
                 .waitForContentTitleToBe("Файлы");
     }

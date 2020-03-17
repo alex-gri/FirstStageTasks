@@ -149,7 +149,7 @@ public class YandexDisk extends TestBase {
         Folder testFolder = new FolderBuilder().setDefaultName().build();
         FolderService
                 .createFolder(testFolder)
-                .deleteButtonClick()
+                .deleteDocumentButtonClick()
                 .trashMenuItemClick();
         boolean isFolderRemovedFromTrashAfterClean = TrashService
                 .emptyTrash()

@@ -37,9 +37,6 @@ public class Arguments {
     @Parameter(names = {"--port", "-p"}, description = "Selenium port", validateWith = PositiveInteger.class)
     private Integer port = 4444;
 
-    public Arguments() {
-    }
-
     public static synchronized Arguments instance() {
         if (instance == null) {
             instance = new Arguments();

@@ -1,6 +1,4 @@
 package com.epam.tat.test;
-import org.apache.commons.lang3.RandomUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 
 public class Constants {
 
@@ -14,4 +12,5 @@ public class Constants {
     public static final int MAX_CREDENTIALS_LENGTH = 20;
     public static final String LOGIN = "taf.alexander.gritsok";
     public static final String PASSWORD = "WebDriverGo";
+    public static final String SAVED_STATUS = "Сохранено в Yandex";
 }

@@ -55,7 +55,7 @@ public class Browser implements WrapsDriver {
         } catch (WebDriverException e) {
             Log.error(e.getMessage());
         } finally {
-            instance.set(null);
+            instance.remove();
             Log.debug("BROWSER HAS STOPPED!");
         }
     }
@@ -122,7 +122,7 @@ public class Browser implements WrapsDriver {
             wrappedDriver.switchTo().defaultContent();
         } else {
             Log.debug("Switching to frame: " + by);
-            wrappedDriver.switchTo().frame(wrappedDriver.findElement(by));
+            wrappedDriver.switchTo().frame(waitForVisibilityOfElementLocated(by));
         }
     }
 

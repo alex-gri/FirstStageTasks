@@ -10,9 +10,6 @@ public class YandexDiskHomePage {
 
     private By logInButtonXpath = By.xpath("//a[@class='button button_login header__login-link']");
 
-    public YandexDiskHomePage() {
-    }
-
     public YandexDiskHomePage openYandexDiskHomePage() {
         Browser.getInstance().get(URL);
         return this;

@@ -15,9 +15,6 @@ public class YandexDiskTextDocumentPage {
     private By topRenameFieldId = By.id("BreadcrumbTitle");
     private By outlineContent = By.xpath("//*[@class='OutlineContent']");
 
-    public YandexDiskTextDocumentPage() {
-    }
-
     public YandexDiskTextDocumentPage writeToDocument(String textToWrite) {
         Log.report("Typing into document: " + textToWrite);
 
@@ -26,7 +23,7 @@ public class YandexDiskTextDocumentPage {
          * Waiting for document's save status to load before write any text.
          */
         Browser.getInstance().swtichToFrame(iframeXpath);
-        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().waitForTextToBe(saveStatusId, Constants.SAVED_STATUS);
         Browser.getInstance().swtichToFrame(null);
 
         // Writing text to the document.
@@ -36,7 +33,7 @@ public class YandexDiskTextDocumentPage {
 
     public YandexDiskTextDocumentPage renameDocumentFieldClick() {
         Browser.getInstance().swtichToFrame(iframeXpath);
-        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().waitForTextToBe(saveStatusId, Constants.SAVED_STATUS);
         Browser.getInstance().click(topRenameFieldId);
         Browser.getInstance().swtichToFrame(null);
         return this;
@@ -49,7 +46,7 @@ public class YandexDiskTextDocumentPage {
         Browser.getInstance().type(topRenameFieldId, name);
         Browser.getInstance().waitForTextToBe(topRenameFieldId, name);
         Browser.getInstance().getWrappedDriver().findElement(topRenameFieldId).sendKeys(Keys.ENTER);
-        Browser.getInstance().waitForTextToBe(saveStatusId, "Сохранено в Yandex");
+        Browser.getInstance().waitForTextToBe(saveStatusId, Constants.SAVED_STATUS);
         Browser.getInstance().swtichToFrame(null);
         return this;
     }

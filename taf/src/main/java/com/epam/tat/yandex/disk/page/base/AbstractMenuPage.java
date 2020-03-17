@@ -12,13 +12,14 @@ public abstract class AbstractMenuPage {
     protected By recentMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[1]/a");
     protected By filesMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[2]/a");
     protected By photoMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[3]/a");
-    protected By sharedMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[4]/a");
-    protected By historyMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[5]/a");
-    protected By archiveMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[6]/a");
-    protected By trashMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[6]/a");
+    protected By sharedMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[5]/a");
+    protected By historyMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[6]/a");
+    protected By archiveMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[7]/a");
+    protected By trashMenuItem = By.xpath("//div[@class='navigation__items navigation__items_standard']/div[8]/a");
 
     protected By createButton = By.xpath("//span[@class='create-resource-popup-with-anchor']/button");
-    protected By deleteButton = By.xpath("//div[@class='groupable-buttons__visible-buttons']/span[3]//button");
+    protected By deleteDocumentButton = By.xpath("//div[@class='groupable-buttons__visible-buttons']/span[4]//button");
+    protected By deleteFolderButton = By.xpath("//div[@class='groupable-buttons__visible-buttons']/span[3]//button");
     protected By contentTitle = By.tagName("h1");
 
     public AbstractMenuPage() {
@@ -29,9 +30,15 @@ public abstract class AbstractMenuPage {
         return new YandexDiskCreatePage();
     }
 
-    public YandexDiskFolderPage deleteButtonClick() {
+    public YandexDiskFolderPage deleteDocumentButtonClick() {
         Log.report("Removing the document");
-        Browser.getInstance().click(deleteButton);
+        Browser.getInstance().click(deleteDocumentButton);
+        return new YandexDiskFolderPage();
+    }
+
+    public YandexDiskFolderPage deleteFolderButtonClick() {
+        Log.report("Removing the folder");
+        Browser.getInstance().click(deleteFolderButton);
         return new YandexDiskFolderPage();
     }
 
