@@ -5,7 +5,7 @@ import com.epam.tat.framework.model.Folder;
 import com.epam.tat.framework.model.builder.DocumentBuilder;
 import com.epam.tat.framework.model.builder.FolderBuilder;
 import com.epam.tat.test.testbase.TestBase;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
 import com.epam.tat.yandex.disk.page.service.DocumentService;
 import com.epam.tat.yandex.disk.page.service.FolderService;
 import com.epam.tat.yandex.disk.page.service.TrashService;
@@ -90,7 +90,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Archive in menu and check if it opens")
     public void archiveMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .archiveMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not Archive", contentTitle, is("Архив"));
@@ -98,7 +98,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Files in menu and check if it opens")
     public void filesMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .filesMenuItemClickAfterClickOnAnotherItem()
                 .getContentTitle();
         assertThat("Opened page is not Files", contentTitle, is("Файлы"));
@@ -106,7 +106,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click History in menu and check if it opens")
     public void historyMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .historyMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not History", contentTitle, is("История"));
@@ -114,7 +114,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Photo in menu and check if it opens")
     public void photoMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .photoMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not Photo", contentTitle, is("Все фотографии"));
@@ -122,7 +122,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Recent in menu and check if it opens")
     public void recentMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .recentMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not Recent", contentTitle, is("Последние файлы"));
@@ -130,7 +130,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Shared in menu and check if it opens")
     public void sharedMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .sharedMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not Shared", contentTitle, is("Публичные ссылки"));
@@ -138,7 +138,7 @@ public class YandexDisk extends TestBase {
 
     @Test (description = "Click Trash in menu and check if it opens")
     public void trashMenuItemLeadsToValidPageTest() {
-        String contentTitle = new YandexDiskFilesPage()
+        String contentTitle = new YandexDiskTrashPage()
                 .trashMenuItemClick()
                 .getContentTitle();
         assertThat("Opened page is not trash", contentTitle, is("Корзина"));

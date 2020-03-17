@@ -2,8 +2,8 @@ package com.epam.tat.yandex.disk.page.authorization;
 
 import com.epam.tat.framework.logger.Log;
 import com.epam.tat.framework.ui.Browser;
+import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
 import org.openqa.selenium.By;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 
 public class PassportYandexAuthorizationPage {
 
@@ -45,8 +45,8 @@ public class PassportYandexAuthorizationPage {
         return this;
     }
 
-    public YandexDiskFilesPage openYandexDiskFilesPage() {
-        return new YandexDiskFilesPage();
+    public YandexDiskTrashPage openYandexDiskTrashPage() {
+        return new YandexDiskTrashPage();
     }
 
     public boolean isLogInErrorMessagePresent() {

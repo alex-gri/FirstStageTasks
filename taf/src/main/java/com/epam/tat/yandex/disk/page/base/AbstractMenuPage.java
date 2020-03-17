@@ -5,13 +5,7 @@ import com.epam.tat.framework.ui.Browser;
 import com.epam.tat.yandex.disk.page.createcontext.YandexDiskCreatePage;
 import org.openqa.selenium.By;
 import com.epam.tat.yandex.disk.page.createdelement.YandexDiskFolderPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskFilesPage;
 import com.epam.tat.yandex.disk.page.menuitem.YandexDiskTrashPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskArchivePage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskHistoryPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskPhotoPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskRecentPage;
-import com.epam.tat.yandex.disk.page.menuitem.YandexDiskSharedPage;
 
 public abstract class AbstractMenuPage {
 
@@ -41,50 +35,50 @@ public abstract class AbstractMenuPage {
         return new YandexDiskFolderPage();
     }
 
-    public YandexDiskArchivePage archiveMenuItemClick() {
+    public YandexDiskTrashPage archiveMenuItemClick() {
         Log.report("Moving to Archive page");
         Browser.getInstance().click(archiveMenuItem);
-        return new YandexDiskArchivePage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskFilesPage filesMenuItemClickAfterClickOnAnotherItem() {
+    public YandexDiskTrashPage filesMenuItemClickAfterClickOnAnotherItem() {
         Log.report("Moving to Files page");
 
         // Changing current directory to trash first, because current could be Files already.
         Browser.getInstance().click(trashMenuItem);
         Browser.getInstance().click(filesMenuItem);
-        return new YandexDiskFilesPage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskFilesPage filesMenuItemClick() {
+    public YandexDiskTrashPage filesMenuItemClick() {
         Log.report("Moving to Files page");
         Browser.getInstance().click(filesMenuItem);
-        return new YandexDiskFilesPage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskHistoryPage historyMenuItemClick() {
+    public YandexDiskTrashPage historyMenuItemClick() {
         Log.report("Moving to History page");
         Browser.getInstance().click(historyMenuItem);
-        return new YandexDiskHistoryPage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskPhotoPage photoMenuItemClick() {
+    public YandexDiskTrashPage photoMenuItemClick() {
         Log.report("Moving to Photo page");
         Browser.getInstance().click(photoMenuItem);
-        return new YandexDiskPhotoPage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskRecentPage recentMenuItemClick() {
+    public YandexDiskTrashPage recentMenuItemClick() {
         Log.report("Moving to Recent page");
         Browser.getInstance().click(recentMenuItem);
-        return new YandexDiskRecentPage();
+        return new YandexDiskTrashPage();
     }
 
-    public YandexDiskSharedPage sharedMenuItemClick() {
+    public YandexDiskTrashPage sharedMenuItemClick() {
         Log.report("Moving to Shared page");
 
         Browser.getInstance().click(sharedMenuItem);
-        return new YandexDiskSharedPage();
+        return new YandexDiskTrashPage();
     }
 
     public YandexDiskTrashPage trashMenuItemClick() {

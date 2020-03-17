@@ -30,7 +30,7 @@ public class FilesStepDefinitions {
     public void returnFilesPage() {
         CucumberDisk.closeAllTabsExceptFirst();
         new PassportYandexAuthorizationPage()
-                .openYandexDiskFilesPage()
+                .openYandexDiskTrashPage()
                 .filesMenuItemClick()
                 .waitForContentTitleToBe("Файлы");
     }
@@ -116,62 +116,62 @@ public class FilesStepDefinitions {
 
     @When("user clicks <Archive>")
     public void userClicksArchive() {
-        new YandexDiskFilesPage().archiveMenuItemClick();
+        new YandexDiskTrashPage().archiveMenuItemClick();
     }
 
     @Then("he reaches the <Archive> page")
     public void heReachesTheArchivePage() {
-        String contentTitle = new YandexDiskArchivePage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not Archive", contentTitle, is("Архив"));
     }
 
     @And("user clicks <Files>")
     public void userClicksFiles() {
-        new YandexDiskFilesPage().filesMenuItemClick();
+        new YandexDiskTrashPage().filesMenuItemClick();
     }
 
     @Then("he reaches the <Files> page")
     public void heReachesTheFilesPage() {
-        String contentTitle = new YandexDiskFilesPage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not Files", contentTitle, is("Файлы"));
     }
 
     @When("user clicks <Photo>")
     public void userClicksPhoto() {
-        new YandexDiskFilesPage().photoMenuItemClick();
+        new YandexDiskTrashPage().photoMenuItemClick();
     }
 
     @Then("he reaches the <Photo> page")
     public void heReachesThePhotoPage() {
-        String contentTitle = new YandexDiskPhotoPage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not Photo", contentTitle, is("Все фотографии"));
     }
 
     @When("user clicks <Recent>")
     public void userClicksRecent() {
-        new YandexDiskFilesPage().recentMenuItemClick();
+        new YandexDiskTrashPage().recentMenuItemClick();
     }
 
     @Then("he reaches the <Recent> page")
     public void heReachesTheRecentPage() {
-        String contentTitle = new YandexDiskRecentPage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not Recent", contentTitle, is("Последние файлы"));
     }
 
     @When("user clicks <Shared>")
     public void userClicksShared() {
-        new YandexDiskFilesPage().sharedMenuItemClick();
+        new YandexDiskTrashPage().sharedMenuItemClick();
     }
 
     @Then("he reaches the <Shared> page")
     public void heReachesTheSharedPage() {
-        String contentTitle = new YandexDiskSharedPage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not Shared", contentTitle, is("Публичные ссылки"));
     }
 
     @When("user clicks <Trash>")
     public void userClicksTrash() {
-        new YandexDiskFilesPage().trashMenuItemClick();
+        new YandexDiskTrashPage().trashMenuItemClick();
     }
 
     @Then("he reaches the <Trash> page")
@@ -182,12 +182,12 @@ public class FilesStepDefinitions {
 
     @When("user clicks <History>")
     public void userClicksHistory() {
-        new YandexDiskFilesPage().historyMenuItemClick();
+        new YandexDiskTrashPage().historyMenuItemClick();
     }
 
     @Then("he reaches the <History> page")
     public void heReachesTheHistoryPage() {
-        String contentTitle = new YandexDiskHistoryPage().getContentTitle();
+        String contentTitle = new YandexDiskTrashPage().getContentTitle();
         assertThat("Opened page is not History", contentTitle, is("История"));
     }
 
