@@ -3,8 +3,8 @@ To avoid error in test where folder with the same name already exists change Exa
 Package project using maven and run it from 'demo-jar-with-dependencies' using console:
 java -jar demo-jar-with-dependencies.jar --suites testng.xml
 
-To run in parallel:
-java -jar demo-jar-with-dependencies.jar --suites testng-all.xml -p classes -t 2
+To connect to specific hub:
+java -jar demo-jar-with-dependencies.jar --suites testng-all.xml --host localhost --port 4444
 
 
 Arguments in short:
@@ -14,6 +14,10 @@ Arguments in short:
     
     {"--logger", "-l"}, description = "Log4j.xml config", default - log4j.xml
     
-    {"--parallel", "-p"}, description = "Entities that you want to run in parallel", default - NONE
+    {"--parallel", "-par"}, description = "Entities that you want to run in parallel", default - NONE
     
     {"--threads", "-t"}, description = "Threads count", default = 1
+
+    {"--host", "-h"}, description = "Selenium grid host", default - localhost
+
+    {"--port", "-p"}, description = "Selenium port", default - 4444;

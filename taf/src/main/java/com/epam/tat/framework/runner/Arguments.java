@@ -31,7 +31,7 @@ public class Arguments {
                validateWith = { PositiveInteger.class, ThreadValidator.class })
     private Integer threadCount = 1;
 
-    @Parameter(names = {"--host", "-h"}, description = "Selenium grid host ")
+    @Parameter(names = {"--host", "-h"}, description = "Selenium grid host")
     private String host = "localhost";
 
     @Parameter(names = {"--port", "-p"}, description = "Selenium port", validateWith = PositiveInteger.class)
