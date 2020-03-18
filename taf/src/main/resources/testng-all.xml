@@ -3,8 +3,9 @@
 <suite name="YandexDisk" verbose="1">
     <test name="All tests" >
         <classes>
-            <class name="com.epam.tat.framework.runner.CucumberLogIn"/>
-            <class name="com.epam.tat.framework.runner.CucumberDisk"/>
+            <class name="com.epam.tat.test.yandex.YandexDisk" />
+            <class name="com.epam.tat.test.yandex.YandexDiskLogIn" />
         </classes>
     </test>
 </suite>
+
